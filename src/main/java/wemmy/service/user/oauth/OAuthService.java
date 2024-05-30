@@ -114,13 +114,13 @@ public class OAuthService {
             UserEntity oauthUser = userInfo.toUserEntity(userType, Role.USER);
             userService.signUp(oauthUser);
 
-            tokenDto = tokenProvider.createToken(oauthUser.getId(), oauthUser.getEmail());
+            tokenDto = tokenProvider.createToken(oauthUser.getId(), oauthUser.getEmail(), String.valueOf(oauthUser.getRole()));
             oauthUser.updateToken(tokenDto);
         } else { // 기존회원
             // 토큰 생성
             UserEntity oauthUser = findUser.get();
 
-            tokenDto = tokenProvider.createToken(oauthUser.getId(), oauthUser.getEmail());
+            tokenDto = tokenProvider.createToken(oauthUser.getId(), oauthUser.getEmail(), String.valueOf(oauthUser.getRole()));
             oauthUser.updateToken(tokenDto);
         }
 

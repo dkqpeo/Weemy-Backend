@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import wemmy.global.interceptor.AdminAuthenticationInterceptor;
 import wemmy.global.interceptor.AuthenticationInterceptor;
 
 @Configuration
@@ -12,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     // accessToken 검증
     private final AuthenticationInterceptor authenticationInterceptor;
+    private final AdminAuthenticationInterceptor adminAuthenticationInterceptor;
 
 
     @Override
@@ -26,5 +28,9 @@ public class WebConfig implements WebMvcConfigurer {
                         "/wemmy/access-token/reissue",
                         "/wemmy/user/oauth/**"
                 );
+
+        registry.addInterceptor(adminAuthenticationInterceptor)
+                .order(2)
+                .addPathPatterns("/wemmy/admin/**");
     }
 }

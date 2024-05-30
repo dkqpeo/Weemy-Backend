@@ -44,7 +44,7 @@ public class UserService {
         if(!passwordEncoder.matches(password, dbPw))
             throw new MemberException(ErrorCode.NOT_EQUAL_PASSWORD);
 
-        TokenDto token = tokenProvider.createToken(user.getId(), email);
+        TokenDto token = tokenProvider.createToken(user.getId(), email, String.valueOf(user.getRole()));
         user.updateToken(token);
 
         return LoginDTO.response.of(token);

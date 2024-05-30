@@ -23,11 +23,11 @@ public class TokenProvider {
     private final String refreshTokenExpirationTime;
     private final String tokenSecret;
 
-    public TokenDto createToken(Long id, String email) {
+    public TokenDto createToken(Long id, String email, String userRole) {
         Date accessTokenExpireTime = createAccessTokenExpireTime();
         Date refreshTokenExpireTime = createRefreshTokenExpireTime();
 
-        String accessToken = createAccessToken(id, email, accessTokenExpireTime);
+        String accessToken = createAccessToken(id, email, userRole, accessTokenExpireTime);
         String refreshToken = createRefreshToken(id, refreshTokenExpireTime);
 
         return TokenDto.builder()
@@ -49,12 +49,13 @@ public class TokenProvider {
         return new Date(System.currentTimeMillis() + Long.parseLong(refreshTokenExpirationTime));
     }
 
-    public String createAccessToken(Long id, String email, Date expirationTime) {
+    public String createAccessToken(Long id, String email, String userRole, Date expirationTime) {
         String accessToken = Jwts.builder()
                 .setSubject(TokenType.ACCESS.name())  // 토큰 제목
                 .setExpiration(expirationTime)        // 만료 시간
                 .claim("id", id)                // 회원 id ( DB PK )
                 .claim("email", email)          // 회원 email
+                .claim("userRole", userRole)    // userRole
                 .signWith(SignatureAlgorithm.HS512, tokenSecret.getBytes(StandardCharsets.UTF_8))
                 .compact();
 
@@ -82,6 +83,7 @@ public class TokenProvider {
                     .parseClaimsJws(token);
         } catch (ExpiredJwtException e) {
             log.info("token expired");
+            throw new TokenValidateException(ErrorCode.TOKEN_EXPIRED);
 
         } catch (Exception e) {
             log.info("잘못된 토큰");
@@ -101,6 +103,7 @@ public class TokenProvider {
                     .parseClaimsJws(token).getBody();
         } catch (Exception e) {
             log.info("잘못된 토큰");
+            throw new TokenValidateException(ErrorCode.NOT_VALID_TOKEN);
         }
         return claims;
     }
