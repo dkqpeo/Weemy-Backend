@@ -19,26 +19,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class OpenApiSercvice {
-
-    /*private final OpenApiClient openApiClient;
-    private final String serviceKey;
-
-    public OpenApiSercvice(OpenApiClient openApiClient, @Value("${openApi.key}") String serviceKey) {
-        this.openApiClient = openApiClient;
-        this.serviceKey = serviceKey;
-    }
-
-    public void getOpenApi() {
-        JsonParser jsonParser = new JsonParser();
-        TestApiRespDTO apiResult = openApiClient.getOpenApi(serviceKey, "500", "1", "json", "서울특별시");
-
-        //JsonElement jsonObject = jsonParser.parse(String.valueOf(apiResult));
-        //JsonArray row = jsonObject.getAsJsonObject().get("row").getAsJsonArray();
-
-        System.out.println(apiResult);
-
-    }*/
-
     private String serviceKey;
 
     public OpenApiSercvice(@Value("${openApi.key}") String serviceKey) {
@@ -100,6 +80,8 @@ public class OpenApiSercvice {
                             dto.setSigg_cd(rowObj.get("sgg_cd").getAsString());
                         } if(rowObj.has("umd_cd")) {
                             dto.setUmd_cd(rowObj.get("umd_cd").getAsString());
+                        } if(rowObj.has("region_cd")) {
+                            dto.setRegion_cd(rowObj.get("region_cd").getAsString());
                         }
                         dto.setLocallow_nm(rowObj.get("locallow_nm").getAsString());
 

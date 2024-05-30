@@ -18,10 +18,8 @@ public class UmdAreas {
     @Column(name = "umd_id")
     private Long id;
 
-    @Column(unique = true)
     private String adm_code;
 
-    @Column(unique = true)
     private String name;
 
     @ManyToOne(cascade = CascadeType.REMOVE)

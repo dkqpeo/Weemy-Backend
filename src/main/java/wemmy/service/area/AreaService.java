@@ -4,17 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wemmy.domain.area.Regions;
 import wemmy.domain.area.city.SidoAreas;
 import wemmy.domain.area.district.SiggAreas;
 import wemmy.domain.area.district.UmdAreas;
-import wemmy.dto.area.openApi.OpenApiRespDTO;
 import wemmy.global.config.error.ErrorCode;
 import wemmy.global.config.error.exception.ControllerException;
+import wemmy.repository.area.RegionRepository;
 import wemmy.repository.area.SidoAreaRepository;
 import wemmy.repository.area.SiggAreaRepository;
 import wemmy.repository.area.UmdAreaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -24,55 +24,25 @@ import java.util.Optional;
 @Transactional
 public class AreaService {
 
+    private final RegionRepository regionRepository;
     private final SidoAreaRepository sidoAreaRepository;
     private final SiggAreaRepository siggAreaRepository;
     private final UmdAreaRepository umdAreaRepository;
 
+    public void saveRegion(Regions regionData) {
+        regionRepository.save(regionData);
+    }
 
-    public void saveArea(List<OpenApiRespDTO> list) {
+    public void saveSido(SidoAreas data) {
+        sidoAreaRepository.save(data);
+    }
 
-        for (OpenApiRespDTO data : list) {
-            String sidoCd = data.getSido_cd();
-            String siggCd = data.getSigg_cd();
-            String umdCd = data.getUmd_cd();
-            String locallowNm = data.getLocallow_nm();
+    public void saveSigg(SiggAreas data) {
+        siggAreaRepository.save(data);
+    }
 
-            System.out.println(sidoCd + siggCd + umdCd);
-
-            // 지역시 데이터가 없을경우 추가.
-            if(sidoAreaRepository.findByAdm_code(sidoCd).isEmpty()) {
-                SidoAreas sidoData = SidoAreas.builder()
-                        .adm_code(sidoCd)
-                        .name(locallowNm)
-                        .build();
-                sidoAreaRepository.save(sidoData);
-            }
-
-            // 자치구, 군이 없을경우 추가.
-            if(siggAreaRepository.findByAdm_code(siggCd).isEmpty()) {
-                SidoAreas findResult = findBySidoCode(sidoCd);
-
-                SiggAreas siggData = SiggAreas.builder()
-                        .adm_code(siggCd)
-                        .name(locallowNm)
-                        .sido_id(findResult)
-                        .build();
-                siggAreaRepository.save(siggData);
-            }
-
-            // 읍, 면, 동이 없을경우 추가.
-            if(!umdCd.equals("000") || umdAreaRepository.findByAdm_code(umdCd).isEmpty()) {
-                SiggAreas findResult = findBySiggCode(siggCd);
-
-                UmdAreas umdData = UmdAreas.builder()
-                        .adm_code(umdCd)
-                        .name(locallowNm)
-                        .sigg_id(findResult)
-                        .build();
-
-                umdAreaRepository.save(umdData);
-            }
-        }
+    public void saveUmd(UmdAreas data) {
+        umdAreaRepository.save(data);
     }
 
     // sido table에 입력받은 시, 구가 존재하는지 확인.
@@ -96,6 +66,10 @@ public class AreaService {
         return sidoArea;
     }
 
+    public Optional<SidoAreas> validateSidoCode(String code) {
+        return sidoAreaRepository.findByAdm_code(code);
+    }
+
     // 지역구 조회
     public SiggAreas findBySiggNameAndSidoId(String name, SidoAreas sidoId) {
         SiggAreas siggArea = siggAreaRepository.findByNameAndSido_id(name, sidoId)
@@ -109,10 +83,37 @@ public class AreaService {
         return siggArea;
     }
 
+    public Optional<SiggAreas> validateSiggCode(String code) {
+        return siggAreaRepository.findByAdm_code(code);
+    }
+
     // 읍면동 조회
     public UmdAreas findByUmdCode(String code) {
         UmdAreas umdArea = umdAreaRepository.findByAdm_code(code)
                 .orElseThrow(() -> new ControllerException(ErrorCode.UMD_NOT_EXISTS));
         return umdArea;
+    }
+
+    public Optional<UmdAreas> validateUmdCodeAndSigg(String code, SiggAreas siggArea) {
+        Optional<UmdAreas> umdArea = umdAreaRepository.findByAdm_codeAndSigg_id(code, siggArea);
+        return umdArea;
+    }
+
+    public UmdAreas findByUmdCodeAndSigg(String code, SiggAreas siggArea) {
+        UmdAreas umdArea = umdAreaRepository.findByAdm_codeAndSigg_id(code, siggArea)
+                .orElseThrow(() -> new ControllerException(ErrorCode.UMD_NOT_EXISTS));
+        return umdArea;
+    }
+
+    // region 조회
+    public Optional<Regions> validateRegionCode(String code) {
+        Optional<Regions> region = regionRepository.findByRegionCd(code);
+        return region;
+    }
+
+    public Regions findByRegionCode(String code) {
+        Regions region = regionRepository.findByRegionCd(code)
+                .orElseThrow(() -> new ControllerException(ErrorCode.REGION_NOT_EXISTS));
+        return region;
     }
 }

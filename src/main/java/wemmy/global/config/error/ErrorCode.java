@@ -38,7 +38,8 @@ public enum ErrorCode {
     // Area
     CITY_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-001", "해당 지역시가 존재하지 않습니다."),
     DISTRICT_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-002", "해당 자치구가 존재하지 않습니다."),
-    UMD_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-002", "해당 읍면동이 존재하지 않습니다.");
+    UMD_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-003", "해당 읍면동이 존재하지 않습니다."),
+    REGION_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-004", "해당 region code가 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
