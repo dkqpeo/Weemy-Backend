@@ -28,18 +28,22 @@ public enum ErrorCode {
     USER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
     NOT_EXISTS_EMAIL(HttpStatus.BAD_REQUEST, "M-004", "일치하는 Email 정보가 존재하지 않습니다."),
     NOT_EXISTS_MEMBER(HttpStatus.BAD_REQUEST, "M-005", "회원정보가 일치하지 않습니다."),
-    USERNAME_IS_NULL(HttpStatus.BAD_REQUEST, "M-006", "Username이 null 입니다."),
+    USERNAME_IS_NULL(HttpStatus.BAD_REQUEST, "M-006", "username이 null 입니다."),
     NOT_VALID_CALENDAR(HttpStatus.BAD_REQUEST, "M-007", "해당 회원에게 접근 권한이 없는 일정입니다."),
     NOT_OFFICE_USER(HttpStatus.BAD_REQUEST, "M-008", "Office User가 아닙니다."),
+    NOT_ADMIN_USER(HttpStatus.BAD_REQUEST, "M-009", "Admin User가 아닙니다."),
 
     // 아기
     BABY_NOT_EXISTS(HttpStatus.BAD_REQUEST, "B-001", "아기 정보가 존재하지 않습니다."),
 
-    // Area
+    // 지역
     CITY_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-001", "해당 지역시가 존재하지 않습니다."),
     DISTRICT_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-002", "해당 자치구가 존재하지 않습니다."),
     UMD_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-003", "해당 읍면동이 존재하지 않습니다."),
-    REGION_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-004", "해당 region code가 존재하지 않습니다.");
+    REGION_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-004", "해당 region code가 존재하지 않습니다."),
+
+    // 복지
+    NOT_FOUND_WCATEGORY_ID(HttpStatus.BAD_REQUEST, "W-001", "해당 복지 카테고리 code가 존재하지 않습니다."),;
 
     private final HttpStatus httpStatus;
     private final String errorCode;

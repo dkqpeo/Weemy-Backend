@@ -75,7 +75,7 @@ public class AreaSaveService {
 
             SiggAreas siggAreas = areaService.findBySiggCode(siggCd);
 
-            if (!areaService.validateRegionCode(regionCd).isPresent()) {
+            if (!areaService.findByRegionCode(regionCd).isPresent()) {
                 Regions regionData = Regions.builder()
                         .region_cd(regionCd)
                         .sido_id(areaService.findBySidoCode(sidoCd))

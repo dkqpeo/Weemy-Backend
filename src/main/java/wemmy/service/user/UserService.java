@@ -7,13 +7,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wemmy.domain.area.district.SiggAreas;
 import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.constant.Role;
+import wemmy.domain.user.constant.UserType;
 import wemmy.dto.user.LoginDTO;
 import wemmy.global.config.error.ErrorCode;
+import wemmy.global.config.error.exception.ControllerException;
 import wemmy.global.config.error.exception.MemberException;
 import wemmy.global.token.jwt.TokenProvider;
 import wemmy.global.token.jwt.dto.TokenDto;
 import wemmy.repository.user.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -27,9 +31,21 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserEntity signUp(UserEntity user) {
-        Optional<UserEntity> findUser = finBydUserEmail(user.getEmail());
-        if (findUser.isPresent())
-            throw new MemberException(ErrorCode.ALREADY_REGISTERED_MEMBER);
+        validateEmail(user.getEmail());
+
+        return userRepository.save(user);
+    }
+
+    public UserEntity signUpByAdmin(String email, String password) {
+        validateEmail(email);
+
+        UserEntity user = UserEntity.builder()
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .userType(UserType.LOCAL)
+                .createdAt(LocalDateTime.now())
+                .role(Role.ADMIN)
+                .build();
 
         return userRepository.save(user);
     }
@@ -69,7 +85,7 @@ public class UserService {
     }
 
     public void validateEmail(String email) {
-        Optional<UserEntity> userEntity = finBydUserEmail(email);
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
 
         if(userEntity.isPresent())
             throw new MemberException(ErrorCode.ALREADY_REGISTERED_MEMBER);
@@ -83,6 +99,15 @@ public class UserService {
 
     public Optional<UserEntity> finBydUserEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public UserEntity valudateAdmin(String adminId) {
+        UserEntity admin = userRepository.findByEmail(adminId)
+                .orElseThrow(() -> new ControllerException(ErrorCode.USER_NOT_EXISTS));
+        if(admin.getRole() != Role.ADMIN)
+            new ControllerException(ErrorCode.NOT_ADMIN_USER);
+
+        return admin;
     }
 
     public Optional<UserEntity> findUserByRefreshToken(String refreshToken) {

@@ -29,6 +29,7 @@ public class AreaService {
     private final SiggAreaRepository siggAreaRepository;
     private final UmdAreaRepository umdAreaRepository;
 
+    // 시, 군, 구의 전체 지역코드를 저장.
     public void saveRegion(Regions regionData) {
         regionRepository.save(regionData);
     }
@@ -106,12 +107,12 @@ public class AreaService {
     }
 
     // region 조회
-    public Optional<Regions> validateRegionCode(String code) {
+    public Optional<Regions> findByRegionCode(String code) {
         Optional<Regions> region = regionRepository.findByRegionCd(code);
         return region;
     }
 
-    public Regions findByRegionCode(String code) {
+    public Regions validateRegionCode(String code) {
         Regions region = regionRepository.findByRegionCd(code)
                 .orElseThrow(() -> new ControllerException(ErrorCode.REGION_NOT_EXISTS));
         return region;
