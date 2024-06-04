@@ -58,14 +58,5 @@ public class BenefitListController {
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 
-    /**
-     * 복지 내용 상세조회
-     */
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<BenefitDTO.response> getBenefitDetail(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
 
-        // region code로 복지(혜택)정보 조회.
-        BenefitDTO.response benefitDetail = benefitService.getBenefitDetail(id);
-        return new ResponseEntity<>(benefitDetail, HttpStatus.OK);
-    }
 }
