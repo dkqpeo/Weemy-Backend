@@ -27,6 +27,13 @@ public class WelfareService {
         welfareRepository.save(welfare);
     }
 
+    public Welfare findById(Long welfare_id) {
+        Welfare welfare = welfareRepository.findById(welfare_id)
+                .orElseThrow(() -> new ControllerException(ErrorCode.NOT_FOUND_WCATEGORY_ID));
+
+        return welfare;
+    }
+
     public List<Welfare> findAllByWelfareById(Regions regions) {
         List<Welfare> welfareList = welfareRepository.findAllByHostId(regions);
         return welfareList;

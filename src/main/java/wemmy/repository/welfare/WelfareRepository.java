@@ -9,9 +9,13 @@ import wemmy.domain.welfare.Welfare;
 import wemmy.dto.benefit.BenefitDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface WelfareRepository extends JpaRepository<Welfare, Long> {
+
+    @Override
+    Optional<Welfare> findById(Long id);
 
     @Query("select w from welfare w where w.hostId = :hostId")
     List<Welfare> findAllByHostId(@Param("hostId") Regions hostId);

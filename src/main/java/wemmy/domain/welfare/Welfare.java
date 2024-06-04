@@ -21,7 +21,7 @@ public class Welfare {
     private Long id;
 
     @Column(name = "unique_id", unique = true)
-    private int uniqueId;
+    private Long uniqueId;
 
     private String title;       // 복지(혜택)제목
 
@@ -42,6 +42,9 @@ public class Welfare {
 
     @Column(name = "original_url", length = 2083)
     private String originalUrl; // 원본 url
+
+    @Column(name = "image_url", length = 2083)
+    private String imageUrl; // 이미지 url
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")

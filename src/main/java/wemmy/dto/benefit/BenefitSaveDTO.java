@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class BenefitSaveDTO {
 
-    private int unique_id;
+    private Long unique_id;
     private String admin_id;        // 관리자 id
     private int w_category_id;      // 1 임신, 2 영유아
     private String host_id;         // region_cd

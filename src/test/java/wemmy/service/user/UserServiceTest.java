@@ -17,7 +17,7 @@ class UserServiceTest {
     void signUpByAdmin() {
 
         // 관리자 계정 생성
-        userService.signUpByAdmin("teamWemmy@gmail.com", "project2024");
+        userService.signUpByAdmin("teamwemmy@gmail.com", "project2024");
     }
 
     @Test

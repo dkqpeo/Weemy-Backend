@@ -6,16 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wemmy.domain.baby.BabyEntity;
 import wemmy.domain.baby.constant.BabyType;
-import wemmy.domain.user.UserEntity;
-import wemmy.dto.baby.BabyInsertDTO;
 import wemmy.dto.baby.BabyRespDTO;
 import wemmy.dto.baby.BabyUpdateInfoDTO;
 import wemmy.global.config.error.ErrorCode;
 import wemmy.global.config.error.exception.BabyException;
-import wemmy.global.config.error.exception.MemberException;
+import wemmy.global.config.error.exception.ControllerException;
 import wemmy.repository.baby.BabyRepository;
-import wemmy.service.user.UserService;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +51,12 @@ public class BabyService {
             babyList.add(new BabyRespDTO(baby));
         }
         return babyList;
+    }
+
+    public BabyEntity findBabyByUserId(Long userId) {
+        BabyEntity babyEntity = babyRepository.findByUserId(userId)
+                .orElseThrow(() -> new ControllerException(ErrorCode.BABY_NOT_EXISTS));
+        return babyEntity;
     }
 
     private Optional<BabyEntity> getByUserId(Long userId) {

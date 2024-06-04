@@ -40,7 +40,7 @@ public class BenefitSaveService {
                 JsonObject object = jsonElement.getAsJsonObject();
                 BenefitSaveDTO benefitSaveDTO = new BenefitSaveDTO();
 
-                benefitSaveDTO.setUnique_id(object.get("unique_id").getAsInt());
+                benefitSaveDTO.setUnique_id(object.get("unique_id").getAsLong());
                 benefitSaveDTO.setAdmin_id("teamWemmy@gmail.com");
                 benefitSaveDTO.setW_category_id(object.get("w_category_id").getAsInt());
                 benefitSaveDTO.setHost_id(object.get("host_id").getAsString());
