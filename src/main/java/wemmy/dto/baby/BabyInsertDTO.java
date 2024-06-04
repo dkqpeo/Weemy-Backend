@@ -12,18 +12,7 @@ import java.time.LocalDate;
 public class BabyInsertDTO {
 
     private String name;
-    @DateTimeFormat(pattern = "yy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     private String type;
 }
-
-/*
-public class BabyInsertDTO {
-
-    private String name1;
-    private String name2;
-    @DateTimeFormat(pattern = "yy-MM-dd")
-    private LocalDate birthday;
-    private String type;
-}
-*/

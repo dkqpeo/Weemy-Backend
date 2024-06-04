@@ -14,7 +14,7 @@ import java.util.List;
 public class UserRegisterDTO {
 
     private String name;
-    @DateTimeFormat(pattern = "yy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     private String type;
     private String city;

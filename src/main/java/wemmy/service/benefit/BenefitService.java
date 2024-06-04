@@ -115,14 +115,14 @@ public class BenefitService {
         String district = detailBenefit.getHostId().getSigg_id().getName();
 
         BenefitDTO.response build = BenefitDTO.response.builder()
-                .benefit_id(detailBenefit.getId())
-                .w_category_id(detailBenefit.getWCategoryId().getId())
+                .benefitId(detailBenefit.getId())
+                .wCategoryId(detailBenefit.getWCategoryId().getId())
                 .title(detailBenefit.getTitle())
                 .field(detailBenefit.getField())
                 .content(detailBenefit.getContent())
                 .way(detailBenefit.getWay())
                 .etc(detailBenefit.getEtc())
-                .original_url(detailBenefit.getOriginalUrl())
+                .originalUrl(detailBenefit.getOriginalUrl())
                 .city(city)
                 .district(district)
                 .imageUrl(detailBenefit.getImageUrl())
@@ -136,17 +136,17 @@ public class BenefitService {
 
         for (Welfare welfare : list) {
             BenefitDTO.response dto = BenefitDTO.response.builder()
-                    .benefit_id(welfare.getId())
+                    .benefitId(welfare.getId())
                     //.unique_id(welfare.getUniqueId())
                     //.admin_id(welfare.getAdminId().getId())
-                    .w_category_id(welfare.getWCategoryId().getId())
+                    .wCategoryId(welfare.getWCategoryId().getId())
                     //.host_id(welfare.getHostId().getRegion_cd())
                     .title(welfare.getTitle())
                     .field(welfare.getField())
                     .content(welfare.getContent())
                     .way(welfare.getWay())
                     .etc(welfare.getEtc())
-                    .original_url(welfare.getOriginalUrl())
+                    .originalUrl(welfare.getOriginalUrl())
                     .city(city)
                     .district(district)
                     .build();
@@ -162,7 +162,7 @@ public class BenefitService {
         for (Welfare welfare : list) {
             if(welfare.getWCategoryId().getId().equals(categoryId)){
                 BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
-                        .benefit_id(welfare.getId())
+                        .benefitId(welfare.getId())
                         .title(welfare.getTitle())
                         .city(city)
                         .district(district)
