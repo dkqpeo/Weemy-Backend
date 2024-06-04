@@ -20,7 +20,7 @@ public class Welfare {
     @Column(name = "welfare_id")
     private Long id;
 
-    @Column(name = "unique_id")
+    @Column(name = "unique_id", unique = true)
     private int uniqueId;
 
     private String title;       // 복지(혜택)제목
@@ -34,11 +34,11 @@ public class Welfare {
     @Column(columnDefinition = "TEXT")
     private String way;         // 신청방법
 
-    @Column(columnDefinition = "TEXT")
-    private String inquiry;     // 문의처
+/*    @Column(columnDefinition = "TEXT")
+    private String inquiry;     // 문의처*/
 
     @Column(columnDefinition = "TEXT")
-    private String etc;         // 기타
+    private String etc;         // 문의처
 
     @Column(name = "original_url", length = 2083)
     private String originalUrl; // 원본 url

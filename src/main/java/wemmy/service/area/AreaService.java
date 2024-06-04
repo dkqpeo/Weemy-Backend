@@ -34,6 +34,20 @@ public class AreaService {
         regionRepository.save(regionData);
     }
 
+    public Regions getRegionById(Long id) {
+        Regions region = regionRepository.findById(id)
+                .orElseThrow(() -> new ControllerException(ErrorCode.REGION_NOT_EXISTS));
+        return region;
+    }
+
+    public Regions getRegionBySiggCode(SiggAreas siggAreas) {
+        String sidoCode = siggAreas.getSido_id().getAdm_code();
+        String siggCode = siggAreas.getAdm_code();
+        Regions region = regionRepository.findByRegionCd(sidoCode + siggCode + "00000")
+                .orElseThrow(() -> new ControllerException(ErrorCode.REGION_NOT_EXISTS));
+        return region;
+    }
+
     public void saveSido(SidoAreas data) {
         sidoAreaRepository.save(data);
     }
@@ -107,6 +121,13 @@ public class AreaService {
     }
 
     // region 조회
+    public Regions findByRegionId(Regions regions) {
+        Long id = regions.getId();
+        Regions region = regionRepository.findById(id)
+                .orElseThrow(() -> new ControllerException(ErrorCode.REGION_NOT_EXISTS));
+        return region;
+    }
+
     public Optional<Regions> findByRegionCode(String code) {
         Optional<Regions> region = regionRepository.findByRegionCd(code);
         return region;

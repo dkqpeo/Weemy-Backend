@@ -17,8 +17,10 @@ class BenefitSaveServiceTest {
 
     @Test
     void benefitSave() {
+        // resource/benefit에 있는 json파일 파싱
         List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave();
 
+        // 파싱한 결과를 데이터베이스에 저장
         benefitService.benefitParseAndSave(benefitSaveDTO);
     }
 

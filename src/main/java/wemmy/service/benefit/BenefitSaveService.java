@@ -48,7 +48,7 @@ public class BenefitSaveService {
                 benefitSaveDTO.setField(object.get("field").getAsString());
                 benefitSaveDTO.setContent(object.get("content").getAsString());
                 benefitSaveDTO.setWay(object.get("way").getAsString());
-                benefitSaveDTO.setInquiry(object.get("inquiry").getAsString());
+                // benefitSaveDTO.setInquiry(object.get("inquiry").getAsString());
                 benefitSaveDTO.setEtc(object.get("etc").getAsString());
                 benefitSaveDTO.setOriginal_url(object.get("original_url").getAsString());
 
