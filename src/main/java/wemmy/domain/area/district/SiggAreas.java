@@ -19,7 +19,7 @@ public class SiggAreas {
     @Column(name = "sigg_id")
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String adm_code;
 
     @Column(unique = true)

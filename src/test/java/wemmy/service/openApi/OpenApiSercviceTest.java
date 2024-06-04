@@ -31,12 +31,12 @@ class OpenApiSercviceTest {
         //areaSaveService.saveArea(findData);
 
         // 군, 구 데이터 저장
-        areaSaveService.saveSigg(findData);
+        //areaSaveService.saveSigg(findData);
 
         // 읍, 면, 동 데이터 저장
-        areaSaveService.saveUmd(findData);
+        //areaSaveService.saveUmd(findData);
 
         // region code 저장
-        areaSaveService.saveRegion(findData);
+        // areaSaveService.saveRegion(findData);
     }
 }
