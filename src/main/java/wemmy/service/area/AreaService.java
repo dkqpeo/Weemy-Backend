@@ -98,8 +98,9 @@ public class AreaService {
         return siggArea;
     }
 
-    public Optional<SiggAreas> validateSiggCode(String code) {
-        return siggAreaRepository.findByAdm_code(code);
+    public Optional<SiggAreas> validateSiggCode(String sidoCode, String siggCode) {
+        SidoAreas sidoArea = findBySidoCode(sidoCode);
+        return siggAreaRepository.findBySidoAndAdm_code(sidoArea, siggCode);
     }
 
     // 읍면동 조회

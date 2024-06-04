@@ -18,6 +18,10 @@ public class AreaSaveService {
 
     private final AreaService areaService;
 
+    /**
+     * 군, 구 데이터 저장
+     * @param list
+     */
     public void saveSigg(List<OpenApiRespDTO> list) {
 
         for (OpenApiRespDTO data : list) {
@@ -28,7 +32,7 @@ public class AreaSaveService {
             String locallowNm = data.getLocallow_nm();
 
             // 자치구, 군이 없을경우 추가.
-            if (umdCd.equals("000") && !areaService.validateSiggCode(siggCd).isPresent()) {
+            if (umdCd.equals("000") && !areaService.validateSiggCode(sidoCd, siggCd).isPresent()) {
                 SidoAreas findResult = areaService.findBySidoCode(sidoCd);
 
                 SiggAreas siggData = SiggAreas.builder()
@@ -42,6 +46,10 @@ public class AreaSaveService {
         }
     }
 
+    /**
+     * 읍, 면, 동 저장
+     * @param list
+     */
     public void saveUmd(List<OpenApiRespDTO> list) {
 
         for (OpenApiRespDTO data : list) {

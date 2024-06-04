@@ -14,6 +14,9 @@ public interface SiggAreaRepository extends JpaRepository<SiggAreas, Long> {
 
     Optional<SiggAreas> findByName(String name);
 
+    @Query("select s from sigg_areas s where sido_areas = :sidoId and s.adm_code = :admCode")
+    Optional<SiggAreas> findBySidoAndAdm_code(@Param("sidoId") SidoAreas sidoId, @Param("admCode") String admCode);
+
     @Query("select s from sigg_areas s where s.adm_code = :admCode")
     Optional<SiggAreas> findByAdm_code(@Param("admCode") String admCode);
 
