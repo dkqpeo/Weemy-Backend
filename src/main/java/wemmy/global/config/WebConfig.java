@@ -26,7 +26,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/wemmy/user/validate/**",
                         "/wemmy/user/login",
                         "/wemmy/access-token/reissue",
-                        "/wemmy/user/oauth/**"
+                        "/wemmy/user/oauth/**",
+                        "/wemmy/benefit/web/**"
                 );
 
         registry.addInterceptor(adminAuthenticationInterceptor)

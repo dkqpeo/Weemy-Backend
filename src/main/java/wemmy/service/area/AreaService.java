@@ -121,6 +121,13 @@ public class AreaService {
         return umdArea;
     }
 
+    public UmdAreas findByUmdAreaByName(String name) {
+        UmdAreas umdAreas = umdAreaRepository.findByName(name)
+                .orElseThrow(() -> new ControllerException(ErrorCode.UMD_NOT_EXISTS));
+
+        return umdAreas;
+    }
+
     // region 조회
     public Regions findByRegionId(Regions regions) {
         Long id = regions.getId();

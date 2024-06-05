@@ -4,11 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wemmy.domain.area.Regions;
+import wemmy.domain.area.district.UmdAreas;
 import wemmy.domain.baby.BabyEntity;
 import wemmy.domain.baby.constant.BabyType;
 import wemmy.domain.user.UserEntity;
@@ -58,5 +56,32 @@ public class BenefitListController {
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 
+    /**
+     * 웹 요청 처리. 입력받은 시의 모든 복지정보를 제공.
+     */
+    @GetMapping("/web/list")
+    public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityWeb(@RequestParam("city") String reqCity) {
 
+        // 정부 region code 조회.
+        Regions government = areaService.getRegionById(494L);
+
+        // region code로 복지(혜택)정보 조회.
+        List<BenefitDTO.titleResponseWeb> benefitList = benefitService.getBenefitTitleListWeb(government, reqCity, null);
+        return new ResponseEntity<>(benefitList, HttpStatus.OK);
+    }
+
+    /**
+     * 웹 요청 처리. 입력받은 시, 구의 모든 복지정보를 제공.
+     */
+    @GetMapping("/web/list/district")
+    public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityAndDistrictWeb(@RequestParam("city") String reqCity,
+                                                                                                     @RequestParam("district") String reqDistrict) {
+
+        // 정부 region code 조회.
+        Regions government = areaService.getRegionById(494L);
+
+        // region code로 복지(혜택)정보 조회.
+        List<BenefitDTO.titleResponseWeb> benefitList = benefitService.getBenefitTitleListWeb(government, reqCity, reqDistrict);
+        return new ResponseEntity<>(benefitList, HttpStatus.OK);
+    }
 }

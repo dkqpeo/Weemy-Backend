@@ -35,4 +35,17 @@ public class BenefitDTO {
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
     }
+
+    /**
+     * 웹 복지 제목 리스트 응답.
+     */
+    @Getter @Builder
+    public static class titleResponseWeb{
+        private Long benefitId;
+        private String title;           // 복지 제목
+        private String type;            // 임신, 육아
+        private String city;            // 시 ex) 서울특별시
+        private String district;        // 지역 ex) 강남구
+        private String imageUrl;        // 이미지 url
+    }
 }

@@ -19,4 +19,7 @@ public interface WelfareRepository extends JpaRepository<Welfare, Long> {
 
     @Query("select w from welfare w where w.hostId = :hostId")
     List<Welfare> findAllByHostId(@Param("hostId") Regions hostId);
+
+    @Override
+    List<Welfare> findAll();
 }

@@ -39,9 +39,16 @@ public class WelfareService {
         return welfareList;
     }
 
+    public List<Welfare> findAll() {
+        List<Welfare> welfareList = welfareRepository.findAll();
+
+        return welfareList;
+    }
+
     public Wcategory getWcategoryByWcategoryId(Long id) {
         Wcategory result = wcategoryRepository.findById(id)
                 .orElseThrow(() -> new ControllerException(ErrorCode.NOT_FOUND_WCATEGORY_ID));
         return result;
     }
+
 }

@@ -31,7 +31,7 @@ public class BenefitService {
     private final UserService userService;
     private final AreaService areaService;
 
-    // 크롤링한 혜택정보 저장.
+    // 크롤링한 복지정보 저장.
     public void benefitParseAndSave(List<BenefitSaveDTO> benefitList) {
         for (BenefitSaveDTO benefit : benefitList) {
             Long uniqueId = benefit.getUnique_id();
@@ -78,13 +78,13 @@ public class BenefitService {
     }
 
     /**
-     * 앱 홈화면에 보여질 혜택 제목리스트
+     * 앱 홈화면에 보여질 복지 제목 리스트
      */
     public List<BenefitDTO.titleResponse> getBenefitTitleList(Regions regions, Regions government, String city, String district, BabyType babyType) {
 
-        // 자치구 혜택.
+        // 자치구 복지정보.
         List<Welfare> welfareList = welfareService.findAllByWelfareById(regions);
-        // 정부 혜택.
+        // 정부 복지정보.
         List<Welfare> governmentList = welfareService.findAllByWelfareById(government);
         // Response List.
         List<BenefitDTO.titleResponse> benefitList;
@@ -105,30 +105,21 @@ public class BenefitService {
     }
 
     /**
-     * benefit_id로 상세 복지정보 조회.
-     * @return BenefitDTO.response
+     * 웹 지역시 기준 복지 리스트
      */
-    public BenefitDTO.response getBenefitDetail(Long benefit_id) {
-        Welfare detailBenefit = welfareService.findById(benefit_id);
+    public List<BenefitDTO.titleResponseWeb> getBenefitTitleListWeb(Regions government, String reqCity, String reqDistrict) {
 
-        String city = detailBenefit.getHostId().getSido_id().getName();
-        String district = detailBenefit.getHostId().getSigg_id().getName();
+        // 전체 복지정보.
+        List<Welfare> welfareList = welfareService.findAll();
+        // 정부 복지정보.
+        List<Welfare> governmentList = welfareService.findAllByWelfareById(government);
+        // Response List.
+        List<BenefitDTO.titleResponseWeb> benefitList;
 
-        BenefitDTO.response build = BenefitDTO.response.builder()
-                .benefitId(detailBenefit.getId())
-                .wCategoryId(detailBenefit.getWCategoryId().getId())
-                .title(detailBenefit.getTitle())
-                .field(detailBenefit.getField())
-                .content(detailBenefit.getContent())
-                .way(detailBenefit.getWay())
-                .etc(detailBenefit.getEtc())
-                .originalUrl(detailBenefit.getOriginalUrl())
-                .city(city)
-                .district(district)
-                .imageUrl(detailBenefit.getImageUrl())
-                .build();
+        benefitList = parseWelfareTitleWeb(welfareList, reqCity, reqDistrict);
+        benefitList.addAll(parseWelfareTitleWeb(governmentList, "정부", null));
 
-        return build;
+        return benefitList;
     }
 
     private List<BenefitDTO.response> parseWelfare(List<Welfare> list, String city, String district) {
@@ -160,6 +151,7 @@ public class BenefitService {
         List<BenefitDTO.titleResponse> resultList = new ArrayList<>();
 
         for (Welfare welfare : list) {
+            // 사용자의 임신 육아 여부에 일치하는 복지 정보만 저장.
             if(welfare.getWCategoryId().getId().equals(categoryId)){
                 BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
                         .benefitId(welfare.getId())
@@ -173,5 +165,74 @@ public class BenefitService {
             }
         }
         return resultList;
+    }
+
+    private List<BenefitDTO.titleResponseWeb> parseWelfareTitleWeb(List<Welfare> list, String reqCity, String reqDistrict) {
+        List<BenefitDTO.titleResponseWeb> resultList = new ArrayList<>();
+
+        for (Welfare welfare : list) {
+            String sidoName = welfare.getHostId().getSido_id().getName();
+            String siggName = welfare.getHostId().getSigg_id().getName();
+
+            if(reqDistrict == null){
+                if(sidoName.equals(reqCity)) {
+                    String district = welfare.getHostId().getUmd_id().getName();
+                    String wType = welfare.getWCategoryId().getName();
+                    BenefitDTO.titleResponseWeb dto = BenefitDTO.titleResponseWeb.builder()
+                            .benefitId(welfare.getId())
+                            .title(welfare.getTitle())
+                            .type(wType)
+                            .city(reqCity)
+                            .district(district)
+                            .imageUrl(welfare.getImageUrl())
+                            .build();
+
+                    resultList.add(dto);
+                }
+            } else {
+                if(siggName.equals(reqDistrict)) {
+                    String district = welfare.getHostId().getUmd_id().getName();
+                    String wType = welfare.getWCategoryId().getName();
+                    BenefitDTO.titleResponseWeb dto = BenefitDTO.titleResponseWeb.builder()
+                            .benefitId(welfare.getId())
+                            .title(welfare.getTitle())
+                            .type(wType)
+                            .city(reqCity)
+                            .district(district)
+                            .imageUrl(welfare.getImageUrl())
+                            .build();
+
+                    resultList.add(dto);
+                }
+            }
+        }
+        return resultList;
+    }
+
+    /**
+     * benefit_id로 상세 복지정보 조회.
+     * @return BenefitDTO.response
+     */
+    public BenefitDTO.response getBenefitDetail(Long benefit_id) {
+        Welfare detailBenefit = welfareService.findById(benefit_id);
+
+        String city = detailBenefit.getHostId().getSido_id().getName();
+        String district = detailBenefit.getHostId().getSigg_id().getName();
+
+        BenefitDTO.response build = BenefitDTO.response.builder()
+                .benefitId(detailBenefit.getId())
+                .wCategoryId(detailBenefit.getWCategoryId().getId())
+                .title(detailBenefit.getTitle())
+                .field(detailBenefit.getField())
+                .content(detailBenefit.getContent())
+                .way(detailBenefit.getWay())
+                .etc(detailBenefit.getEtc())
+                .originalUrl(detailBenefit.getOriginalUrl())
+                .city(city)
+                .district(district)
+                .imageUrl(detailBenefit.getImageUrl())
+                .build();
+
+        return build;
     }
 }

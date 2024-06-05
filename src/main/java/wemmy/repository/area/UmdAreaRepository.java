@@ -19,4 +19,5 @@ public interface UmdAreaRepository extends JpaRepository<UmdAreas, Long> {
     Optional<UmdAreas> findByAdm_codeAndSigg_id(@Param("admCode") String admCode,
                                                 @Param("siggId") SiggAreas siggId);
 
+    Optional<UmdAreas> findByName(String name);
 }

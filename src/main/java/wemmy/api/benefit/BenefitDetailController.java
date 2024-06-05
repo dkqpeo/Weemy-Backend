@@ -3,10 +3,7 @@ package wemmy.api.benefit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wemmy.dto.benefit.BenefitDTO;
 import wemmy.service.benefit.BenefitService;
 
@@ -22,6 +19,17 @@ public class BenefitDetailController {
      */
     @GetMapping("/detail/{id}")
     public ResponseEntity<BenefitDTO.response> getBenefitDetail(@PathVariable("id") Long id) {
+
+        // region code로 복지(혜택)정보 조회.
+        BenefitDTO.response benefitDetail = benefitService.getBenefitDetail(id);
+        return new ResponseEntity<>(benefitDetail, HttpStatus.OK);
+    }
+
+    /**
+     * 웹 복지 내용 상세조회
+     */
+    @GetMapping("/web/detail")
+    public ResponseEntity<BenefitDTO.response> getBenefitDetailWeb(@RequestParam("id") Long id) {
 
         // region code로 복지(혜택)정보 조회.
         BenefitDTO.response benefitDetail = benefitService.getBenefitDetail(id);
