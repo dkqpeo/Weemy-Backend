@@ -1,5 +1,7 @@
 package wemmy.api.user;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,7 @@ import wemmy.global.token.jwt.util.AuthorizationHeaderUtils;
 import wemmy.global.validate.OAuthValidator;
 import wemmy.service.user.oauth.OAuthService;
 
+@Tag(name = "User", description = "회원 관련 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -31,13 +34,15 @@ public class OAuthLoginController {
      * @return void
      */
 
+    /*@Tag(name = "User")
+    @Operation(summary = "서버 테스트용")
     @ResponseBody
     @GetMapping("/kakao")
     public void kakaoCallback(@RequestParam("code") String code){
         System.out.println(code);
         String accessToken = oAuthService.getKakaoAccessToken(code);
 
-    }
+    }*/
 
     /**
      * 카카오에서 얻은 엑세스 토큰으로 서버 접근을 위한 엑세스토큰 요청
@@ -45,8 +50,10 @@ public class OAuthLoginController {
      * @param httpServletRequest  // header : kakao_accessToken
      * @return  // accessToken, refreshToken
      */
+    @Tag(name = "User")
+    @Operation(summary = "사용자 소셜 로그인 API", description = "소셜에서 받은 토큰으로 로그인 처리. userType : KAKAO 와 같이 대문자로 작성.")
     @PostMapping("/login")
-    public ResponseEntity<LoginDTO.response> login(@RequestBody OAuthLoginDTO oAuthLoginDTO,
+    public ResponseEntity<LoginDTO.loginResponse> login(@RequestBody OAuthLoginDTO oAuthLoginDTO,
                                                    HttpServletRequest httpServletRequest) {
 
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -61,7 +68,7 @@ public class OAuthLoginController {
         oAuthValidator.validateUserType(oAuthLoginDTO.getUserType());
 
         String accessToken = authorization.split(" ")[1];
-        LoginDTO.response result = oAuthService.outhLogin(accessToken, UserType.from(oAuthLoginDTO.getUserType()));
+        LoginDTO.loginResponse result = oAuthService.outhLogin(accessToken, UserType.from(oAuthLoginDTO.getUserType()));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

@@ -100,7 +100,7 @@ public class OAuthService {
      * @param userType
      * @return  accessToken, refreshToken
      */
-    public LoginDTO.response outhLogin(String accessToken, UserType userType) {
+    public LoginDTO.loginResponse outhLogin(String accessToken, UserType userType) {
 
         SocialLoginApiService socialLoginApiService = SocialLoginApiServiceFactory.getSocialLoginApiService(userType);
         OAuthAttributes userInfo = socialLoginApiService.getUserInfo(accessToken);
@@ -124,6 +124,6 @@ public class OAuthService {
             oauthUser.updateToken(tokenDto);
         }
 
-        return LoginDTO.response.of(tokenDto);
+        return LoginDTO.loginResponse.of(tokenDto);
     }
 }

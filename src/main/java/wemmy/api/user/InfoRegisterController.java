@@ -1,5 +1,7 @@
 package wemmy.api.user;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ import wemmy.service.user.UserService;
 
 import java.time.LocalDateTime;
 
+@Tag(name = "User", description = "회원 관련 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -36,8 +39,10 @@ public class InfoRegisterController {
     private final GetUserIDByToken getUserIDByToken;
 
     /**
-     * 온보딩 시 입력받은 아기, 지역 정보 저장
+     * 온보딩 시 입력받은 아기, 지역정보 저장
      */
+    @Tag(name = "User")
+    @Operation(summary = "온보딩 시 입력받은 아기, 지역정보 저장", description = "dateFormat : yyyy-mm-dd, type : PREGNANCY, PARENTING (대문자로 작성), city : 시, 도, district : 구, 군")
     @PostMapping("/register/info")
     public ResponseEntity<ResponseDTO> insert(@RequestBody UserRegisterDTO dto, HttpServletRequest httpServletRequest) {
 

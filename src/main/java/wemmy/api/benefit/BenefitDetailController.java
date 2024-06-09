@@ -1,5 +1,7 @@
 package wemmy.api.benefit;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import wemmy.dto.benefit.BenefitDTO;
 import wemmy.service.benefit.BenefitService;
 
+
+@Tag(name = "Benefit", description = "복지 정보 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/wemmy/benefit")
@@ -17,6 +21,8 @@ public class BenefitDetailController {
     /**
      * 복지 내용 상세조회
      */
+    @Tag(name = "Benafit")
+    @Operation(summary = "앱 복지 상세조회 API", description = "accessToken필요, benefitId에 해당하는 상세 복지정보 응답.")
     @GetMapping("/detail/{id}")
     public ResponseEntity<BenefitDTO.response> getBenefitDetail(@PathVariable("id") Long id) {
 
@@ -28,6 +34,8 @@ public class BenefitDetailController {
     /**
      * 웹 복지 내용 상세조회
      */
+    @Tag(name = "Benafit")
+    @Operation(summary = "웹 복지 상세조회 API", description = "benefitId에 해당하는 상세 복지정보 응답.")
     @GetMapping("/web/detail")
     public ResponseEntity<BenefitDTO.response> getBenefitDetailWeb(@RequestParam("id") Long id) {
 

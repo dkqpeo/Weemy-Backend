@@ -50,7 +50,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public LoginDTO.response login(String email, String password) {
+    public LoginDTO.loginResponse login(String email, String password) {
 
         UserEntity user = finBydUserEmail(email)
                 .orElseThrow(() -> new MemberException(ErrorCode.NOT_EXISTS_EMAIL));
@@ -63,7 +63,7 @@ public class UserService {
         TokenDto token = tokenProvider.createToken(user.getId(), email, String.valueOf(user.getRole()));
         user.updateToken(token);
 
-        return LoginDTO.response.of(token);
+        return LoginDTO.loginResponse.of(token);
     }
 
     public boolean updatePassword(Long id, String oldPasswoed, String newPassword) {
