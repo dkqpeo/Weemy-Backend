@@ -25,7 +25,7 @@ class OpenApiSercviceTest {
     @Test
     void test() {
         // 오픈 데이터 정보 가져오기
-        List<OpenApiRespDTO> findData = openApiSercvice.getOpenApi();
+        //List<OpenApiRespDTO> findData = openApiSercvice.getOpenApi();
 
         // 군, 구 데이터 저장
         //areaSaveService.saveSigg(findData);

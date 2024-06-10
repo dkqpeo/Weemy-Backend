@@ -117,7 +117,7 @@ public class BenefitService {
         List<BenefitDTO.titleResponseWeb> benefitList;
 
         benefitList = parseWelfareTitleWeb(welfareList, reqCity, reqDistrict);
-        benefitList.addAll(parseWelfareTitleWeb(governmentList, "정부", null));
+        benefitList.addAll(parseWelfareTitleWeb(governmentList, "정부", reqDistrict));
 
         return benefitList;
     }
@@ -174,7 +174,7 @@ public class BenefitService {
             String sidoName = welfare.getHostId().getSido_id().getName();
             String siggName = welfare.getHostId().getSigg_id().getName();
 
-            if(reqDistrict == null){
+            if(reqDistrict.isEmpty()){
                 if(sidoName.equals(reqCity)) {
                     String district = welfare.getHostId().getUmd_id().getName();
                     String wType = welfare.getWCategoryId().getName();

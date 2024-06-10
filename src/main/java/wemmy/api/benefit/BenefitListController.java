@@ -65,7 +65,7 @@ public class BenefitListController {
      * 웹 요청 처리. 입력받은 시의 모든 복지정보를 제공.
      */
     @Tag(name = "Benefit")
-    @Operation(summary = "앱 복지리스트 API", description = "요청쿼리로 보낸 지역시에 해당하는 복지정보 응답.")
+    @Operation(summary = "웹 복지리스트 API", description = "요청쿼리로 보낸 지역시에 해당하는 복지정보 응답.")
     @GetMapping("/web/list")
     public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityWeb(@RequestParam("city") String reqCity) {
 
@@ -73,7 +73,7 @@ public class BenefitListController {
         Regions government = areaService.getRegionById(494L);
 
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponseWeb> benefitList = benefitService.getBenefitTitleListWeb(government, reqCity, null);
+        List<BenefitDTO.titleResponseWeb> benefitList = benefitService.getBenefitTitleListWeb(government, reqCity, "");
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 
@@ -81,7 +81,7 @@ public class BenefitListController {
      * 웹 요청 처리. 입력받은 시, 구의 모든 복지정보를 제공.
      */
     @Tag(name = "Benefit")
-    @Operation(summary = "앱 복지리스트 API", description = "요청쿼리로 보낸 지역시, 구에 해당하는 복지정보 응답.")
+    @Operation(summary = "웹 복지리스트 API", description = "요청쿼리로 보낸 지역시, 구에 해당하는 복지정보 응답.")
     @GetMapping("/web/list/district")
     public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityAndDistrictWeb(@RequestParam("city") String reqCity,
                                                                                                      @RequestParam("district") String reqDistrict) {
