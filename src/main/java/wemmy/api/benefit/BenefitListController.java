@@ -37,7 +37,7 @@ public class BenefitListController {
     /**
      * 사용자의 거주지, 임신/육아 여부에 맞는 복지 리스트 조회
      */
-    @Tag(name = "Benafit")
+    @Tag(name = "Benefit")
     @Operation(summary = "앱 홈화면 복지리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
     @GetMapping("/list/home")
     public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleList(HttpServletRequest httpServletRequest) {
@@ -64,7 +64,7 @@ public class BenefitListController {
     /**
      * 웹 요청 처리. 입력받은 시의 모든 복지정보를 제공.
      */
-    @Tag(name = "Benafit")
+    @Tag(name = "Benefit")
     @Operation(summary = "앱 복지리스트 API", description = "요청쿼리로 보낸 지역시에 해당하는 복지정보 응답.")
     @GetMapping("/web/list")
     public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityWeb(@RequestParam("city") String reqCity) {
@@ -80,7 +80,7 @@ public class BenefitListController {
     /**
      * 웹 요청 처리. 입력받은 시, 구의 모든 복지정보를 제공.
      */
-    @Tag(name = "Benafit")
+    @Tag(name = "Benefit")
     @Operation(summary = "앱 복지리스트 API", description = "요청쿼리로 보낸 지역시, 구에 해당하는 복지정보 응답.")
     @GetMapping("/web/list/district")
     public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityAndDistrictWeb(@RequestParam("city") String reqCity,
