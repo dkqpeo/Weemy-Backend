@@ -54,7 +54,7 @@ public class OAuthService {
             //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             String sb = "grant_type=authorization_code" +
-                    "&client_id=234744b67b5d99fa07dd07f298908946" + // TODO REST_API_KEY 입력
+                    "&client_id= client_id 입력." + // TODO REST_API_KEY 입력
                     "&redirect_uri=http://localhost:8080/wemmy/user/oauth/kakao" + // TODO 인가코드 받은 redirect_uri 입력
                     "&code=" + code +
                     "&client_secret=qkmRjsgUjed9DuqgceUcXSYqAjU9CPpm";

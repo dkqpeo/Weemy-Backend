@@ -9,15 +9,12 @@ public class BenefitDTO {
     @Getter @Builder
     public static class response{
         private Long benefitId;
-        //private Long unique_id;
-        //private Long admin_id;          // 관리자 id
         private Long wCategoryId;     // 1 임신, 2 영유아
-        //private String host_id;         // region_cd
         private String title;           // 복지 제목
         private String field;           // 지원대상
         private String content;         // 내용
         private String way;             // 신청방법
-        private String etc;             // 기타
+        private String etc;             // 연락처
         private String originalUrl;    // 원본 url
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
