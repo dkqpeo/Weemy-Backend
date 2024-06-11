@@ -27,7 +27,6 @@ import wemmy.service.user.UserService;
 import java.time.LocalDateTime;
 
 @Tag(name = "User", description = "회원 관련 API")
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/wemmy/user")

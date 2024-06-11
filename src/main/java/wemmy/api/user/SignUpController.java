@@ -2,7 +2,9 @@ package wemmy.api.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,7 @@ import wemmy.service.user.UserService;
 import java.time.LocalDateTime;
 
 @Tag(name = "User", description = "회원 관련 API")
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/wemmy/user")
@@ -28,16 +31,22 @@ public class SignUpController {
     @Tag(name = "User")
     @Operation(summary = "회원가입 이메일 중복 확인 API", description = "회원가입 시 이메일 중복 여부 확인")
     @GetMapping("/validate/{email}")
-    public ResponseEntity<ResponseDTO> validateEmail(@PathVariable("email") String email) {
-        userService.validateEmail(email);
+    public ResponseEntity<ResponseDTO> validateEmail(@PathVariable("email") String email, HttpServletRequest httpServletRequest) {
 
+        log.info("request url : " + httpServletRequest.getRequestURI());
+        log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
+
+        userService.validateEmail(email);
         return new ResponseEntity<>(ResponseDTO.of("사용 가능한 이메일입니다.") ,HttpStatus.OK);
     }
 
     @Tag(name = "User")
     @Operation(summary = "사용자 회원가입 API", description = "wemmy 서비스 이용을 위한 회원가입 API")
     @PostMapping("/sign-up")
-    public ResponseEntity<ResponseDTO> signUp(@RequestBody SignUpDTO dto) {
+    public ResponseEntity<ResponseDTO> signUp(@RequestBody SignUpDTO dto, HttpServletRequest httpServletRequest) {
+
+        log.info("request url : " + httpServletRequest.getRequestURI());
+        log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
         UserEntity user = UserEntity.builder()
                 .userType(UserType.LOCAL)

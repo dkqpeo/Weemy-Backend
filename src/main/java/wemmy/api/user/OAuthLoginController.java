@@ -56,6 +56,9 @@ public class OAuthLoginController {
     public ResponseEntity<LoginDTO.loginResponse> login(@RequestBody OAuthLoginDTO oAuthLoginDTO,
                                                    HttpServletRequest httpServletRequest) {
 
+        log.info("request url : " + httpServletRequest.getRequestURI());
+        log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
+
         String authorization = httpServletRequest.getHeader("Authorization");
 
         log.info(authorization.split(" ")[0]);

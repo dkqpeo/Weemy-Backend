@@ -14,7 +14,6 @@ import wemmy.service.area.AreaService;
 import wemmy.service.user.UserService;
 
 @Tag(name = "User", description = "회원 관련 API")
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/wemmy/user")

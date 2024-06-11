@@ -12,7 +12,6 @@ import wemmy.service.area.openApi.OpenApiSercvice;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/wemmy/admin")

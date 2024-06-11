@@ -28,15 +28,6 @@ public class BabyListController {
     @Operation(summary = "아기정보 조회 API", description = "마이페이지 등 등록된 아기정보 요청.")
     @GetMapping("/get")
     public ResponseEntity<List<BabyRespDTO>> babyList(HttpServletRequest httpServletRequest) {
-        /*// 헤더의 토큰 정보 검증
-        String authorization = httpServletRequest.getHeader("Authorization");
-        AuthorizationHeaderUtils.validateAuthorization(authorization);
-
-        String accessToken = authorization.split(" ")[1];
-        tokenProvider.validateToken(accessToken);
-
-        // 토큰의 사용자 id(PK) 조회
-        Long userId = tokenProvider.getUserIdFromClaims(accessToken);*/
 
         Long userId = getUserIDByToken.getUserID(httpServletRequest);
         List<BabyRespDTO> result = babyService.babyList(userId);

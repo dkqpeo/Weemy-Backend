@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import wemmy.global.config.error.ErrorCode;
@@ -12,6 +13,7 @@ import wemmy.global.token.jwt.TokenProvider;
 import wemmy.global.token.jwt.constant.TokenType;
 import wemmy.global.token.jwt.util.AuthorizationHeaderUtils;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AuthenticationInterceptor implements HandlerInterceptor {
@@ -20,6 +22,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        log.info(request.getRequestURI());
+        log.info(request.getHeader("user-agent"));
 
         // 1. Authorization Header 검증
         String authorization = request.getHeader("Authorization");

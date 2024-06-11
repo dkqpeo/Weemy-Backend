@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import wemmy.service.user.UserService;
 import java.util.List;
 
 @Tag(name = "Benefit", description = "복지 정보 API")
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/wemmy/benefit")
@@ -67,7 +69,10 @@ public class BenefitListController {
     @Tag(name = "Benefit")
     @Operation(summary = "웹 복지리스트 API", description = "요청쿼리로 보낸 지역시에 해당하는 복지정보 응답.")
     @GetMapping("/web/list")
-    public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityWeb(@RequestParam("city") String reqCity) {
+    public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityWeb(@RequestParam("city") String reqCity,
+                                                                                          HttpServletRequest httpServletRequest) {
+        log.info("request url : " + httpServletRequest.getRequestURI());
+        log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
         // 정부 region code 조회.
         Regions government = areaService.getRegionById(494L);
