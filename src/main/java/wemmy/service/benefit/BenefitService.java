@@ -17,6 +17,7 @@ import wemmy.service.welfare.WelfareService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static wemmy.domain.baby.constant.BabyType.PARENTING;
 import static wemmy.domain.baby.constant.BabyType.PREGNANCY;
@@ -98,8 +99,8 @@ public class BenefitService {
             categoryId = 2L;
         }
 
-        benefitList = parseWelfareTitle(welfareList, city, district, categoryId);
-        benefitList.addAll(parseWelfareTitle(governmentList, "정부", "", categoryId));
+        benefitList = parseWelfareTitle(welfareList, city, district, categoryId, 3);
+        benefitList.addAll(parseWelfareTitle(governmentList, "정부", "", categoryId, 1));
 
         return benefitList;
     }
@@ -122,6 +123,32 @@ public class BenefitService {
         return benefitList;
     }
 
+    /**
+     * benefit_id로 상세 복지정보 조회.
+     * @return BenefitDTO.response
+     */
+    public BenefitDTO.response getBenefitDetail(Long benefit_id) {
+        Welfare detailBenefit = welfareService.findById(benefit_id);
+
+        String city = detailBenefit.getHostId().getSido_id().getName();
+        String district = detailBenefit.getHostId().getSigg_id().getName();
+
+        BenefitDTO.response build = BenefitDTO.response.builder()
+                .benefitId(detailBenefit.getId())
+                .wCategoryId(detailBenefit.getWCategoryId().getId())
+                .title(detailBenefit.getTitle())
+                .field(detailBenefit.getField())
+                .content(detailBenefit.getContent())
+                .way(detailBenefit.getWay())
+                .etc(detailBenefit.getEtc())
+                .originalUrl(detailBenefit.getOriginalUrl())
+                .city(city)
+                .district(district)
+                .imageUrl(detailBenefit.getImageUrl())
+                .build();
+
+        return build;
+    }
     private List<BenefitDTO.response> parseWelfare(List<Welfare> list, String city, String district) {
         List<BenefitDTO.response> resultList = new ArrayList<>();
 
@@ -147,8 +174,12 @@ public class BenefitService {
         return resultList;
     }
 
-    private List<BenefitDTO.titleResponse> parseWelfareTitle(List<Welfare> list, String city, String district, Long categoryId) {
+    /**
+     * 사용자 타입에 맞는 지역시, 정부의 전체 혜택 중 4개의 값만 리턴
+     */
+    private List<BenefitDTO.titleResponse> parseWelfareTitle(List<Welfare> list, String city, String district, Long categoryId, int count) {
         List<BenefitDTO.titleResponse> resultList = new ArrayList<>();
+        List<BenefitDTO.titleResponse> randomList = new ArrayList<>();
 
         for (Welfare welfare : list) {
             // 사용자의 임신 육아 여부에 일치하는 복지 정보만 저장.
@@ -164,7 +195,16 @@ public class BenefitService {
                 resultList.add(dto);
             }
         }
-        return resultList;
+
+        Random random = new Random();
+        int randomIndex = 0;
+
+        for (int i = 0; i < count; i++){
+            randomIndex = random.nextInt(resultList.size());
+            randomList.add(resultList.get(randomIndex));
+        }
+
+        return randomList;
     }
 
     private List<BenefitDTO.titleResponseWeb> parseWelfareTitleWeb(List<Welfare> list, String reqCity, String reqDistrict) {
@@ -209,30 +249,4 @@ public class BenefitService {
         return resultList;
     }
 
-    /**
-     * benefit_id로 상세 복지정보 조회.
-     * @return BenefitDTO.response
-     */
-    public BenefitDTO.response getBenefitDetail(Long benefit_id) {
-        Welfare detailBenefit = welfareService.findById(benefit_id);
-
-        String city = detailBenefit.getHostId().getSido_id().getName();
-        String district = detailBenefit.getHostId().getSigg_id().getName();
-
-        BenefitDTO.response build = BenefitDTO.response.builder()
-                .benefitId(detailBenefit.getId())
-                .wCategoryId(detailBenefit.getWCategoryId().getId())
-                .title(detailBenefit.getTitle())
-                .field(detailBenefit.getField())
-                .content(detailBenefit.getContent())
-                .way(detailBenefit.getWay())
-                .etc(detailBenefit.getEtc())
-                .originalUrl(detailBenefit.getOriginalUrl())
-                .city(city)
-                .district(district)
-                .imageUrl(detailBenefit.getImageUrl())
-                .build();
-
-        return build;
-    }
 }

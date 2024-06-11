@@ -1,75 +1,75 @@
-#spring:
-#  config:
-#    import: application-setting.yml
-
 spring:
+  config:
+    import: application-setting.yml
 
-  cloud:
-    openfeign:
-      okhttp:
-        enabled: true
-
-  h2:
-    console:
-      enabled: true
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${RDS_URL}
-    #url: jdbc:mysql://localhost:3306/wemmy_backend
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
-
-  jpa:
-    generate-ddl: true
-    open-in-view: false
-    hibernate:
-      ddl-auto: update
-    show_sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-  security:
-    oauth2:
-      client:
-        registration:
-          kakao:
-            client-id: ${KAKAO_CLIENT_ID}
-            client-secret: ${KAKAO_CLIENT_KEY}
-            redirect-uri: '{baseUrl}/wemmy/user/oauth/callback/{registrationId}'
-            authorization-grant-type: authorization_code
-            client-authentication-method: client_secret_post
-            scope:
-              - account_email
-        provider:
-          kakao:
-            authorization-uri: https://kauth.kakao.com/oauth/authorize
-            token-uri: https://kauth.kakao.com/oauth/token
-            user-info-uri: https://kapi.kakao.com/v2/user/me
-            user-name-attribute: id
-
-  # Swagger 설정
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
-token:
-  header: Authorization
-  secret: ${TOKEEN_SECRET} # base64
-  access-token-expiration-time: 600000 # 10m -> ms
-  refresh-token-expiration-time: 86400000 # 24h -> ms
-
-feign:
-  client:
-    config:
-      default:
-        connect-timeout: 5000 # ?? (5? ??)
-        read-timeout: 5000 # ?? (5? ??)
-
-logging:
-  level:
-    com.jet_tutorial: DEBUG
-
-openApi:
-  key: ${OPEN_API_KEY}  # 일반인증키
+#spring:
+#
+#  cloud:
+#    openfeign:
+#      okhttp:
+#        enabled: true
+#
+#  h2:
+#    console:
+#      enabled: true
+#
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: ${RDS_URL}
+#    #url: jdbc:mysql://localhost:3306/wemmy_backend
+#    username: ${RDS_USERNAME}
+#    password: ${RDS_PASSWORD}
+#
+#  jpa:
+#    generate-ddl: true
+#    open-in-view: false
+#    hibernate:
+#      ddl-auto: update
+#    show_sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          kakao:
+#            client-id: ${KAKAO_CLIENT_ID}
+#            client-secret: ${KAKAO_CLIENT_KEY}
+#            redirect-uri: '{baseUrl}/wemmy/user/oauth/callback/{registrationId}'
+#            authorization-grant-type: authorization_code
+#            client-authentication-method: client_secret_post
+#            scope:
+#              - account_email
+#        provider:
+#          kakao:
+#            authorization-uri: https://kauth.kakao.com/oauth/authorize
+#            token-uri: https://kauth.kakao.com/oauth/token
+#            user-info-uri: https://kapi.kakao.com/v2/user/me
+#            user-name-attribute: id
+#
+#  # Swagger 설정
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
+#
+#token:
+#  header: Authorization
+#  secret: ${TOKEEN_SECRET} # base64
+#  access-token-expiration-time: 600000 # 10m -> ms
+#  refresh-token-expiration-time: 86400000 # 24h -> ms
+#
+#feign:
+#  client:
+#    config:
+#      default:
+#        connect-timeout: 5000 # ?? (5? ??)
+#        read-timeout: 5000 # ?? (5? ??)
+#
+#logging:
+#  level:
+#    com.jet_tutorial: DEBUG
+#
+#openApi:
+#  key: ${OPEN_API_KEY}  # 일반인증키
