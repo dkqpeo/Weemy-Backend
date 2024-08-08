@@ -39,7 +39,17 @@ class BenefitSaveServiceTest {
     void benefitSave() {
         // resource/benefit에 있는 json파일 파싱
         try {
-            List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave();
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/dj_2024-07-10_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ga_2024-07-12_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/geumcheon_2024-07-11_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/gj_2024-07-09_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/gn_2024-07-15_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/gr_2024-07-12_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/gs_2024-07-12_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sh_2024-07-15_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ydp_2024-07-08_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ydp_2024-07-09_result.json");
+            List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ydp_2024-07-10_result.json");
 
             // 파싱한 결과를 데이터베이스에 저장
             benefitService.benefitParseAndSave(benefitSaveDTO);

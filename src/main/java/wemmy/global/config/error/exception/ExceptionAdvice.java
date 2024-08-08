@@ -1,6 +1,7 @@
 package wemmy.global.config.error.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -40,5 +41,13 @@ public class ExceptionAdvice {
         log.info("controller error handler");
         ErrorResult result = ErrorResult.of(e.getErrorCode().getErrorCode(), e.getMessage());
         return new ResponseEntity<>(result, e.getErrorCode().getHttpStatus());
+    }
+
+    // runtime exception 예외처리
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResult> controllerExceptionHandler(RuntimeException e) {
+        log.info("controller error handler");
+        ErrorResult result = ErrorResult.of("E-000", e.getMessage() + "\n 서버 에러. 담당자에게 문의 바랍니다.");
+        return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

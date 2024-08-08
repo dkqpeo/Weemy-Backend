@@ -53,6 +53,22 @@ public class BenefitService {
             String imageUrl = "";
             if(region.getSigg_id().getName().equals("금천구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/geumcheon-gu.png?raw=true";
+            } else if (region.getSigg_id().getName().equals("구로구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/guro-gu.png";
+            } else if (region.getSigg_id().getName().equals("서초구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/seocho-gu.png";
+            } else if (region.getSigg_id().getName().equals("강남구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gangnam-gu.png";
+            } else if (region.getSigg_id().getName().equals("강서구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/ganseo-gu.png";
+            } else if (region.getSigg_id().getName().equals("관악구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gwanak-gu.png";
+            } else if (region.getSigg_id().getName().equals("광진구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gwangjin-gu.png";
+            } else if (region.getSigg_id().getName().equals("동작구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/dongjak-gu.png";
+            } else if (region.getSigg_id().getName().equals("영등포구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/yeongdeungpo-gu.png";
             } else if(region.getSigg_id().getName().equals("정부")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/government.png?raw=true";
             }

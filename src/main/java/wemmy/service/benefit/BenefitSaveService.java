@@ -21,9 +21,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BenefitSaveService {
 
-    public List<BenefitSaveDTO> benefitSave() {
+    public List<BenefitSaveDTO> benefitSave(String fileName) {
 
-        ClassPathResource resource = new ClassPathResource("/benefit/geumcheon.json");  // 크롤링 결과 파일 불러오기.
+        ClassPathResource resource = new ClassPathResource(fileName);  // 크롤링 결과 파일 불러오기.
         List<BenefitSaveDTO> benefitList = new ArrayList<>();
 
         try {
