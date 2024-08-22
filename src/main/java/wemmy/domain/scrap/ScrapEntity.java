@@ -12,6 +12,7 @@ import wemmy.domain.welfare.Welfare;
 @Entity (name = "SCRAP")
 @Getter
 @Builder
+//@IdClass(ScrapPK.class)
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScrapEntity extends BaseTimeEntity {
@@ -21,13 +22,13 @@ public class ScrapEntity extends BaseTimeEntity {
     @Column(name = "scrap_id")
     private Long id;
 
-    @Id
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     UserEntity user_id;
 
-    @Id
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "welfare_id", referencedColumnName = "welfare_id")
     Welfare welfare_id;
 

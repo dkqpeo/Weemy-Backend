@@ -43,7 +43,10 @@ public enum ErrorCode {
     REGION_NOT_EXISTS(HttpStatus.BAD_REQUEST, "AREA-004", "해당 region code가 존재하지 않습니다."),
 
     // 복지
-    NOT_FOUND_WCATEGORY_ID(HttpStatus.BAD_REQUEST, "W-001", "해당 복지 카테고리 code가 존재하지 않습니다."),;
+    NOT_FOUND_WCATEGORY_ID(HttpStatus.BAD_REQUEST, "W-001", "해당 복지 카테고리 code가 존재하지 않습니다."),
+
+    // 스크랩
+    ALREADY_REGISTERED_SCRAP(HttpStatus.BAD_REQUEST, "S-001", "이미 스크랩 되어있는 복지 정보 입니다."),;
 
     private final HttpStatus httpStatus;
     private final String errorCode;
