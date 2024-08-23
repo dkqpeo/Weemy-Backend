@@ -69,6 +69,26 @@ public class BenefitService {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/dongjak-gu.png";
             } else if (region.getSigg_id().getName().equals("영등포구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/yeongdeungpo-gu.png";
+            } else if (region.getSigg_id().getName().equals("송파구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/songpa-gu.png";
+            } else if (region.getSigg_id().getName().equals("동작구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/dongjak-gu.png";
+            } else if (region.getSigg_id().getName().equals("양천구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/yangcheon-gu.png";
+            } else if (region.getSigg_id().getName().equals("마포구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/mapo-gu.png";
+            } else if (region.getSigg_id().getName().equals("서대문구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/seodaemun-gu.png";
+            } else if (region.getSigg_id().getName().equals("은평구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/eunpyeong-gu.png";
+            } else if (region.getSigg_id().getName().equals("노원구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/nowon-gu.png";
+            } else if (region.getSigg_id().getName().equals("도봉구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/dobong-gu.png";
+            } else if (region.getSigg_id().getName().equals("강북구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gangbuk-gu.png";
+            } else if (region.getSigg_id().getName().equals("성북구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/sungbuk-gu.png";
             } else if(region.getSigg_id().getName().equals("정부")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/government.png?raw=true";
             }

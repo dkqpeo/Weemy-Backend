@@ -49,10 +49,22 @@ class BenefitSaveServiceTest {
             //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sh_2024-07-15_result.json");
             //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ydp_2024-07-08_result.json");
             //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ydp_2024-07-09_result.json");
-            List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ydp_2024-07-10_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ydp_2024-07-10_result.json");
+
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/db_2024-08-12_result (1).json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ep_2024-08-06_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/gb_2024-08-12_result (1).json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/gd_2024-08-05_result (2).json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/gn_2024-08-05_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/mp_2024-08-05_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/nw_2024-08-12_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sb_2024-08-12_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sdm_2024-08-06_result (2).json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sp_2024-08-05_result (3).json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/yc_2024-08-05_result (2).json");
 
             // 파싱한 결과를 데이터베이스에 저장
-            benefitService.benefitParseAndSave(benefitSaveDTO);
+            //benefitService.benefitParseAndSave(benefitSaveDTO);
         } catch (Exception e) {
 
         }
