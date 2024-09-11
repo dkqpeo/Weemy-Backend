@@ -1,5 +1,6 @@
 package wemmy.service.benefit;
 
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,6 +63,13 @@ class BenefitSaveServiceTest {
             //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sdm_2024-08-06_result (2).json");
             //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sp_2024-08-05_result (3).json");
             //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/yc_2024-08-05_result (2).json");
+
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ddm_2024-08-29_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/jg_2024-08-30_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/jn_2024-08-28_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/jr_2024-08-30_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sd_2024-08-29_result.json");
+            //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ys_2024-08-29_result.json");
 
             // 파싱한 결과를 데이터베이스에 저장
             //benefitService.benefitParseAndSave(benefitSaveDTO);

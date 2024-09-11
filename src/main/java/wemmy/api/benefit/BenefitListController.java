@@ -37,6 +37,7 @@ public class BenefitListController {
     private final GetUserIDByToken getUserIDByToken;
 
     /**
+     * 앱 요청 처리
      * 사용자의 거주지, 임신/육아 여부에 맞는 복지 리스트 조회
      */
     @Tag(name = "Benefit")
