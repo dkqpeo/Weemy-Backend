@@ -10,8 +10,10 @@ import wemmy.domain.baby.constant.BabyType;
 import wemmy.domain.user.UserEntity;
 import wemmy.dto.benefit.BenefitDTO;
 import wemmy.dto.benefit.BenefitSaveDTO;
+import wemmy.dto.scrap.ScrapDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.baby.BabyService;
+import wemmy.service.scrap.ScrapService;
 import wemmy.service.user.UserService;
 
 import java.util.List;
@@ -35,6 +37,9 @@ class BenefitSaveServiceTest {
 
     @Autowired
     private BabyService babyService;
+
+    @Autowired
+    private ScrapService scrapService;
 
     @Test
     void benefitSave() {
@@ -97,8 +102,11 @@ class BenefitSaveServiceTest {
         // 정부 region code 조회.
         Regions government = areaService.getRegionById(494L);
 
+        // 회원이 스크랩 한 복지정보 리스트
+        List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
+
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, babyType);
+        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, babyType, scrapList);
 
         for (BenefitDTO.titleResponse titleResponse : benefitList) {
             System.out.println(titleResponse.getBenefitId());

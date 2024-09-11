@@ -24,13 +24,14 @@ public class BenefitDTO {
     /**
      * 앱 홈화면 복지 제목 리스트 응답.
      */
-    @Getter @Builder
+    @Getter @Setter @Builder
     public static class titleResponse{
         private Long benefitId;
         private String title;           // 복지 제목
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
+        private String scrap;           // 스크랩 여부
     }
 
     /**

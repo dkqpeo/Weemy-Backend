@@ -14,10 +14,12 @@ import wemmy.domain.baby.BabyEntity;
 import wemmy.domain.baby.constant.BabyType;
 import wemmy.domain.user.UserEntity;
 import wemmy.dto.benefit.BenefitDTO;
+import wemmy.dto.scrap.ScrapDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.area.AreaService;
 import wemmy.service.baby.BabyService;
 import wemmy.service.benefit.BenefitService;
+import wemmy.service.scrap.ScrapService;
 import wemmy.service.user.UserService;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public class BenefitListController {
     private final BabyService babyService;
     private final BenefitService benefitService;
     private final AreaService areaService;
+    private final ScrapService scrapService;
     private final GetUserIDByToken getUserIDByToken;
 
     /**
@@ -59,8 +62,11 @@ public class BenefitListController {
         // 정부 region code 조회.
         Regions government = areaService.getRegionById(494L);
 
+        // 회원이 스크랩 한 복지정보 리스트
+        List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
+
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, babyType);
+        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, babyType, scrapList);
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 

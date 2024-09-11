@@ -11,6 +11,7 @@ import wemmy.domain.welfare.Wcategory;
 import wemmy.domain.welfare.Welfare;
 import wemmy.dto.benefit.BenefitDTO;
 import wemmy.dto.benefit.BenefitSaveDTO;
+import wemmy.dto.scrap.ScrapDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.user.UserService;
 import wemmy.service.welfare.WelfareService;
@@ -71,8 +72,8 @@ public class BenefitService {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/yeongdeungpo-gu.png?raw=true";
             } else if (region.getSigg_id().getName().equals("송파구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/songpa-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("동작구")) {
-                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/dongjak-gu.png?raw=true";
+            } else if (region.getSigg_id().getName().equals("강동구")) {
+                imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gangdong-gu.png?raw=true";
             } else if (region.getSigg_id().getName().equals("양천구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/yangcheon-gu.png?raw=true";
             } else if (region.getSigg_id().getName().equals("마포구")) {
@@ -129,7 +130,7 @@ public class BenefitService {
     /**
      * 앱 홈화면에 보여질 복지 제목 리스트
      */
-    public List<BenefitDTO.titleResponse> getBenefitTitleList(Regions regions, Regions government, String city, String district, BabyType babyType) {
+    public List<BenefitDTO.titleResponse> getBenefitTitleList(Regions regions, Regions government, String city, String district, BabyType babyType, List<ScrapDTO.response> scrapList) {
 
         // 자치구 복지정보.
         List<Welfare> welfareList = welfareService.findAllByWelfareById(regions);
@@ -147,8 +148,8 @@ public class BenefitService {
             categoryId = 2L;
         }
 
-        benefitList = parseWelfareTitle(welfareList, city, district, categoryId, 3);
-        benefitList.addAll(parseWelfareTitle(governmentList, "정부", "", categoryId, 1));
+        benefitList = parseWelfareTitle(welfareList, city, district, categoryId, 3, scrapList);
+        benefitList.addAll(parseWelfareTitle(governmentList, "정부", "", categoryId, 1, scrapList));
 
         return benefitList;
     }
@@ -225,11 +226,12 @@ public class BenefitService {
     /**
      * 사용자 타입에 맞는 지역시, 정부의 전체 혜택 중 4개의 값만 리턴
      */
-    private List<BenefitDTO.titleResponse> parseWelfareTitle(List<Welfare> list, String city, String district, Long categoryId, int count) {
+    private List<BenefitDTO.titleResponse> parseWelfareTitle(List<Welfare> list, String city, String district, Long categoryId, int count, List<ScrapDTO.response> scrapList) {
         List<BenefitDTO.titleResponse> resultList = new ArrayList<>();
         List<BenefitDTO.titleResponse> randomList = new ArrayList<>();
 
         for (Welfare welfare : list) {
+
             // 사용자의 임신 육아 여부에 일치하는 복지 정보만 저장.
             if(welfare.getWCategoryId().getId().equals(categoryId)){
                 BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
@@ -238,6 +240,7 @@ public class BenefitService {
                         .city(city)
                         .district(district)
                         .imageUrl(welfare.getImageUrl())
+                        .scrap("false")
                         .build();
 
                 resultList.add(dto);
@@ -247,9 +250,19 @@ public class BenefitService {
         Random random = new Random();
         int randomIndex = 0;
 
+        // 복지 리스트 중 랜덤으로 선택
         for (int i = 0; i < count; i++){
             randomIndex = random.nextInt(resultList.size());
             randomList.add(resultList.get(randomIndex));
+        }
+
+        // 응답할 복지 리스트의 스크랩 여부 확인.
+        for (ScrapDTO.response scrap : scrapList) {
+            for (BenefitDTO.titleResponse randoom : randomList) {
+                if(scrap.getWelfareId() == randoom.getBenefitId()){
+                    randoom.setScrap("true");
+                }
+            }
         }
 
         return randomList;
