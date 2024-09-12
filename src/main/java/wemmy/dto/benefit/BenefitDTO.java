@@ -19,6 +19,7 @@ public class BenefitDTO {
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
+        private String scrap;           // 스클랩 여부.
     }
 
     /**

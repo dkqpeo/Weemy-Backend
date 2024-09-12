@@ -20,4 +20,5 @@ public interface ScrapRepository extends JpaRepository<ScrapEntity, Long> {
 
     @Query("select s from SCRAP s where s.user_id = :userId ")
     List<ScrapEntity> findByUser_id(@Param("userId") UserEntity userId);
+
 }

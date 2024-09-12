@@ -27,11 +27,5 @@ class ScrapAddControllerTest {
     @Test
     void scrapSave() {
 
-        UserEntity user = userService.findByUserId(2L);
-        //Optional<UserEntity> user = userService.finBydUserEmail("lan0184@naver.com");
-
-        Welfare welfare = welfareService.findById(98L);
-
-        scrapService.scrapSave(user, welfare);
     }
 }

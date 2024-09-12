@@ -12,6 +12,7 @@ import wemmy.dto.scrap.ScrapDTO;
 import wemmy.global.config.error.ErrorCode;
 import wemmy.global.config.error.exception.ServiceException;
 import wemmy.repository.scrap.ScrapRepository;
+import wemmy.service.welfare.WelfareService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.Optional;
 public class ScrapService {
 
     private final ScrapRepository scrapRepository;
+    private final WelfareService welfareService;
 
     /**
      * 복지정보 스크랩 저장.
@@ -41,6 +43,9 @@ public class ScrapService {
         scrapRepository.save(scrap);
     }
 
+    /**
+     * 해당 회원의 복지정보 스크랩 리스트 조회
+     */
     public List<ScrapDTO.response> scrapList(UserEntity user) {
 
         List<ScrapEntity> scrapList = scrapRepository.findByUser_id(user);
@@ -57,6 +62,23 @@ public class ScrapService {
         }
 
         return responseList;
+    }
+
+    /**
+     * 회원 Id와 복지정보 Id를 기준으로
+     * 스크랩 여부 확인
+     */
+    public String findScrap(UserEntity user, Long welfareId) {
+
+        Welfare welfare = welfareService.findById(welfareId);
+
+        Optional<ScrapEntity> scrapEntity = scrapRepository.findByUser_idAndWelfare_id(user, welfare);
+
+        if(scrapEntity.isPresent())
+            return "true";
+
+        else
+            return "false";
     }
 
     /**
