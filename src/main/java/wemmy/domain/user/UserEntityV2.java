@@ -92,6 +92,8 @@ public class UserEntityV2 {
         this.gender = dto.getGender();
         this.userState = dto.getUserState();
         this.characteristic = dto.getCharacteristic();
+        this.familyCount = dto.getFamilyCount();
+        this.monthlyImcome = dto.getMonthlyImcome();
 
         if(dto.getBaby().equals("true"))
             this.babyState = dto.getBabyState();

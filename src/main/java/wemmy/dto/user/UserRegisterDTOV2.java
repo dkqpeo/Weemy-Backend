@@ -24,4 +24,6 @@ public class UserRegisterDTOV2 {
     private String baby;                // 자녀 유무
     private List<String> babyState;     // 자녀 상태 ["영유아", "어린이집", "유치원", "성인", "초등학생", "중학생", "고등학생"]
     private List<String> characteristic;    // 대상특성 (해당 없음, 다문화 가정 등..)
+    private int familyCount;        // 가구원 수
+    private int monthlyImcome;      // 가구 월소득
 }
