@@ -47,7 +47,7 @@ public class BenefitService {
             String etc = benefit.getEtc();
             String originalUrl = benefit.getOriginal_url();
 
-            UserEntity adminId = userService.valudateAdmin(admin);      // 관리자 계정
+            UserEntity adminId = userService.validateAdmin(admin);      // 관리자 계정
             Wcategory wcategory = welfareService.getWcategoryByWcategoryId(wCategoryId);        // 복지 카테고리
             Regions region = areaService.validateRegionCode(hostId);    // 지역코드
 

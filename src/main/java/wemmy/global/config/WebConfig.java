@@ -30,8 +30,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/wemmy/**")
                 .excludePathPatterns(
                         "/wemmy/user/sign-up",
+                        "/wemmy/user/sign-up/v2",
                         "/wemmy/user/validate/**",
                         "/wemmy/user/login",
+                        "/wemmy/user/login/v2",
                         "/wemmy/access-token/reissue",
                         "/wemmy/user/oauth/**",
                         "/wemmy/benefit/web/**"

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wemmy.domain.area.district.SiggAreas;
 import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.user.constant.Role;
 import wemmy.domain.user.constant.UserType;
 import wemmy.dto.user.LoginDTO;
@@ -16,7 +17,6 @@ import wemmy.global.config.error.exception.ControllerException;
 import wemmy.global.config.error.exception.MemberException;
 import wemmy.global.token.jwt.TokenProvider;
 import wemmy.global.token.jwt.dto.TokenDto;
-import wemmy.repository.user.UserRepository;
 import wemmy.repository.user.UserRepositoryV2;
 
 import java.time.LocalDateTime;
@@ -26,22 +26,22 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class UserService {
+public class UserServiceV2 {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryV2 userRepository;
     private final TokenProvider tokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    public UserEntity signUp(UserEntity user) {
+    public UserEntityV2 signUp(UserEntityV2 user) {
         validateEmail(user.getEmail());
 
         return userRepository.save(user);
     }
 
-    public UserEntity signUpByAdmin(String email, String password) {
+    public UserEntityV2 signUpByAdmin(String email, String password) {
         validateEmail(email);
 
-        UserEntity user = UserEntity.builder()
+        UserEntityV2 user = UserEntityV2.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .userType(UserType.LOCAL)
@@ -54,7 +54,7 @@ public class UserService {
 
     public LoginDTO.loginResponse login(String email, String password) {
 
-        UserEntity user = finBydUserEmail(email)
+        UserEntityV2 user = finBydUserEmail(email)
                 .orElseThrow(() -> new MemberException(ErrorCode.NOT_EXISTS_EMAIL));
 
         String dbPw = user.getPassword();
@@ -70,7 +70,7 @@ public class UserService {
 
     public boolean updatePassword(Long id, String oldPasswoed, String newPassword) {
 
-        UserEntity user = findByUserId(id);
+        UserEntityV2 user = findByUserId(id);
 
         if(!passwordEncoder.matches(oldPasswoed, user.getPassword()))
             throw new MemberException(ErrorCode.NOT_EQUAL_PASSWORD);
@@ -80,38 +80,38 @@ public class UserService {
     }
 
     public boolean updateArea(Long id, SiggAreas area) {
-        UserEntity user = findByUserId(id);
+        UserEntityV2 user = findByUserId(id);
 
         user.updateArea(area);
         return true;
     }
 
     public boolean updateUserInfo(Long id, UserRegisterDTOV2 dto) {
-        UserEntity user = findByUserId(id);
+        UserEntityV2 user = findByUserId(id);
 
         user.updateUserInfo(dto);
         return true;
     }
 
     public void validateEmail(String email) {
-        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
+        Optional<UserEntityV2> userEntity = userRepository.findByEmail(email);
 
         if(userEntity.isPresent())
             throw new MemberException(ErrorCode.ALREADY_REGISTERED_MEMBER);
     }
 
-    public UserEntity findByUserId(Long id) {
-        UserEntity user = userRepository.findById(id)
+    public UserEntityV2 findByUserId(Long id) {
+        UserEntityV2 user = userRepository.findById(id)
                 .orElseThrow(() -> new MemberException(ErrorCode.NOT_EXISTS_MEMBER));
         return user;
     }
 
-    public Optional<UserEntity> finBydUserEmail(String email) {
+    public Optional<UserEntityV2> finBydUserEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public UserEntity validateAdmin(String adminId) {
-        UserEntity admin = userRepository.findByEmail(adminId)
+    public UserEntityV2 validateAdmin(String adminId) {
+        UserEntityV2 admin = userRepository.findByEmail(adminId)
                 .orElseThrow(() -> new ControllerException(ErrorCode.USER_NOT_EXISTS));
         if(admin.getRole() != Role.ADMIN)
             new ControllerException(ErrorCode.NOT_ADMIN_USER);
@@ -119,7 +119,7 @@ public class UserService {
         return admin;
     }
 
-    public Optional<UserEntity> findUserByRefreshToken(String refreshToken) {
+    public Optional<UserEntityV2> findUserByRefreshToken(String refreshToken) {
         return userRepository.findByRefreshToken(refreshToken);
     }
 }
