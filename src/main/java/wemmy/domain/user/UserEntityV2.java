@@ -95,7 +95,7 @@ public class UserEntityV2 {
         this.familyCount = dto.getFamilyCount();
         this.monthlyImcome = dto.getMonthlyImcome();
 
-        if(dto.getBaby().equals("true"))
+        if(dto.getBaby() == true)
             this.babyState = dto.getBabyState();
         else
             this.babyState = Collections.singletonList("false");

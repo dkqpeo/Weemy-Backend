@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.global.config.error.exception.MemberException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,21 @@ class UserServiceTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserServiceV2 userServiceV2;
+
+/*    @Test
+    void signUpByAdmin() {
+
+        // 관리자 계정 생성
+        try {
+            userServiceV2.signUpByAdmin("teamwemmy@gmail.com", "project2024");
+        } catch (MemberException e) {
+
+        }
+
+    }*/
 
     /*@Test
     void signUpByAdmin() {
