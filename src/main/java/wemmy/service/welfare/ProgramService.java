@@ -29,4 +29,11 @@ public class ProgramService {
         programRepository.save(program);
         System.out.println("저장 완료");
     }
+
+    public List<Program> findAllProgramByRegions(Regions regions) {
+
+        List<Program> programList = programRepository.findAllByCityName(regions);
+
+        return programList;
+    }
 }

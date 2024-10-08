@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wemmy.domain.area.district.SiggAreas;
 import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.user.constant.Role;
 import wemmy.domain.user.constant.UserType;
 import wemmy.dto.user.LoginDTO;
