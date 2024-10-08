@@ -19,7 +19,11 @@ public class BenefitDTO {
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
-        private String scrap;           // 스클랩 여부.
+        private String scrap;           // 스크랩 여부.
+
+        private String aplicationPeriod;    // 신청 기간
+        private String trainingPeriod;      // 교육 기간
+        private String category;            // 카테고리 ['임신준비', '임신', '출산·육아']
     }
 
     /**
@@ -33,6 +37,7 @@ public class BenefitDTO {
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
         private String scrap;           // 스크랩 여부
+        private String group;           // benefit, program
     }
 
     /**
