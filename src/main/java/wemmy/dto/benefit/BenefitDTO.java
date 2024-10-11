@@ -6,8 +6,10 @@ import lombok.Setter;
 
 public class BenefitDTO {
 
-    @Getter @Builder
-    public static class response{
+    @Getter
+    @Builder
+    public static class response {
+        private String group;           // benefit, program
         private Long benefitId;
         private Long wCategoryId;     // 1 임신, 2 영유아
         private String title;           // 복지 제목
@@ -16,21 +18,56 @@ public class BenefitDTO {
         private String way;             // 신청방법
         private String etc;             // 연락처
         private String originalUrl;    // 원본 url
+        private String aplicationPeriod;    // 신청 기간
+        private String trainingPeriod;      // 교육 기간
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
         private String scrap;           // 스크랩 여부.
+    }
 
+    @Getter
+    @Builder
+    public static class benefitResponse {
+        private String group;           // benefit, program
+        private Long benefitId;
+        private String category;     // 임신, 영유아
+        private String title;           // 복지 제목
+        private String field;           // 지원대상
+        private String content;         // 내용
+        private String way;             // 신청방법
+        private String etc;             // 연락처
+        private String originalUrl;    // 원본 url
+        private String aplicationPeriod;    // 신청 기간
+        private String trainingPeriod;      // 교육 기간
+        private String city;            // 시 ex) 서울특별시
+        private String district;        // 지역 ex) 강남구
+        private String imageUrl;        // 이미지 url
+        private String scrap;           // 스크랩 여부.
+    }
+
+    @Getter
+    @Builder
+    public static class programResponse {
+        private String group;           // benefit, program
+        private Long benefitId;
+        private String title;           // 복지 제목
         private String aplicationPeriod;    // 신청 기간
         private String trainingPeriod;      // 교육 기간
         private String category;            // 카테고리 ['임신준비', '임신', '출산·육아']
+        private String city;            // 시 ex) 서울특별시
+        private String district;        // 지역 ex) 강남구
+        private String imageUrl;        // 이미지 url
+        private String scrap;           // 스크랩 여부.
     }
 
     /**
      * 앱 홈화면 복지 제목 리스트 응답.
      */
-    @Getter @Setter @Builder
-    public static class titleResponse{
+    @Getter
+    @Setter
+    @Builder
+    public static class titleResponse {
         private Long benefitId;
         private String title;           // 복지 제목
         private String city;            // 시 ex) 서울특별시
@@ -43,8 +80,9 @@ public class BenefitDTO {
     /**
      * 웹 복지 제목 리스트 응답.
      */
-    @Getter @Builder
-    public static class titleResponseWeb{
+    @Getter
+    @Builder
+    public static class titleResponseWeb {
         private Long benefitId;
         private String title;           // 복지 제목
         private String type;            // 임신, 육아

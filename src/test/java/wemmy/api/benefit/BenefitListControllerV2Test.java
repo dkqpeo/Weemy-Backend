@@ -14,8 +14,6 @@ import wemmy.service.user.UserServiceV2;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class BenefitListControllerV2Test {
 

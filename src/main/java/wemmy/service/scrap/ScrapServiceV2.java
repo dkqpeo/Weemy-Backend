@@ -15,6 +15,7 @@ import wemmy.global.config.error.ErrorCode;
 import wemmy.global.config.error.exception.ServiceException;
 import wemmy.repository.scrap.ScrapRepository;
 import wemmy.repository.scrap.ScrapRepositoryV2;
+import wemmy.service.welfare.ProgramService;
 import wemmy.service.welfare.WelfareService;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ScrapServiceV2 {
 
     private final ScrapRepositoryV2 scrapRepository;
     private final WelfareService welfareService;
+    private final ProgramService programService;
 
     /**
      * 복지정보 스크랩 저장.
@@ -99,15 +101,21 @@ public class ScrapServiceV2 {
      * 회원 Id와 복지정보 Id를 기준으로
      * 스크랩 여부 확인
      */
-    public String findScrap(UserEntityV2 user, Long welfareId) {
+    public String findScrap(UserEntityV2 user, Long reqId, String group) {
 
-        Welfare welfare = welfareService.findById(welfareId);
+        Optional<ScrapEntityV2> scrapEntityV2 = null;
 
-        Optional<ScrapEntityV2> scrapEntityV2 = scrapRepository.findByUser_idAndWelfare_id(user, welfare);
+        if(group.equals("benefit")) {
+            Welfare welfare = welfareService.findById(reqId);
+            scrapEntityV2 = scrapRepository.findByUser_idAndWelfare_id(user, welfare);
+        } else if (group.equals("program")) {
+            Program program = programService.findById(reqId);
+            scrapEntityV2 = scrapRepository.findByUser_idAndProgram_id(user, program);
+        }
+
 
         if(scrapEntityV2.isPresent())
             return "true";
-
         else
             return "false";
     }
