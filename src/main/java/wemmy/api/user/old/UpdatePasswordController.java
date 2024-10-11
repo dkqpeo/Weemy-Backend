@@ -1,4 +1,4 @@
-package wemmy.api.user;
+package wemmy.api.user.old;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,10 +20,10 @@ import wemmy.service.user.UserService;
 
 import java.io.IOException;
 
-@Tag(name = "User", description = "회원 관련 API")
+//@Tag(name = "User", description = "회원 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/user")
+//@RequestMapping("/wemmy/user")
 public class UpdatePasswordController {
 
     private final UserService userService;
@@ -31,9 +31,9 @@ public class UpdatePasswordController {
     private final PasswordEncoder passwordEncoder;
     private final GetUserIDByToken getUserIDByToken;
 
-    @Tag(name = "User")
+    /*@Tag(name = "User")
     @Operation(summary = "회원 비밀번호 변경 API", description = "회원 비밀번호 변경.")
-    @PostMapping("/update/password")
+    @PostMapping("/update/password")*/
     public ResponseEntity<ResponseDTO> updatePassword(@RequestBody UpdateDTO.request dto, HttpServletRequest httpServletRequest) throws IOException {
 
         Long userId = getUserIDByToken.getUserID(httpServletRequest);

@@ -16,12 +16,12 @@ import wemmy.service.scrap.ScrapService;
 import wemmy.service.user.UserService;
 
 
-@Tag(name = "Benefit", description = "복지 정보 API")
+@Tag(name = "BenefitV2", description = "복지 정보 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/benefit")
-public class BenefitDetailController {
+@RequestMapping("/wemmy/benefit/v2")
+public class BenefitDetailControllerV2 {
 
     private final BenefitService benefitService;
     private final UserService userService;
@@ -32,8 +32,8 @@ public class BenefitDetailController {
      * App
      * 복지 내용 상세조회
      */
-    @Tag(name = "Benefit")
-    @Operation(summary = "앱 복지 상세조회 API", description = "accessToken필요, benefitId에 해당하는 상세 복지정보 응답.")
+    @Tag(name = "BenefitV2")
+    @Operation(summary = "APP 복지 상세조회 API", description = "accessToken필요, benefitId에 해당하는 상세 복지정보 응답.")
     @GetMapping("/detail/{id}")
     public ResponseEntity<BenefitDTO.response> getBenefitDetail(@PathVariable("id") Long id,
                                                                 HttpServletRequest httpServletRequest) {
@@ -55,8 +55,8 @@ public class BenefitDetailController {
     /**
      * 웹 복지 내용 상세조회
      */
-    @Tag(name = "Benefit")
-    @Operation(summary = "웹 복지 상세조회 API", description = "benefitId에 해당하는 상세 복지정보 응답.")
+    @Tag(name = "BenefitV2")
+    @Operation(summary = "WEB 복지 상세조회 API", description = "benefitId에 해당하는 상세 복지정보 응답.")
     @GetMapping("/web/detail")
     public ResponseEntity<BenefitDTO.response> getBenefitDetailWeb(@RequestParam("id") Long id,
                                                                    HttpServletRequest httpServletRequest) {

@@ -1,4 +1,4 @@
-package wemmy.api.scrap;
+package wemmy.api.scrap.old;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,11 +16,11 @@ import wemmy.service.scrap.ScrapService;
 import wemmy.service.user.UserService;
 import wemmy.service.welfare.WelfareService;
 
-@Tag(name = "Scrap", description = "복지 정보 스크랩 API")
+//@Tag(name = "Scrap", description = "복지 정보 스크랩 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/scrap")
+//@RequestMapping("/wemmy/scrap")
 public class ScrapAddController {
 
     private final ScrapService scrapService;
@@ -30,7 +30,7 @@ public class ScrapAddController {
 
     @Tag(name = "Scrap")
     @Operation(summary = "복지정보 스크랩 저장 API", description = "사용자가 저장을 원하는 복지정보 스크랩 API")
-    @GetMapping("/save/{benefitId}")
+  //@GetMapping("/save/{benefitId}")
     public ResponseEntity<ResponseDTO> scrapSave(@PathVariable("benefitId") Long reqBenefitId,
                                                  HttpServletRequest httpServletRequest) {
 

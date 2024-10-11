@@ -7,7 +7,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import wemmy.domain.user.constant.UserType;
 import wemmy.dto.user.LoginDTO;
 import wemmy.dto.user.OAuthLoginDTO;
@@ -15,12 +18,12 @@ import wemmy.global.token.jwt.util.AuthorizationHeaderUtils;
 import wemmy.global.validate.OAuthValidator;
 import wemmy.service.user.oauth.OAuthService;
 
-@Tag(name = "User", description = "회원 관련 API")
+@Tag(name = "UserV2", description = "회원 관련 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/user/oauth")
-public class OAuthLoginController {
+@RequestMapping("/wemmy/user/v2/oauth")
+public class OAuthLoginControllerV2 {
 
     private final OAuthService oAuthService;
     private final OAuthValidator oAuthValidator;
@@ -50,7 +53,7 @@ public class OAuthLoginController {
      * @param httpServletRequest  // header : kakao_accessToken
      * @return  // accessToken, refreshToken
      */
-    @Tag(name = "User")
+    @Tag(name = "UserV2")
     @Operation(summary = "사용자 소셜 로그인 API", description = "소셜에서 받은 토큰으로 로그인 처리. userType : KAKAO 와 같이 대문자로 작성.")
     @PostMapping("/login")
     public ResponseEntity<LoginDTO.loginResponse> login(@RequestBody OAuthLoginDTO oAuthLoginDTO,

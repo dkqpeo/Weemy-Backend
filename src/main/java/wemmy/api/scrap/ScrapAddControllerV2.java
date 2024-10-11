@@ -37,7 +37,7 @@ public class ScrapAddControllerV2 {
     private final UserServiceV2 userService;
     private final GetUserIDByToken getUserIDByToken;
 
-    @Tag(name = "Scrap")
+    @Tag(name = "ScrapV2")
     @Operation(summary = "복지정보 스크랩 저장 API", description = "사용자가 저장을 원하는 복지정보 스크랩 API")
     @GetMapping("/save/{benefitId}/{group}")
     public ResponseEntity<ResponseDTO> scrapSave(@PathVariable("benefitId") Long reqBenefitId,
