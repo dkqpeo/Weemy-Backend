@@ -1,4 +1,4 @@
-package wemmy.api.user;
+package wemmy.api.user.old;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,19 +15,19 @@ import wemmy.dto.user.LoginDTO;
 import wemmy.service.user.UserService;
 import wemmy.service.user.UserServiceV2;
 
-@Tag(name = "User", description = "회원 관련 API")
+//@Tag(name = "User", description = "회원 관련 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/user")
+//@RequestMapping("/wemmy/user")
 public class LoginController {
 
     private final UserService userService;
     private final UserServiceV2 userServiceV2;
 
-    @Tag(name = "User")
+    /*@Tag(name = "User")
     @Operation(summary = "사용자 로그인 API", description = "wemmy 서비스 이용을 위한 로그인 API")
-    @PostMapping("/login")
+    @PostMapping("/login")*/
     public ResponseEntity<LoginDTO.loginResponse> login(@RequestBody LoginDTO.loginRequest dto,
                                                         HttpServletRequest httpServletRequest) {
 
@@ -42,9 +42,9 @@ public class LoginController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @Tag(name = "User")
+    /*@Tag(name = "User")
     @Operation(summary = "사용자 로그인 API", description = "wemmy 서비스 이용을 위한 로그인 API")
-    @PostMapping("/login/v2")
+    @PostMapping("/login/v2")*/
     public ResponseEntity<LoginDTO.loginResponse> loginV2(@RequestBody LoginDTO.loginRequest dto,
                                                         HttpServletRequest httpServletRequest) {
 

@@ -21,10 +21,10 @@ import wemmy.service.user.UserService;
 
 import java.time.LocalDateTime;
 
-@Tag(name = "Baby", description = "아기 관련 API")
+//@Tag(name = "Baby", description = "아기 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/baby")
+//@RequestMapping("/wemmy/baby")
 public class InsertBabyController {
 
     private final BabyService babyService;
@@ -33,7 +33,7 @@ public class InsertBabyController {
 
     @Tag(name = "Baby", description = "아기 관련 API")
     @Operation(summary = "아기정보 추가", description = "dateFormat : yyyy-mm-dd, type : PREGNANCY, PARENTING (대문자로 작성)")
-    @PostMapping("/insert")
+    //@PostMapping("/insert")
     public ResponseEntity<ResponseDTO> insert(@RequestBody BabyInsertDTO dto, HttpServletRequest httpServletRequest) {
 
         Long userId = getUserIDByToken.getUserID(httpServletRequest);

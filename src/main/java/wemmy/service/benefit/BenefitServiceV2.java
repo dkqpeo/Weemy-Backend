@@ -135,7 +135,8 @@ public class BenefitServiceV2 {
     /**
      * 앱 홈화면에 보여질 복지 제목 리스트
      */
-    public List<BenefitDTO.titleResponse> getBenefitTitleList(Regions regions, Regions government, String city, String district, UserEntityV2 babyType) {
+    public List<BenefitDTO.titleResponse> getBenefitTitleList(Regions regions, Regions government, String city,
+                                                              String district, UserEntityV2 babyType, List<ScrapDTO.response> scrapList) {
 
         // 자치구 복지정보.
         List<Welfare> welfareList = welfareService.findAllByWelfareById(regions);
@@ -157,9 +158,9 @@ public class BenefitServiceV2 {
             categoryId = 2L;                // 육아
         }
 
-        benefitList = parseWelfareTitle(welfareList, city, district, categoryId, 1);
-        benefitList.addAll(parseWelfareTitle(governmentList, "정부", "", categoryId, 1));
-        benefitList.addAll(parseProgramTitle(programList, city, district, babyType, 1));
+        benefitList = parseWelfareTitle(welfareList, city, district, categoryId, 1, scrapList);
+        benefitList.addAll(parseWelfareTitle(governmentList, "정부", "", categoryId, 1, scrapList));
+        benefitList.addAll(parseProgramTitle(programList, city, district, babyType, 1, scrapList));
 
         return benefitList;
     }
@@ -264,9 +265,10 @@ public class BenefitServiceV2 {
     }
 
     /**
-     * 사용자 타입에 맞는 지역시, 정부의 전체 혜택 중 4개의 값만 리턴
+     * 사용자 타입에 맞는 지역시, 정부의 전체 혜택 중 2개의 값만 리턴
      */
-    private List<BenefitDTO.titleResponse> parseWelfareTitle(List<Welfare> list, String city, String district, Long categoryId, int count) {
+    private List<BenefitDTO.titleResponse> parseWelfareTitle(List<Welfare> list, String city, String district,
+                                                             Long categoryId, int count, List<ScrapDTO.response> scrapList) {
         List<BenefitDTO.titleResponse> resultList = new ArrayList<>();
         List<BenefitDTO.titleResponse> randomList = new ArrayList<>();
 
@@ -298,13 +300,13 @@ public class BenefitServiceV2 {
         }
 
         // 응답할 복지 리스트의 스크랩 여부 확인.
-/*        for (ScrapDTO.response scrap : scrapList) {
+        for (ScrapDTO.response scrap : scrapList) {
             for (BenefitDTO.titleResponse randoom : randomList) {
                 if(scrap.getWelfareId() == randoom.getBenefitId()){
                     randoom.setScrap("true");
                 }
             }
-        }*/
+        }
 
         return randomList;
     }
@@ -312,7 +314,8 @@ public class BenefitServiceV2 {
     /**
      * 프로그램 정보
      */
-    private List<BenefitDTO.titleResponse> parseProgramTitle(List<Program> list, String city, String district, UserEntityV2 babyType, int count) {
+    private List<BenefitDTO.titleResponse> parseProgramTitle(List<Program> list, String city, String district,
+                                                             UserEntityV2 babyType, int count, List<ScrapDTO.response> scrapList) {
         List<BenefitDTO.titleResponse> resultList = new ArrayList<>();
         List<BenefitDTO.titleResponse> randomList = new ArrayList<>();
 
@@ -328,26 +331,12 @@ public class BenefitServiceV2 {
                         .city(city)
                         .district(district)
                         .imageUrl(program.getImageUrl())
-                        .group("program")
-                        .build();
-
-                resultList.add(dto);
-            }
-
-            // 사용자의 임신 육아 여부에 일치하는 복지 정보만 저장.
-            /*if(welfare.getWCategoryId().getId().equals(categoryId)){
-                BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
-                        .benefitId(welfare.getId())
-                        .title(welfare.getTitle())
-                        .city(city)
-                        .district(district)
-                        .imageUrl(welfare.getImageUrl())
                         .scrap("false")
                         .group("program")
                         .build();
 
                 resultList.add(dto);
-            }*/
+            }
         }
 
         Random random = new Random();
@@ -362,13 +351,13 @@ public class BenefitServiceV2 {
         }
 
         // 응답할 복지 리스트의 스크랩 여부 확인.
-/*        for (ScrapDTO.response scrap : scrapList) {
+        for (ScrapDTO.response scrap : scrapList) {
             for (BenefitDTO.titleResponse randoom : randomList) {
                 if(scrap.getWelfareId() == randoom.getBenefitId()){
                     randoom.setScrap("true");
                 }
             }
-        }*/
+        }
 
         return randomList;
     }

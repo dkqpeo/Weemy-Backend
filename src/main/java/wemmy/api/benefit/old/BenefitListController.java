@@ -1,4 +1,4 @@
-package wemmy.api.benefit;
+package wemmy.api.benefit.old;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,11 +24,11 @@ import wemmy.service.user.UserService;
 
 import java.util.List;
 
-@Tag(name = "Benefit", description = "복지 정보 API")
+//@Tag(name = "Benefit", description = "복지 정보 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/benefit")
+//@RequestMapping("/wemmy/benefit")
 public class BenefitListController {
 
 
@@ -43,9 +43,9 @@ public class BenefitListController {
      * 앱 요청 처리
      * 사용자의 거주지, 임신/육아 여부에 맞는 복지 리스트 조회
      */
-    @Tag(name = "Benefit")
+    /*@Tag(name = "Benefit")
     @Operation(summary = "앱 홈화면 복지리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
-    @GetMapping("/list/home")
+    @GetMapping("/list/home")*/
     public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleList(HttpServletRequest httpServletRequest) {
 
         // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
@@ -73,9 +73,9 @@ public class BenefitListController {
     /**
      * 웹 요청 처리. 입력받은 시의 모든 복지정보를 제공.
      */
-    @Tag(name = "Benefit")
+    /*@Tag(name = "Benefit")
     @Operation(summary = "웹 복지리스트 API", description = "요청쿼리로 보낸 지역시에 해당하는 복지정보 응답.")
-    @GetMapping("/web/list")
+    @GetMapping("/web/list")*/
     public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityWeb(@RequestParam("city") String reqCity,
                                                                                           HttpServletRequest httpServletRequest) {
         log.info("request url : " + httpServletRequest.getRequestURI());
@@ -92,9 +92,9 @@ public class BenefitListController {
     /**
      * 웹 요청 처리. 입력받은 시, 구의 모든 복지정보를 제공.
      */
-    @Tag(name = "Benefit")
+    /*@Tag(name = "Benefit")
     @Operation(summary = "웹 복지리스트 API", description = "요청쿼리로 보낸 지역시, 구에 해당하는 복지정보 응답.")
-    @GetMapping("/web/list/district")
+    @GetMapping("/web/list/district")*/
     public ResponseEntity<List<BenefitDTO.titleResponseWeb>> getBenefitTitleListByCityAndDistrictWeb(@RequestParam("city") String reqCity,
                                                                                                      @RequestParam("district") String reqDistrict) {
 

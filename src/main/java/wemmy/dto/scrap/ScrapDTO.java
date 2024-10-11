@@ -11,5 +11,6 @@ public class ScrapDTO {
         private Long id;
         private Long userId;
         private Long welfareId;
+        private String group;
     }
 }

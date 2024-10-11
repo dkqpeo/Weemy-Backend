@@ -15,10 +15,10 @@ import wemmy.service.baby.BabyService;
 
 import java.util.List;
 
-@Tag(name = "Baby", description = "아기 관련 API")
+//@Tag(name = "Baby", description = "아기 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/baby")
+//@RequestMapping("/wemmy/baby")
 public class BabyListController {
 
     private final BabyService babyService;
@@ -26,7 +26,7 @@ public class BabyListController {
 
     @Tag(name = "Baby")
     @Operation(summary = "아기정보 조회 API", description = "마이페이지 등 등록된 아기정보 요청.")
-    @GetMapping("/get")
+    //@GetMapping("/get")
     public ResponseEntity<List<BabyRespDTO>> babyList(HttpServletRequest httpServletRequest) {
 
         Long userId = getUserIDByToken.getUserID(httpServletRequest);

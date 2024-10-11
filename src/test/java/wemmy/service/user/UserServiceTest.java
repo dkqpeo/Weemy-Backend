@@ -19,7 +19,7 @@ class UserServiceTest {
     @Autowired
     private UserServiceV2 userServiceV2;
 
-/*    @Test
+    /*@Test
     void signUpByAdmin() {
 
         // 관리자 계정 생성
@@ -28,7 +28,6 @@ class UserServiceTest {
         } catch (MemberException e) {
 
         }
-
     }*/
 
     /*@Test

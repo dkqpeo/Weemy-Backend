@@ -15,10 +15,10 @@ import wemmy.dto.baby.BabyUpdateInfoDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.baby.BabyService;
 
-@Tag(name = "Baby", description = "아기 관련 API")
+//@Tag(name = "Baby", description = "아기 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wemmy/baby")
+//@RequestMapping("/wemmy/baby")
 public class UpdateBabyController {
 
     private final BabyService babyService;
@@ -26,7 +26,7 @@ public class UpdateBabyController {
 
     @Tag(name = "Baby")
     @Operation(summary = "아기정보 수정 API", description = "아기 정보 수정. 임신 -> 육아, 태명 -> 이름 등.")
-    @PostMapping("/update")
+    //@PostMapping("/update")
     public ResponseEntity<ResponseDTO> updateBabyInfo(@RequestBody BabyUpdateInfoDTO dto, HttpServletRequest httpServletRequest) {
 
         Long userId = getUserIDByToken.getUserID(httpServletRequest);
