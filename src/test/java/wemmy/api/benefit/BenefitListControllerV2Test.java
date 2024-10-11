@@ -6,8 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import wemmy.domain.area.Regions;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.dto.benefit.BenefitDTO;
+import wemmy.dto.scrap.ScrapDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.benefit.BenefitServiceV2;
+import wemmy.service.scrap.ScrapServiceV2;
 import wemmy.service.user.UserServiceV2;
 
 import java.util.List;
@@ -26,6 +28,9 @@ class BenefitListControllerV2Test {
     @Autowired
     private BenefitServiceV2 benefitService;
 
+    @Autowired
+    private ScrapServiceV2 scrapService;
+
 
     @Test
     void getBenefitTitleList() {
@@ -34,12 +39,9 @@ class BenefitListControllerV2Test {
 
         UserEntityV2 user = userService.findByUserId(userID);
 
-        // BabyEntity babyInfo = babyService.findBabyByUserId(user.getId());
-
         String city = user.getSigg_id().getSido_id().getName();
         String district = user.getSigg_id().getName();
 
-        //BabyType babyType = babyInfo.getType();
 
         // 회원 정보에 있는 sigg_id를 통해 region code 조회.
         Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
@@ -47,10 +49,10 @@ class BenefitListControllerV2Test {
         Regions government = areaService.getRegionById(494L);
 
         // 회원이 스크랩 한 복지정보 리스트
-        //List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
+        List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
 
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, user);
+        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, user, scrapList);
 
         for (BenefitDTO.titleResponse titleResponse : benefitList) {
             System.out.println(titleResponse.getTitle());

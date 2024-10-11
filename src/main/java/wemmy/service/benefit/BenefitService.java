@@ -35,6 +35,9 @@ public class BenefitService {
 
     // 크롤링한 복지정보 저장.
     public void benefitParseAndSave(List<BenefitSaveDTO> benefitList) {
+
+        System.out.println(benefitList.size());
+
         for (BenefitSaveDTO benefit : benefitList) {
             Long uniqueId = benefit.getUnique_id();
             String admin = benefit.getAdmin_id();

@@ -43,6 +43,12 @@ public class AreaService {
     public Regions getRegionBySiggCode(SiggAreas siggAreas) {
         String sidoCode = siggAreas.getSido_id().getAdm_code();
         String siggCode = siggAreas.getAdm_code();
+
+        log.info("sido code : " +sidoCode);
+        log.info("sigg code : " +siggCode);
+
+        regionRepository.findByRegionCd("1154500000");
+
         Regions region = regionRepository.findByRegionCd(sidoCode + siggCode + "00000")
                 .orElseThrow(() -> new ControllerException(ErrorCode.REGION_NOT_EXISTS));
         return region;

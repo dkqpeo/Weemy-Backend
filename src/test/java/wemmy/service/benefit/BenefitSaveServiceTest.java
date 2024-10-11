@@ -76,8 +76,37 @@ class BenefitSaveServiceTest {
             //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/sd_2024-08-29_result.json");
             //List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/ys_2024-08-29_result.json");
 
+            /*List<BenefitSaveDTO> benefitSaveDTO = benefitSaveService.benefitSave("/benefit/dj_2024-07-10_result.json");
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/ga_2024-07-12_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/geumcheon_2024-07-11_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/gj_2024-07-09_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/gr_2024-07-12_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/gs_2024-07-12_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/sh_2024-07-15_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/ydp_2024-07-08_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/ydp_2024-07-09_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/ydp_2024-07-10_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/db_2024-08-12_result (1).json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/ep_2024-08-06_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/gb_2024-08-12_result (1).json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/gd_2024-08-05_result (2).json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/gn_2024-08-05_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/mp_2024-08-05_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/nw_2024-08-12_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/sb_2024-08-12_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/sdm_2024-08-06_result (2).json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/sp_2024-08-05_result (3).json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/yc_2024-08-05_result (2).json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/ddm_2024-08-29_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/jg_2024-08-30_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/jn_2024-08-28_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/jr_2024-08-30_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/sd_2024-08-29_result.json"));
+            benefitSaveDTO.addAll(benefitSaveService.benefitSave("/benefit/ys_2024-08-29_result.json"));
+
             // 파싱한 결과를 데이터베이스에 저장
-            //benefitService.benefitParseAndSave(benefitSaveDTO);
+            benefitService.benefitParseAndSave(benefitSaveDTO);*/
+
         } catch (Exception e) {
 
         }

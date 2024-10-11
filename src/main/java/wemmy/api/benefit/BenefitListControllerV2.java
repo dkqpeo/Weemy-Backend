@@ -24,12 +24,13 @@ import wemmy.service.baby.BabyService;
 import wemmy.service.benefit.BenefitService;
 import wemmy.service.benefit.BenefitServiceV2;
 import wemmy.service.scrap.ScrapService;
+import wemmy.service.scrap.ScrapServiceV2;
 import wemmy.service.user.UserService;
 import wemmy.service.user.UserServiceV2;
 
 import java.util.List;
 
-@Tag(name = "Benefit", description = "복지 정보 API")
+@Tag(name = "BenefitV2", description = "복지, 프로그램 정보 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -40,11 +41,11 @@ public class BenefitListControllerV2 {
     private final UserServiceV2 userService;
     private final BenefitServiceV2 benefitService;
     private final AreaService areaService;
-    private final ScrapService scrapService;
+    private final ScrapServiceV2 scrapService;
     private final GetUserIDByToken getUserIDByToken;
 
     /**
-     * 앱 요청 처리
+     * APP 요청 처리
      * 사용자의 거주지, 임신/육아 여부에 맞는 복지 리스트 조회
      */
     @Tag(name = "Benefit")
@@ -56,12 +57,9 @@ public class BenefitListControllerV2 {
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
         UserEntityV2 user = userService.findByUserId(userID);
 
-        // BabyEntity babyInfo = babyService.findBabyByUserId(user.getId());
-        
         String city = user.getSigg_id().getSido_id().getName();
         String district = user.getSigg_id().getName();
 
-        //BabyType babyType = babyInfo.getType();
 
         // 회원 정보에 있는 sigg_id를 통해 region code 조회.
         Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
@@ -69,10 +67,10 @@ public class BenefitListControllerV2 {
         Regions government = areaService.getRegionById(494L);
 
         // 회원이 스크랩 한 복지정보 리스트
-        //List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
+        List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
 
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, user);
+        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, user, scrapList);
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 
