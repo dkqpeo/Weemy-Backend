@@ -72,6 +72,8 @@ public class BenefitDTO {
         private String title;           // 복지 제목
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
+        private String aplicationPeriod;    // 신청 기간
+        private String trainingPeriod;      // 교육 기간
         private String imageUrl;        // 이미지 url
         private String scrap;           // 스크랩 여부
         private String group;           // benefit, program
@@ -88,6 +90,9 @@ public class BenefitDTO {
         private String type;            // 임신, 육아
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
+        private String aplicationPeriod;    // 신청 기간
+        private String trainingPeriod;      // 교육 기간
         private String imageUrl;        // 이미지 url
+        private String group;           // benefit, program
     }
 }

@@ -199,17 +199,21 @@ public class BenefitServiceV2 {
         List<Welfare> welfareList = welfareService.findAll();
         // 정부 복지정보.
         List<Welfare> governmentList = welfareService.findAllByWelfareById(government);
+        // 프로그램 정보
+        List<Program> programList = programService.findAll();
+
         // Response List.
         List<BenefitDTO.titleResponseWeb> benefitList;
 
         benefitList = parseWelfareTitleWeb(welfareList, reqCity, reqDistrict);
         benefitList.addAll(parseWelfareTitleWeb(governmentList, "정부", reqDistrict));
+        benefitList.addAll(parseProgramTitleWeb(programList, reqCity, reqDistrict));
 
         return benefitList;
     }
 
     /**
-     * App
+     * App, Web
      * benefit_id로 상세 복지정보 조회.
      *
      * @return BenefitDTO.benefitResponse
@@ -222,8 +226,8 @@ public class BenefitServiceV2 {
         String city = detailBenefit.getHostId().getSido_id().getName();
         String district = detailBenefit.getHostId().getSigg_id().getName();
 
-        if(detailBenefit.getWCategoryId().getId() == 1L)
-            category = "임신";
+        if (detailBenefit.getWCategoryId().getId() == 1L)
+            category = "임산부";
         else if (detailBenefit.getWCategoryId().getId() == 2L) {
             category = "영유아";
         }
@@ -250,9 +254,8 @@ public class BenefitServiceV2 {
     }
 
     /**
-     * App
+     * App, Web
      * program_id로 상세 복지정보 조회.
-     *
      * @return BenefitDTO.programResponse
      */
     public BenefitDTO.programResponse getProgramDetail(Long program_id, String scrap, String group) {
@@ -273,35 +276,6 @@ public class BenefitServiceV2 {
                 .district(district)
                 .imageUrl(detailProgram.getImageUrl())
                 .scrap(scrap)
-                .build();
-
-        return build;
-    }
-
-    /**
-     * Web
-     * benefit_id로 상세 복지정보 조회.
-     *
-     * @return BenefitDTO.response
-     */
-    public BenefitDTO.response getWebBenefitDetail(Long benefit_id) {
-        Welfare detailBenefit = welfareService.findById(benefit_id);
-
-        String city = detailBenefit.getHostId().getSido_id().getName();
-        String district = detailBenefit.getHostId().getSigg_id().getName();
-
-        BenefitDTO.response build = BenefitDTO.response.builder()
-                .benefitId(detailBenefit.getId())
-                .wCategoryId(detailBenefit.getWCategoryId().getId())
-                .title(detailBenefit.getTitle())
-                .field(detailBenefit.getField())
-                .content(detailBenefit.getContent())
-                .way(detailBenefit.getWay())
-                .etc(detailBenefit.getEtc())
-                .originalUrl(detailBenefit.getOriginalUrl())
-                .city(city)
-                .district(district)
-                .imageUrl(detailBenefit.getImageUrl())
                 .build();
 
         return build;
@@ -349,6 +323,8 @@ public class BenefitServiceV2 {
                         .title(welfare.getTitle())
                         .city(city)
                         .district(district)
+                        .aplicationPeriod("")
+                        .trainingPeriod("")
                         .imageUrl(welfare.getImageUrl())
                         .scrap("false")
                         .group("benefit")
@@ -389,23 +365,21 @@ public class BenefitServiceV2 {
 
         for (Program program : list) {
 
-            List<String> topic = babyType.getTopic();
-            if (topic.contains(program.getCategory())) {
-                log.info("status : true");
+            log.info("status : true");
 
-                BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
-                        .benefitId(program.getId())
-                        .title(program.getTitle())
-                        .city(city)
-                        .district(district)
-                        .imageUrl(program.getImageUrl())
-                        .scrap("false")
-                        .group("program")
-                        .build();
+            BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
+                    .benefitId(program.getId())
+                    .title(program.getTitle())
+                    .city(city)
+                    .district(district)
+                    .imageUrl(program.getImageUrl())
+                    .scrap("false")
+                    .group("program")
+                    .build();
 
-                resultList.add(dto);
-            }
+            resultList.add(dto);
         }
+
 
         Random random = new Random();
         int randomIndex = 0;
@@ -448,6 +422,8 @@ public class BenefitServiceV2 {
                         .title(program.getTitle())
                         .city(city)
                         .district(district)
+                        .aplicationPeriod(program.getAplicationPeriod())
+                        .trainingPeriod(program.getTrainingPeriod())
                         .imageUrl(program.getImageUrl())
                         .scrap("false")
                         .group("program")
@@ -496,7 +472,10 @@ public class BenefitServiceV2 {
                             .type(wType)
                             .city(reqCity)
                             .district(district)
+                            .aplicationPeriod("")
+                            .trainingPeriod("")
                             .imageUrl(welfare.getImageUrl())
+                            .group("benefit")
                             .build();
 
                     resultList.add(dto);
@@ -512,6 +491,7 @@ public class BenefitServiceV2 {
                             .city(reqCity)
                             .district(district)
                             .imageUrl(welfare.getImageUrl())
+                            .group("benefit")
                             .build();
 
                     resultList.add(dto);
@@ -521,4 +501,54 @@ public class BenefitServiceV2 {
         return resultList;
     }
 
+    private List<BenefitDTO.titleResponseWeb> parseProgramTitleWeb(List<Program> list, String reqCity, String reqDistrict) {
+        List<BenefitDTO.titleResponseWeb> resultList = new ArrayList<>();
+
+        for (Program program : list) {
+
+            String sidoName = program.getCityName().getSido_id().getName();
+            String siggName = program.getCityName().getSigg_id().getName();
+
+            if (reqDistrict.isEmpty()) {
+                if (sidoName.equals(reqCity)) {
+
+                    String district = program.getCityName().getUmd_id().getName();
+                    String wType = program.getCategory();
+
+                    BenefitDTO.titleResponseWeb dto = BenefitDTO.titleResponseWeb.builder()
+                            .benefitId(program.getId())
+                            .title(program.getTitle())
+                            .type(wType)
+                            .city(reqCity)
+                            .district(district)
+                            .aplicationPeriod(program.getAplicationPeriod())
+                            .trainingPeriod(program.getTrainingPeriod())
+                            .imageUrl(program.getImageUrl())
+                            .group("program")
+                            .build();
+
+                    resultList.add(dto);
+                }
+            } else {
+                if (siggName.equals(reqDistrict)) {
+
+                    String district = program.getCityName().getUmd_id().getName();
+                    String wType = program.getCategory();
+
+                    BenefitDTO.titleResponseWeb dto = BenefitDTO.titleResponseWeb.builder()
+                            .benefitId(program.getId())
+                            .title(program.getTitle())
+                            .type(wType)
+                            .city(reqCity)
+                            .district(district)
+                            .imageUrl(program.getImageUrl())
+                            .group("program")
+                            .build();
+
+                    resultList.add(dto);
+                }
+            }
+        }
+        return resultList;
+    }
 }

@@ -30,13 +30,15 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/wemmy/**")
                 .excludePathPatterns(
                         "/wemmy/user/sign-up",
-                        "/wemmy/user/sign-up/v2",
+                        "/wemmy/user/v2/sign-up",
                         "/wemmy/user/validate/**",
+                        "/wemmy/user/v2/validate/**",
                         "/wemmy/user/login",
-                        "/wemmy/user/login/v2",
+                        "/wemmy/user/v2/login",
                         "/wemmy/access-token/reissue",
                         "/wemmy/user/oauth/**",
-                        "/wemmy/benefit/web/**"
+                        "/wemmy/benefit/web/**",
+                        "/wemmy/benefit/v2/web/**"
                 );
 
         registry.addInterceptor(adminAuthenticationInterceptor)

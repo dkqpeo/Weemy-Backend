@@ -5,19 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wemmy.domain.area.Regions;
-import wemmy.domain.area.city.SidoAreas;
-import wemmy.domain.area.district.SiggAreas;
-import wemmy.domain.user.UserEntity;
 import wemmy.domain.welfare.Program;
-import wemmy.dto.program.ProgramSaveDTO;
 import wemmy.global.config.error.ErrorCode;
 import wemmy.global.config.error.exception.ControllerException;
 import wemmy.repository.welfare.ProgramRepository;
-import wemmy.service.area.AreaService;
-import wemmy.service.user.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -31,6 +24,13 @@ public class ProgramService {
 
         programRepository.save(program);
         System.out.println("저장 완료");
+    }
+
+    public List<Program> findAll() {
+
+        List<Program> programList = programRepository.findAll();
+
+        return programList;
     }
 
     public List<Program> findAllProgramByRegions(Regions regions) {

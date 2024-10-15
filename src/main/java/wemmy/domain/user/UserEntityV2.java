@@ -57,8 +57,8 @@ public class UserEntityV2 {
     @JoinColumn(name = "sigg_id", referencedColumnName = "sigg_id")
     SiggAreas sigg_id;
 
-    @Convert(converter = StringListConverter.class)
-    private List<String> topic;         // 관심 주제 (임신 준비, 임신, 출산, 양육)
+    /*@Convert(converter = StringListConverter.class)
+    private List<String> topic;*/         // 관심 주제 (임신 준비, 임신, 출산, 양육)
 
     @Column(length = 15)
     private String gender;
@@ -88,7 +88,7 @@ public class UserEntityV2 {
     public void updateArea(SiggAreas area) {this.sigg_id = area;}
 
     public void updateUserInfo(UserRegisterDTOV2 dto) {
-        this.topic = dto.getTopic();
+        //this.topic = dto.getTopic();
         this.gender = dto.getGender();
         this.userState = dto.getUserState();
         this.characteristic = dto.getCharacteristic();

@@ -30,7 +30,7 @@ class BenefitListControllerV2Test {
     private ScrapServiceV2 scrapService;
 
 
-    @Test
+    /*@Test
     void getBenefitTitleList() {
 
         Long userID = 1L;
@@ -56,5 +56,5 @@ class BenefitListControllerV2Test {
             System.out.println(titleResponse.getTitle());
             System.out.println(titleResponse.getGroup());
         }
-    }
+    }*/
 }

@@ -40,7 +40,7 @@ public class InfoRegisterControllerV2 {
      * 온보딩 시 입력 정보 저장
      */
     @Tag(name = "UserV2")
-    @Operation(summary = "온보딩 시 입력받은 정보 저장", description = "city : 시, 도, district : 구, 군, topic : 관심주제, userState : 결혼. 임신. 출산 탭, babyState : 자녀상태, characteristic : 대상특성")
+    @Operation(summary = "온보딩 시 입력받은 정보 저장", description = "city : 시, 도, district : 구, 군, userState : 결혼. 임신. 출산 탭, babyState : 자녀상태, characteristic : 대상특성")
     @PostMapping("/register/info")
     public ResponseEntity<ResponseDTO> insertV2(@RequestBody UserRegisterDTOV2 dto, HttpServletRequest httpServletRequest) {
 

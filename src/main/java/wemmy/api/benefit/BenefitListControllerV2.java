@@ -37,6 +37,7 @@ public class BenefitListControllerV2 {
     /**
      * APP 요청 처리
      * 사용자의 거주지, 사용자 토픽에 맞는 복지 리스트 조회
+     * 토픽 수집 중단으로 인해 미사용.
      */
     /*@Tag(name = "BenefitV2")
     @Operation(summary = "APP 홈화면 복지리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
@@ -69,7 +70,7 @@ public class BenefitListControllerV2 {
      * 사용자의 거주지, 요청한 카테고리에 맞는 복지, 프로그램 조회
      */
     @Tag(name = "BenefitV2")
-    @Operation(summary = "APP 홈화면 복지리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
+    @Operation(summary = "APP 홈 분야별 혜택리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
     @GetMapping("/list/home/{group}")
     public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleListByGroup(@PathVariable("group") String group,
                                                                                      HttpServletRequest httpServletRequest) {
@@ -96,7 +97,7 @@ public class BenefitListControllerV2 {
     }
 
     /**
-     * 웹 요청 처리. 입력받은 시의 모든 복지정보를 제공.
+     * WEB 요청 처리. 입력받은 시의 모든 복지정보를 제공.
      */
     @Tag(name = "BenefitV2")
     @Operation(summary = "WEB 복지리스트 API", description = "요청쿼리로 보낸 지역시에 해당하는 복지정보 응답.")
@@ -115,7 +116,7 @@ public class BenefitListControllerV2 {
     }
 
     /**
-     * 웹 요청 처리. 입력받은 시, 구의 모든 복지정보를 제공.
+     * WEB 요청 처리. 입력받은 시, 구의 모든 복지정보를 제공.
      */
     @Tag(name = "BenefitV2")
     @Operation(summary = "WEB 복지리스트 API", description = "요청쿼리로 보낸 지역시, 구에 해당하는 복지정보 응답.")

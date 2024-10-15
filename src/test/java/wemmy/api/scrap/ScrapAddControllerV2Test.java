@@ -28,7 +28,7 @@ class ScrapAddControllerV2Test {
     @Autowired
     private ScrapServiceV2 scrapService;
 
-    @Test
+/*    @Test
     void scrapSave() {
         Long userID = 1L;
 
@@ -37,5 +37,5 @@ class ScrapAddControllerV2Test {
         Welfare welfare = welfareService.findById(79L);
         scrapService.scrapSaveByBenefit(user, welfare);
 
-    }
+    }*/
 }
