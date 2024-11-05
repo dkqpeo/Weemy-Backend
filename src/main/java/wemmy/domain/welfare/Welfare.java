@@ -44,7 +44,9 @@ public class Welfare {
     private String originalUrl; // 원본 url
 
     @Column(name = "image_url", length = 2083)
-    private String imageUrl; // 이미지 url
+    private String imageUrl;    // 이미지 url
+
+    private Long view;          // 조회수
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")

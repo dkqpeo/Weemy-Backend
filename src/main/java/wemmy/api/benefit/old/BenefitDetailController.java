@@ -1,7 +1,5 @@
 package wemmy.api.benefit.old;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wemmy.domain.user.UserEntity;
-import wemmy.dto.benefit.BenefitDTO;
+import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.benefit.BenefitService;
 import wemmy.service.scrap.ScrapService;

@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wemmy.domain.user.UserEntityV2;
-import wemmy.dto.benefit.BenefitDTO;
+import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.benefit.BenefitServiceV2;
 import wemmy.service.scrap.ScrapServiceV2;

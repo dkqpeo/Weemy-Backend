@@ -46,4 +46,10 @@ public class ProgramService {
 
         return program;
     }
+
+    public List<Program> findByView(Regions regions) {
+        List<Program> programList = programRepository.findAllByOrderByViewAsc(regions);
+
+        return programList;
+    }
 }

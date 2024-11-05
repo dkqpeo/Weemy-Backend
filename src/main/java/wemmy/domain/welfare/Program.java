@@ -22,11 +22,13 @@ public class Program {
 
     private String title;               // 프로그램 이름
 
-    private String aplicationPeriod;    // 신청 기간
+    private String applicationPeriod;    // 신청 기간
 
     private String trainingPeriod;      // 교육 기간
 
     private String category;            // 카테고리 ['임신준비', '임신', '출산·육아']
+
+    private Long view;                 // 조회수
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "city_name", referencedColumnName = "region_id")

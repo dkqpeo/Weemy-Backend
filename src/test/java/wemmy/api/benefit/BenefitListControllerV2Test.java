@@ -1,18 +1,11 @@
 package wemmy.api.benefit;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import wemmy.domain.area.Regions;
-import wemmy.domain.user.UserEntityV2;
-import wemmy.dto.benefit.BenefitDTO;
-import wemmy.dto.scrap.ScrapDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.benefit.BenefitServiceV2;
 import wemmy.service.scrap.ScrapServiceV2;
 import wemmy.service.user.UserServiceV2;
-
-import java.util.List;
 
 @SpringBootTest
 class BenefitListControllerV2Test {
@@ -56,5 +49,23 @@ class BenefitListControllerV2Test {
             System.out.println(titleResponse.getTitle());
             System.out.println(titleResponse.getGroup());
         }
+    }*/
+
+    /*@Test
+    void getBenefitTitleListByMostView() {
+        // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
+        Long userID = 1L;
+        UserEntityV2 user = userService.findByUserId(userID);
+
+        String city = user.getSigg_id().getSido_id().getName();
+        String district = user.getSigg_id().getName();
+
+        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+
+        // 회원이 스크랩 한 복지정보 리스트
+        List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
+
+        benefitService.getBenefitTitleListByMostView(region, city, district, user, scrapList);
     }*/
 }

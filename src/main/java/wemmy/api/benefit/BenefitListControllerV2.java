@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wemmy.domain.area.Regions;
 import wemmy.domain.user.UserEntityV2;
-import wemmy.dto.benefit.BenefitDTO;
+import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.dto.scrap.ScrapDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.area.AreaService;
@@ -82,7 +82,6 @@ public class BenefitListControllerV2 {
         String city = user.getSigg_id().getSido_id().getName();
         String district = user.getSigg_id().getName();
 
-
         // 회원 정보에 있는 sigg_id를 통해 region code 조회.
         Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
         // 정부 region code 조회.
@@ -91,9 +90,33 @@ public class BenefitListControllerV2 {
         // 회원이 스크랩 한 복지정보 리스트
         List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
 
+
         // region code로 복지(혜택)정보 조회.
         List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleListByGroup(region, government, city, district, user, scrapList, group);
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
+    }
+
+    @Tag(name = "BenefitV2")
+    @Operation(summary = "APP HOT 혜택리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
+    @GetMapping("/list/home/hot")
+    public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleListByMostView(HttpServletRequest httpServletRequest) {
+
+        // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
+        Long userID = getUserIDByToken.getUserID(httpServletRequest);
+        UserEntityV2 user = userServiceV2.findByUserId(userID);
+
+        String city = user.getSigg_id().getSido_id().getName();
+        String district = user.getSigg_id().getName();
+
+        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+
+        // 회원이 스크랩 한 복지정보 리스트
+        List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
+
+        List<BenefitDTO.titleResponse> benefitTitleListByMostView = benefitService.getBenefitTitleListByMostView(region, city, district, user, scrapList);
+        return new ResponseEntity<>(benefitTitleListByMostView, HttpStatus.OK);
+
     }
 
     /**

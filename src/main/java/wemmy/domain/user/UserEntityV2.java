@@ -33,6 +33,9 @@ public class UserEntityV2 {
     @Column(nullable = false, length = 10)
     private UserType userType;          // 회원 구분 (로컬, 카카오 등)
 
+    @Column
+    private String name;
+
     @Column(unique = true, length = 50, nullable = false)
     private String email;               // 로그인 시 사용되는 이메일
 

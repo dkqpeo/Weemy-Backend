@@ -1,4 +1,4 @@
-package wemmy.dto.benefit;
+package wemmy.dto.welfare.benefit;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -18,12 +18,13 @@ public class BenefitDTO {
         private String way;             // 신청방법
         private String etc;             // 연락처
         private String originalUrl;    // 원본 url
-        private String aplicationPeriod;    // 신청 기간
+        private String applicationPeriod;    // 신청 기간
         private String trainingPeriod;      // 교육 기간
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
-        private String scrap;           // 스크랩 여부.
+        private String scrap;           // 스크랩 여부
+        //private boolean scrap;           // 스크랩 여부
     }
 
     @Getter
@@ -38,12 +39,13 @@ public class BenefitDTO {
         private String way;             // 신청방법
         private String etc;             // 연락처
         private String originalUrl;    // 원본 url
-        private String aplicationPeriod;    // 신청 기간
+        private String applicationPeriod;    // 신청 기간
         private String trainingPeriod;      // 교육 기간
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
-        private String scrap;           // 스크랩 여부.
+        private String scrap;           // 스크랩 여부
+        //private boolean scrap;           // 스크랩 여부
     }
 
     @Getter
@@ -52,13 +54,14 @@ public class BenefitDTO {
         private String group;           // benefit, program
         private Long benefitId;
         private String title;           // 복지 제목
-        private String aplicationPeriod;    // 신청 기간
+        private String applicationPeriod;    // 신청 기간
         private String trainingPeriod;      // 교육 기간
         private String category;            // 카테고리 ['임신준비', '임신', '출산·육아']
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
         private String imageUrl;        // 이미지 url
-        private String scrap;           // 스크랩 여부.
+        private String scrap;           // 스크랩 여부
+        //private boolean scrap;           // 스크랩 여부
     }
 
     /**
@@ -72,10 +75,11 @@ public class BenefitDTO {
         private String title;           // 복지 제목
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
-        private String aplicationPeriod;    // 신청 기간
+        private String applicationPeriod;    // 신청 기간
         private String trainingPeriod;      // 교육 기간
         private String imageUrl;        // 이미지 url
         private String scrap;           // 스크랩 여부
+        //private boolean scrap;           // 스크랩 여부
         private String group;           // benefit, program
     }
 
@@ -90,7 +94,7 @@ public class BenefitDTO {
         private String type;            // 임신, 육아
         private String city;            // 시 ex) 서울특별시
         private String district;        // 지역 ex) 강남구
-        private String aplicationPeriod;    // 신청 기간
+        private String applicationPeriod;    // 신청 기간
         private String trainingPeriod;      // 교육 기간
         private String imageUrl;        // 이미지 url
         private String group;           // benefit, program
