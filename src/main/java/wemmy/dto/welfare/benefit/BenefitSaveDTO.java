@@ -1,4 +1,4 @@
-package wemmy.dto.benefit;
+package wemmy.dto.welfare.benefit;
 
 import lombok.Getter;
 import lombok.Setter;

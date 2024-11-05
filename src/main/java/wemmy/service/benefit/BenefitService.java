@@ -9,8 +9,8 @@ import wemmy.domain.baby.constant.BabyType;
 import wemmy.domain.user.UserEntity;
 import wemmy.domain.welfare.Wcategory;
 import wemmy.domain.welfare.Welfare;
-import wemmy.dto.benefit.BenefitDTO;
-import wemmy.dto.benefit.BenefitSaveDTO;
+import wemmy.dto.welfare.benefit.BenefitDTO;
+import wemmy.dto.welfare.benefit.BenefitSaveDTO;
 import wemmy.dto.scrap.ScrapDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.user.UserService;
@@ -185,6 +185,10 @@ public class BenefitService {
 
         String city = detailBenefit.getHostId().getSido_id().getName();
         String district = detailBenefit.getHostId().getSigg_id().getName();
+        boolean b_scrap = false;
+
+        if (scrap.equals("true"))
+            b_scrap = true;
 
         BenefitDTO.response build = BenefitDTO.response.builder()
                 .benefitId(detailBenefit.getId())

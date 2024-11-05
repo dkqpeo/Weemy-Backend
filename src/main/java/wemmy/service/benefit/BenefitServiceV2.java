@@ -8,7 +8,7 @@ import wemmy.domain.area.Regions;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.welfare.Program;
 import wemmy.domain.welfare.Welfare;
-import wemmy.dto.benefit.BenefitDTO;
+import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.dto.scrap.ScrapDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.user.UserServiceV2;
@@ -170,7 +170,6 @@ public class BenefitServiceV2 {
         // 프로그램 정보
         List<Program> programList = programService.findAllProgramByRegions(regions);
 
-
         // Response List.
         List<BenefitDTO.titleResponse> benefitList;
 
@@ -191,6 +190,40 @@ public class BenefitServiceV2 {
     }
 
     /**
+     * 앱 홈화면에 보여질 복지 제목 리스트, Most View
+     */
+    public List<BenefitDTO.titleResponse> getBenefitTitleListByMostView(Regions regions, String city,
+                                                                        String district, UserEntityV2 babyType, List<ScrapDTO.response> scrapList) {
+
+        // 자치구 복지정보.
+        List<Welfare> welfareList = welfareService.findAllByView(regions);
+
+        // 프로그램 정보
+        List<Program> programList = programService.findByView(regions);
+
+        // Response List.
+        List<BenefitDTO.titleResponse> benefitList;
+
+        Long categoryId = null;
+
+        // 임신/육아 여부 확인.
+        if (babyType != null) {
+            categoryId = 1L;                // 임신
+        } else if (babyType == null) {
+            categoryId = 2L;                // 육아
+        }
+
+        if(programList.size() == 0) {
+            benefitList = parseWelfareTitleByMostView(welfareList, city, district, categoryId, 5, scrapList);
+        } else {
+            benefitList = parseWelfareTitleByMostView(welfareList, city, district, categoryId, 3, scrapList);
+            benefitList.addAll(parseProgramTitleByMostView(programList, city, district, 2, scrapList));
+        }
+
+        return benefitList;
+    }
+
+    /**
      * 웹 지역시 기준 복지 리스트
      */
     public List<BenefitDTO.titleResponseWeb> getBenefitTitleListWeb(Regions government, String reqCity, String reqDistrict) {
@@ -199,17 +232,21 @@ public class BenefitServiceV2 {
         List<Welfare> welfareList = welfareService.findAll();
         // 정부 복지정보.
         List<Welfare> governmentList = welfareService.findAllByWelfareById(government);
+        // 프로그램 정보
+        List<Program> programList = programService.findAll();
+
         // Response List.
         List<BenefitDTO.titleResponseWeb> benefitList;
 
         benefitList = parseWelfareTitleWeb(welfareList, reqCity, reqDistrict);
         benefitList.addAll(parseWelfareTitleWeb(governmentList, "정부", reqDistrict));
+        benefitList.addAll(parseProgramTitleWeb(programList, reqCity, reqDistrict));
 
         return benefitList;
     }
 
     /**
-     * App
+     * App, Web
      * benefit_id로 상세 복지정보 조회.
      *
      * @return BenefitDTO.benefitResponse
@@ -221,9 +258,13 @@ public class BenefitServiceV2 {
         String category = "";
         String city = detailBenefit.getHostId().getSido_id().getName();
         String district = detailBenefit.getHostId().getSigg_id().getName();
+        boolean b_scrap = false;
 
-        if(detailBenefit.getWCategoryId().getId() == 1L)
-            category = "임신";
+        if (scrap.equals("true"))
+            b_scrap = true;
+
+        if (detailBenefit.getWCategoryId().getId() == 1L)
+            category = "임산부";
         else if (detailBenefit.getWCategoryId().getId() == 2L) {
             category = "영유아";
         }
@@ -238,7 +279,7 @@ public class BenefitServiceV2 {
                 .way(detailBenefit.getWay())
                 .etc(detailBenefit.getEtc())
                 .originalUrl(detailBenefit.getOriginalUrl())
-                .aplicationPeriod("")
+                .applicationPeriod("")
                 .trainingPeriod("")
                 .city(city)
                 .district(district)
@@ -250,9 +291,8 @@ public class BenefitServiceV2 {
     }
 
     /**
-     * App
+     * App, Web
      * program_id로 상세 복지정보 조회.
-     *
      * @return BenefitDTO.programResponse
      */
     public BenefitDTO.programResponse getProgramDetail(Long program_id, String scrap, String group) {
@@ -261,47 +301,22 @@ public class BenefitServiceV2 {
 
         String city = detailProgram.getCityName().getSido_id().getName();
         String district = detailProgram.getCityName().getSigg_id().getName();
+        boolean b_scrap = false;
+
+        if (scrap.equals("true"))
+            b_scrap = true;
 
         BenefitDTO.programResponse build = BenefitDTO.programResponse.builder()
                 .group("proram")
                 .benefitId(detailProgram.getId())
                 .title(detailProgram.getTitle())
-                .aplicationPeriod(detailProgram.getAplicationPeriod())
+                .applicationPeriod(detailProgram.getApplicationPeriod())
                 .trainingPeriod(detailProgram.getTrainingPeriod())
                 .category(detailProgram.getCategory())
                 .city(city)
                 .district(district)
                 .imageUrl(detailProgram.getImageUrl())
                 .scrap(scrap)
-                .build();
-
-        return build;
-    }
-
-    /**
-     * Web
-     * benefit_id로 상세 복지정보 조회.
-     *
-     * @return BenefitDTO.response
-     */
-    public BenefitDTO.response getWebBenefitDetail(Long benefit_id) {
-        Welfare detailBenefit = welfareService.findById(benefit_id);
-
-        String city = detailBenefit.getHostId().getSido_id().getName();
-        String district = detailBenefit.getHostId().getSigg_id().getName();
-
-        BenefitDTO.response build = BenefitDTO.response.builder()
-                .benefitId(detailBenefit.getId())
-                .wCategoryId(detailBenefit.getWCategoryId().getId())
-                .title(detailBenefit.getTitle())
-                .field(detailBenefit.getField())
-                .content(detailBenefit.getContent())
-                .way(detailBenefit.getWay())
-                .etc(detailBenefit.getEtc())
-                .originalUrl(detailBenefit.getOriginalUrl())
-                .city(city)
-                .district(district)
-                .imageUrl(detailBenefit.getImageUrl())
                 .build();
 
         return build;
@@ -333,7 +348,7 @@ public class BenefitServiceV2 {
     }
 
     /**
-     * 사용자 타입에 맞는 지역시, 정부의 전체 혜택 중 2개의 값만 리턴
+     * 사용자 타입에 맞는 지역시, 정부의 전체 혜택 중 n개의 값만 리턴
      */
     private List<BenefitDTO.titleResponse> parseWelfareTitle(List<Welfare> list, String city, String district,
                                                              Long categoryId, int count, List<ScrapDTO.response> scrapList) {
@@ -349,6 +364,8 @@ public class BenefitServiceV2 {
                         .title(welfare.getTitle())
                         .city(city)
                         .district(district)
+                        .applicationPeriod("")
+                        .trainingPeriod("")
                         .imageUrl(welfare.getImageUrl())
                         .scrap("false")
                         .group("benefit")
@@ -360,6 +377,11 @@ public class BenefitServiceV2 {
 
         Random random = new Random();
         int randomIndex = 0;
+
+        if(list.size() < count) {
+            log.info("count 크기 변경", list.size());
+            count = list.size();
+        }
 
         // 복지 리스트 중 랜덤으로 선택
         for (int i = 0; i < count; i++) {
@@ -389,23 +411,21 @@ public class BenefitServiceV2 {
 
         for (Program program : list) {
 
-            List<String> topic = babyType.getTopic();
-            if (topic.contains(program.getCategory())) {
-                log.info("status : true");
+            log.info("status : true");
 
-                BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
-                        .benefitId(program.getId())
-                        .title(program.getTitle())
-                        .city(city)
-                        .district(district)
-                        .imageUrl(program.getImageUrl())
-                        .scrap("false")
-                        .group("program")
-                        .build();
+            BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
+                    .benefitId(program.getId())
+                    .title(program.getTitle())
+                    .city(city)
+                    .district(district)
+                    .imageUrl(program.getImageUrl())
+                    .scrap("false")
+                    .group("program")
+                    .build();
 
-                resultList.add(dto);
-            }
+            resultList.add(dto);
         }
+
 
         Random random = new Random();
         int randomIndex = 0;
@@ -431,6 +451,98 @@ public class BenefitServiceV2 {
     }
 
     /**
+     * 사용자 타입에 맞는 지역시, 정부의 전체 혜택 중 n개의 값만 리턴
+     */
+    private List<BenefitDTO.titleResponse> parseWelfareTitleByMostView(List<Welfare> list, String city, String district,
+                                                             Long categoryId, int count, List<ScrapDTO.response> scrapList) {
+        List<BenefitDTO.titleResponse> resultList = new ArrayList<>();
+        List<BenefitDTO.titleResponse> respList = new ArrayList<>();
+
+        for (Welfare welfare : list) {
+            log.info(String.valueOf(welfare.getView()));
+
+            // 사용자의 임신 육아 여부에 일치하는 복지 정보만 저장.
+            //if (welfare.getWCategoryId().getId().equals(categoryId)) {
+                BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
+                        .benefitId(welfare.getId())
+                        .title(welfare.getTitle())
+                        .city(city)
+                        .district(district)
+                        .applicationPeriod("")
+                        .trainingPeriod("")
+                        .imageUrl(welfare.getImageUrl())
+                        .scrap("false")
+                        .group("benefit")
+                        .build();
+
+                resultList.add(dto);
+            //}
+        }
+
+        // 복지 리스트 중 앞 3개의 정보 선택
+        for (int i = 0; i < count; i++) {
+            respList.add(resultList.get(i));
+        }
+
+        // 응답할 복지 리스트의 스크랩 여부 확인.
+            for (ScrapDTO.response scrap : scrapList) {
+                for (BenefitDTO.titleResponse resp : respList) {
+                    if (scrap.getWelfareId().equals(resp.getBenefitId())) {
+                        log.info("scrap " + scrap.getWelfareId());
+                        log.info("benefit " + resp.getBenefitId());
+                        resp.setScrap("true");
+                    }
+                }
+            }
+
+        return respList;
+    }
+
+    /**
+     * 프로그램 정보
+     */
+    private List<BenefitDTO.titleResponse> parseProgramTitleByMostView(List<Program> list, String city, String district,
+                                                                       int count, List<ScrapDTO.response> scrapList) {
+        List<BenefitDTO.titleResponse> resultList = new ArrayList<>();
+        List<BenefitDTO.titleResponse> respList = new ArrayList<>();
+
+        for (Program program : list) {
+            BenefitDTO.titleResponse dto = BenefitDTO.titleResponse.builder()
+                    .benefitId(program.getId())
+                    .title(program.getTitle())
+                    .city(city)
+                    .district(district)
+                    .imageUrl(program.getImageUrl())
+                    .scrap("false")
+                    .group("program")
+                    .build();
+
+            resultList.add(dto);
+        }
+
+        if(list.size() < 2) {
+            log.info("count 크기 변경", list.size());
+            count = list.size();
+        }
+
+        // 복지 리스트 중 앞 3개의 정보 선택
+        for (int i = 0; i < count; i++) {
+            respList.add(resultList.get(i));
+        }
+
+        // 응답할 복지 리스트의 스크랩 여부 확인.
+            for (ScrapDTO.response scrap : scrapList) {
+                for (BenefitDTO.titleResponse resp : respList) {
+                    if (scrap.getWelfareId() == resp.getBenefitId()) {
+                        resp.setScrap("true");
+                    }
+                }
+            }
+
+        return respList;
+    }
+
+    /**
      * 프로그램 정보, 요청한 그룹의 대한 데이터 제공.
      */
     private List<BenefitDTO.titleResponse> parseProgramTitleByGroup(List<Program> list, String city, String district,
@@ -448,6 +560,8 @@ public class BenefitServiceV2 {
                         .title(program.getTitle())
                         .city(city)
                         .district(district)
+                        .applicationPeriod(program.getApplicationPeriod())
+                        .trainingPeriod(program.getTrainingPeriod())
                         .imageUrl(program.getImageUrl())
                         .scrap("false")
                         .group("program")
@@ -496,7 +610,10 @@ public class BenefitServiceV2 {
                             .type(wType)
                             .city(reqCity)
                             .district(district)
+                            .applicationPeriod("")
+                            .trainingPeriod("")
                             .imageUrl(welfare.getImageUrl())
+                            .group("benefit")
                             .build();
 
                     resultList.add(dto);
@@ -512,6 +629,7 @@ public class BenefitServiceV2 {
                             .city(reqCity)
                             .district(district)
                             .imageUrl(welfare.getImageUrl())
+                            .group("benefit")
                             .build();
 
                     resultList.add(dto);
@@ -521,4 +639,54 @@ public class BenefitServiceV2 {
         return resultList;
     }
 
+    private List<BenefitDTO.titleResponseWeb> parseProgramTitleWeb(List<Program> list, String reqCity, String reqDistrict) {
+        List<BenefitDTO.titleResponseWeb> resultList = new ArrayList<>();
+
+        for (Program program : list) {
+
+            String sidoName = program.getCityName().getSido_id().getName();
+            String siggName = program.getCityName().getSigg_id().getName();
+
+            if (reqDistrict.isEmpty()) {
+                if (sidoName.equals(reqCity)) {
+
+                    String district = program.getCityName().getUmd_id().getName();
+                    String wType = program.getCategory();
+
+                    BenefitDTO.titleResponseWeb dto = BenefitDTO.titleResponseWeb.builder()
+                            .benefitId(program.getId())
+                            .title(program.getTitle())
+                            .type(wType)
+                            .city(reqCity)
+                            .district(district)
+                            .applicationPeriod(program.getApplicationPeriod())
+                            .trainingPeriod(program.getTrainingPeriod())
+                            .imageUrl(program.getImageUrl())
+                            .group("program")
+                            .build();
+
+                    resultList.add(dto);
+                }
+            } else {
+                if (siggName.equals(reqDistrict)) {
+
+                    String district = program.getCityName().getUmd_id().getName();
+                    String wType = program.getCategory();
+
+                    BenefitDTO.titleResponseWeb dto = BenefitDTO.titleResponseWeb.builder()
+                            .benefitId(program.getId())
+                            .title(program.getTitle())
+                            .type(wType)
+                            .city(reqCity)
+                            .district(district)
+                            .imageUrl(program.getImageUrl())
+                            .group("program")
+                            .build();
+
+                    resultList.add(dto);
+                }
+            }
+        }
+        return resultList;
+    }
 }

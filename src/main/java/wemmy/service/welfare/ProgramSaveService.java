@@ -15,7 +15,7 @@ import wemmy.domain.area.city.SidoAreas;
 import wemmy.domain.area.district.SiggAreas;
 import wemmy.domain.user.UserEntity;
 import wemmy.domain.welfare.Program;
-import wemmy.dto.program.ProgramSaveDTO;
+import wemmy.dto.welfare.program.ProgramSaveDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.user.UserService;
 
@@ -146,7 +146,7 @@ public class ProgramSaveService {
 
             Program program1 = Program.builder()
                     .title(title)
-                    .aplicationPeriod(aplicationPeriod)
+                    .applicationPeriod(aplicationPeriod)
                     .trainingPeriod(trainingPeriod)
                     .category(category)
                     .cityName(region)

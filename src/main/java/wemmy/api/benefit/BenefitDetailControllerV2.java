@@ -8,18 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wemmy.domain.user.UserEntity;
 import wemmy.domain.user.UserEntityV2;
-import wemmy.dto.benefit.BenefitDTO;
+import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
-import wemmy.service.area.AreaService;
-import wemmy.service.benefit.BenefitService;
 import wemmy.service.benefit.BenefitServiceV2;
-import wemmy.service.scrap.ScrapService;
 import wemmy.service.scrap.ScrapServiceV2;
-import wemmy.service.user.UserService;
 import wemmy.service.user.UserServiceV2;
-
 
 @Tag(name = "BenefitV2", description = "복지 정보 API")
 @Slf4j
@@ -30,7 +24,6 @@ public class BenefitDetailControllerV2 {
 
     private final UserServiceV2 userServiceV2;
     private final BenefitServiceV2 benefitServiceV2;
-    private final AreaService areaService;
     private final ScrapServiceV2 scrapServiceV2;
     private final GetUserIDByToken getUserIDByToken;
 
@@ -39,11 +32,11 @@ public class BenefitDetailControllerV2 {
      * 복지 내용 상세조회
      */
     @Tag(name = "BenefitV2")
-    @Operation(summary = "APP 복지 상세조회 API", description = "accessToken필요, benefitId에 해당하는 상세 복지정보 응답.")
+    @Operation(summary = "APP 복지 상세조회 API", description = "accessToken필요, benefitId에 해당하는 상세 복지정보 응답., group = benefit/program")
     @GetMapping("/detail/{id}/{group}")
     public ResponseEntity<?> getBenefitDetail(@PathVariable("id") Long id,
-                                                                @PathVariable("group") String group,
-                                                                HttpServletRequest httpServletRequest) {
+                                              @PathVariable("group") String group,
+                                              HttpServletRequest httpServletRequest) {
 
         // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
@@ -55,7 +48,7 @@ public class BenefitDetailControllerV2 {
         System.out.println(scrap);
 
         // region code로 복지(혜택)정보 조회.
-        if(group.equals("benefit")){
+        if (group.equals("benefit")) {
             BenefitDTO.benefitResponse benefitDetail = benefitServiceV2.getBenefitDetail(id, scrap, group);
             return new ResponseEntity<>(benefitDetail, HttpStatus.OK);
         } else if (group.equals("program")) {
@@ -69,16 +62,24 @@ public class BenefitDetailControllerV2 {
      * 웹 복지 내용 상세조회
      */
     @Tag(name = "BenefitV2")
-    @Operation(summary = "WEB 복지 상세조회 API", description = "benefitId에 해당하는 상세 복지정보 응답.")
+    @Operation(summary = "WEB 복지 상세조회 API", description = "benefitId에 해당하는 상세 복지정보 응답., group = benefit/program")
     @GetMapping("/web/detail")
-    public ResponseEntity<BenefitDTO.response> getBenefitDetailWeb(@RequestParam("id") Long id,
-                                                                   HttpServletRequest httpServletRequest) {
+    public ResponseEntity<?> getBenefitDetailWeb(@RequestParam("id") Long id,
+                                                 @RequestParam("group") String group,
+                                                 HttpServletRequest httpServletRequest) {
 
         log.info("request url : " + httpServletRequest.getRequestURI());
         log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
         // region code로 복지(혜택)정보 조회.
-        BenefitDTO.response benefitDetail = benefitServiceV2.getWebBenefitDetail(id);
-        return new ResponseEntity<>(benefitDetail, HttpStatus.OK);
+        if (group.equals("benefit")) {
+            BenefitDTO.benefitResponse benefitDetail = benefitServiceV2.getBenefitDetail(id, null, group);
+            return new ResponseEntity<>(benefitDetail, HttpStatus.OK);
+        } else if (group.equals("program")) {
+            BenefitDTO.programResponse programDetail = benefitServiceV2.getProgramDetail(id, "", group);
+            return new ResponseEntity<>(programDetail, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-import wemmy.dto.benefit.BenefitSaveDTO;
+import wemmy.dto.welfare.benefit.BenefitSaveDTO;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

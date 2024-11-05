@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wemmy.domain.area.Regions;
 import wemmy.domain.user.UserEntityV2;
-import wemmy.dto.benefit.BenefitDTO;
+import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.dto.scrap.ScrapDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.area.AreaService;
@@ -37,6 +37,7 @@ public class BenefitListControllerV2 {
     /**
      * APP 요청 처리
      * 사용자의 거주지, 사용자 토픽에 맞는 복지 리스트 조회
+     * 토픽 수집 중단으로 인해 미사용.
      */
     /*@Tag(name = "BenefitV2")
     @Operation(summary = "APP 홈화면 복지리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
@@ -69,7 +70,7 @@ public class BenefitListControllerV2 {
      * 사용자의 거주지, 요청한 카테고리에 맞는 복지, 프로그램 조회
      */
     @Tag(name = "BenefitV2")
-    @Operation(summary = "APP 홈화면 복지리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
+    @Operation(summary = "APP 홈 분야별 혜택리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
     @GetMapping("/list/home/{group}")
     public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleListByGroup(@PathVariable("group") String group,
                                                                                      HttpServletRequest httpServletRequest) {
@@ -81,7 +82,6 @@ public class BenefitListControllerV2 {
         String city = user.getSigg_id().getSido_id().getName();
         String district = user.getSigg_id().getName();
 
-
         // 회원 정보에 있는 sigg_id를 통해 region code 조회.
         Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
         // 정부 region code 조회.
@@ -90,13 +90,37 @@ public class BenefitListControllerV2 {
         // 회원이 스크랩 한 복지정보 리스트
         List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
 
+
         // region code로 복지(혜택)정보 조회.
         List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleListByGroup(region, government, city, district, user, scrapList, group);
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 
+    @Tag(name = "BenefitV2")
+    @Operation(summary = "APP HOT 혜택리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
+    @GetMapping("/list/home/hot")
+    public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleListByMostView(HttpServletRequest httpServletRequest) {
+
+        // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
+        Long userID = getUserIDByToken.getUserID(httpServletRequest);
+        UserEntityV2 user = userServiceV2.findByUserId(userID);
+
+        String city = user.getSigg_id().getSido_id().getName();
+        String district = user.getSigg_id().getName();
+
+        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+
+        // 회원이 스크랩 한 복지정보 리스트
+        List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
+
+        List<BenefitDTO.titleResponse> benefitTitleListByMostView = benefitService.getBenefitTitleListByMostView(region, city, district, user, scrapList);
+        return new ResponseEntity<>(benefitTitleListByMostView, HttpStatus.OK);
+
+    }
+
     /**
-     * 웹 요청 처리. 입력받은 시의 모든 복지정보를 제공.
+     * WEB 요청 처리. 입력받은 시의 모든 복지정보를 제공.
      */
     @Tag(name = "BenefitV2")
     @Operation(summary = "WEB 복지리스트 API", description = "요청쿼리로 보낸 지역시에 해당하는 복지정보 응답.")
@@ -115,7 +139,7 @@ public class BenefitListControllerV2 {
     }
 
     /**
-     * 웹 요청 처리. 입력받은 시, 구의 모든 복지정보를 제공.
+     * WEB 요청 처리. 입력받은 시, 구의 모든 복지정보를 제공.
      */
     @Tag(name = "BenefitV2")
     @Operation(summary = "WEB 복지리스트 API", description = "요청쿼리로 보낸 지역시, 구에 해당하는 복지정보 응답.")

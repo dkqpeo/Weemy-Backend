@@ -18,7 +18,7 @@ public class UserRegisterDTOV2 {
 
     private String city;
     private String district;
-    private List<String> topic;         // 관심 주제 (임신 준비, 임신, 출산, 양육)
+    // private List<String> topic;         // 관심 주제 (임신 준비, 임신, 출산, 양육)
     private String gender;
     private List<String> userState;     // 결혼. 임신. 출산 (예비부부, 신혼부부, 홀벌이, 임신계획, 난임 등..)
     private Boolean baby;                // 자녀 유무
