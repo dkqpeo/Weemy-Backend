@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wemmy.domain.user.UserEntityV2;
+import wemmy.domain.user.constant.Role;
 import wemmy.domain.welfare.Program;
 import wemmy.domain.welfare.ProgramRegistration;
 import wemmy.domain.welfare.Welfare;
@@ -16,6 +17,8 @@ import wemmy.domain.welfare.WelfareRegistration;
 import wemmy.dto.ResponseDTO;
 import wemmy.dto.welfare.WelfareRegisterListRespDTO;
 import wemmy.dto.welfare.program.ProgramRegisterDTO;
+import wemmy.global.config.error.ErrorCode;
+import wemmy.global.config.error.exception.ControllerException;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.user.UserServiceV2;
 import wemmy.service.welfare.*;
@@ -87,7 +90,12 @@ public class BenefitRegisterController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> registerList() {
+    public ResponseEntity<?> registerList(HttpServletRequest httpServletRequest) {
+        Long userID = getUserIDByToken.getUserID(httpServletRequest);
+        UserEntityV2 user = userServiceV2.findByUserId(userID);
+
+        userServiceV2.validateAdmin(user.getEmail());
+
         List<WelfareRegisterListRespDTO.response> response = welfareRegisterationService.registerList();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
