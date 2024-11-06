@@ -114,7 +114,7 @@ public class UserServiceV2 {
         UserEntityV2 admin = userRepository.findByEmail(adminId)
                 .orElseThrow(() -> new ControllerException(ErrorCode.USER_NOT_EXISTS));
         if(admin.getRole() != Role.ADMIN)
-            new ControllerException(ErrorCode.NOT_ADMIN_USER);
+           throw  new ControllerException(ErrorCode.NOT_ADMIN_USER);
 
         return admin;
     }
