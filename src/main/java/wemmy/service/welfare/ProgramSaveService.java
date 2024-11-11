@@ -70,7 +70,6 @@ public class ProgramSaveService {
     }
 
     public void programParseAndSave(List<ProgramSaveDTO> programList) {
-        System.out.println("진입");
 
         for (ProgramSaveDTO program : programList) {
             String title = program.getTitle();

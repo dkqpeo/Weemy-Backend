@@ -93,6 +93,7 @@ public class AreaService {
 
     // 지역구 조회
     public SiggAreas findBySiggNameAndSidoId(String name, SidoAreas sidoId) {
+        log.info("district : " + name);
         SiggAreas siggArea = siggAreaRepository.findByNameAndSido_id(name, sidoId)
                 .orElseThrow(() -> new ControllerException(ErrorCode.DISTRICT_NOT_EXISTS));
         return siggArea;
