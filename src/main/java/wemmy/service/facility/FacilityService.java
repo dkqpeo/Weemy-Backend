@@ -1,0 +1,159 @@
+package wemmy.service.facility;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import wemmy.domain.facility.Facility;
+import wemmy.dto.facility.FacilityDTO;
+import wemmy.repository.facility.FacilityRepository;
+import wemmy.service.area.AreaService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class FacilityService {
+
+    private final FacilityRepository facilityRepository;
+
+    public void facilitySave(Facility facility) {
+
+        facilityRepository.save(facility);
+        log.info("FacilityService-facilitySave : 저장 완료.");
+    }
+
+    public List<FacilityDTO.response> getFacilitiesWithinRadius(double longitude, double latitude, double radius) {
+
+        List<Facility> facilitiy = facilityRepository.findFacilitiesWithinRadius(longitude, latitude, radius);
+
+        List<FacilityDTO.facilityDetail> childcare_facilitieList = new ArrayList<>();       // 육아시설
+        List<FacilityDTO.facilityDetail> cultural_facilitieList = new ArrayList<>();        // 행정시설
+        List<FacilityDTO.facilityDetail> medical_facilitieList = new ArrayList<>();         // 의료시설
+        List<FacilityDTO.facilityDetail> postpartum_facilitieList = new ArrayList<>();      // 산후조리원
+
+        for (Facility facility : facilitiy) {
+            FacilityDTO.facilityDetail data = FacilityDTO.facilityDetail.builder()
+                    .facilityId(facility.getId())
+                    .facilityName(facility.getFacilityName())
+                    .address(facility.getAddress())
+                    .tel(facility.getTel())
+                    .categorySub(facility.getCategorySub())
+                    .city(facility.getDistrict().getSido_id().getName())
+                    .district(facility.getDistrict().getName())
+                    .operatingHours(facility.getOperatingHours())
+                    .build();
+
+            if(facility.getCategoryMain().equals("육아시설")){
+                childcare_facilitieList.add(data);
+            } else if (facility.getCategoryMain().equals("행정시설")) {
+                cultural_facilitieList.add(data);
+            } else if (facility.getCategoryMain().equals("의료시설")) {
+                medical_facilitieList.add(data);
+            } else if (facility.getCategoryMain().equals("산후조리원")) {
+                postpartum_facilitieList.add(data);
+            }
+        }
+
+        FacilityDTO.response childcare_facility = FacilityDTO.response.builder()
+                .category("granulation")
+                .data(childcare_facilitieList)
+                .build();
+
+        FacilityDTO.response cultural_facility = FacilityDTO.response.builder()
+                .category("administration")
+                .data(cultural_facilitieList)
+                .build();
+
+        FacilityDTO.response medical_facility = FacilityDTO.response.builder()
+                .category("medical")
+                .data(medical_facilitieList)
+                .build();
+
+        FacilityDTO.response postpartum_facility = FacilityDTO.response.builder()
+                .category("confinement")
+                .data(postpartum_facilitieList)
+                .build();
+
+        List<FacilityDTO.response> response = new ArrayList<>();
+
+        log.info("childcare_facility size : " + childcare_facility.getData().size());
+        log.info("cultural_facility size : " + cultural_facility.getData().size());
+        log.info("medical_facility size : " + medical_facility.getData().size());
+        log.info("postpartum_facility size : " + postpartum_facility.getData().size());
+
+        response.add(childcare_facility);
+        response.add(cultural_facility);
+        response.add(medical_facility);
+        response.add(postpartum_facility);
+
+        return response;
+    }
+
+    public List<FacilityDTO.titleResponse> getFacilitiesTitleWithinRadius(double longitude, double latitude, double radius) {
+
+        List<Facility> facilitiy = facilityRepository.findFacilitiesWithinRadius(longitude, latitude, radius);
+
+        List<FacilityDTO.facilityTitle> childcare_facilitieList = new ArrayList<>();       // 육아시설
+        List<FacilityDTO.facilityTitle> cultural_facilitieList = new ArrayList<>();        // 행정시설
+        List<FacilityDTO.facilityTitle> medical_facilitieList = new ArrayList<>();         // 의료시설
+        List<FacilityDTO.facilityTitle> postpartum_facilitieList = new ArrayList<>();      // 산후조리원
+
+        for (Facility facility : facilitiy) {
+            FacilityDTO.facilityTitle data = FacilityDTO.facilityTitle.builder()
+                    .facilityId(facility.getId())
+                    .facilityName(facility.getFacilityName())
+                    .city(facility.getDistrict().getSido_id().getName())
+                    .district(facility.getDistrict().getName())
+                    .operatingHours(facility.getOperatingHours())
+                    .build();
+
+            if(facility.getCategoryMain().equals("육아시설")){
+                childcare_facilitieList.add(data);
+            } else if (facility.getCategoryMain().equals("행정시설")) {
+                cultural_facilitieList.add(data);
+            } else if (facility.getCategoryMain().equals("의료시설")) {
+                medical_facilitieList.add(data);
+            } else if (facility.getCategoryMain().equals("산후조리원")) {
+                postpartum_facilitieList.add(data);
+            }
+        }
+
+        FacilityDTO.titleResponse childcare_facility = FacilityDTO.titleResponse.builder()
+                .category("granulation")
+                .data(childcare_facilitieList)
+                .build();
+
+        FacilityDTO.titleResponse cultural_facility = FacilityDTO.titleResponse.builder()
+                .category("administration")
+                .data(cultural_facilitieList)
+                .build();
+
+        FacilityDTO.titleResponse medical_facility = FacilityDTO.titleResponse.builder()
+                .category("medical")
+                .data(medical_facilitieList)
+                .build();
+
+        FacilityDTO.titleResponse postpartum_facility = FacilityDTO.titleResponse.builder()
+                .category("confinement")
+                .data(postpartum_facilitieList)
+                .build();
+
+        List<FacilityDTO.titleResponse> response = new ArrayList<>();
+
+        log.info("childcare_facility size : " + childcare_facility.getData().size());
+        log.info("cultural_facility size : " + cultural_facility.getData().size());
+        log.info("medical_facility size : " + medical_facility.getData().size());
+        log.info("postpartum_facility size : " + postpartum_facility.getData().size());
+
+        response.add(childcare_facility);
+        response.add(cultural_facility);
+        response.add(medical_facility);
+        response.add(postpartum_facility);
+
+        return response;
+    }
+}
