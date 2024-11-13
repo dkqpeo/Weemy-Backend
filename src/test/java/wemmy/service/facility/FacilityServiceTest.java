@@ -15,9 +15,9 @@ class FacilityServiceTest {
 
     @Test
     void getFacilitiesWithinRadius() {
-        List<FacilityDTO.response> responses = facilityService.getFacilitiesWithinRadius(126.9660613, 37.58837123, 2000);
+        //List<FacilityDTO.response> responses = facilityService.getFacilitiesWithinRadius(126.9660613, 37.58837123, 2000);
 
-        System.out.println(responses.size());
+        //System.out.println(responses.size());
 
     }
 

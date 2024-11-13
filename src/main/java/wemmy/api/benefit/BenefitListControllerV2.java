@@ -39,10 +39,14 @@ public class BenefitListControllerV2 {
      * 사용자의 거주지, 사용자 토픽에 맞는 복지 리스트 조회
      * 토픽 수집 중단으로 인해 미사용.
      */
-    /*@Tag(name = "BenefitV2")
-    @Operation(summary = "APP 홈화면 복지리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
-    @GetMapping("/list/home")*/
-    public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleList(HttpServletRequest httpServletRequest) {
+    @Tag(name = "BenefitV2")
+    @Operation(summary = "APP 맞춤혜택 API", description = "accessToken에 있는 사용자 정보에 해당하는 맞춤혜택 응답. \n group : 전체, 임신준비 등..")
+    @GetMapping("/custom/{group}")
+    public ResponseEntity<List<BenefitDTO.benefitTitleResponse>> getBenefitTitleList(@PathVariable("group") String group,
+                                                                              HttpServletRequest httpServletRequest) {
+
+        log.info("request url : " + httpServletRequest.getRequestURI());
+        log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
         // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
@@ -61,7 +65,8 @@ public class BenefitListControllerV2 {
         List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
 
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, user, scrapList);
+        List<BenefitDTO.benefitTitleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, user, scrapList, group);
+
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 
@@ -72,8 +77,11 @@ public class BenefitListControllerV2 {
     @Tag(name = "BenefitV2")
     @Operation(summary = "APP 홈 분야별 혜택리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
     @GetMapping("/list/home/{group}")
-    public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleListByGroup(@PathVariable("group") String group,
+    public ResponseEntity<List<BenefitDTO.benefitTitleResponse>> getBenefitTitleListByGroup(@PathVariable("group") String group,
                                                                                      HttpServletRequest httpServletRequest) {
+
+        log.info("request url : " + httpServletRequest.getRequestURI());
+        log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
         // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
@@ -92,14 +100,17 @@ public class BenefitListControllerV2 {
 
 
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleListByGroup(region, government, city, district, user, scrapList, group);
+        List<BenefitDTO.benefitTitleResponse> benefitList = benefitService.getBenefitTitleListByGroup(region, government, city, district, user, scrapList, group);
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 
     @Tag(name = "BenefitV2")
     @Operation(summary = "APP HOT 혜택리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
     @GetMapping("/list/home/hot")
-    public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleListByMostView(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<List<BenefitDTO.benefitTitleResponse>> getBenefitTitleListByMostView(HttpServletRequest httpServletRequest) {
+
+        log.info("request url : " + httpServletRequest.getRequestURI());
+        log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
         // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
@@ -114,7 +125,7 @@ public class BenefitListControllerV2 {
         // 회원이 스크랩 한 복지정보 리스트
         List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
 
-        List<BenefitDTO.titleResponse> benefitTitleListByMostView = benefitService.getBenefitTitleListByMostView(region, city, district, user, scrapList);
+        List<BenefitDTO.benefitTitleResponse> benefitTitleListByMostView = benefitService.getBenefitTitleListByMostView(region, city, district, user, scrapList);
         return new ResponseEntity<>(benefitTitleListByMostView, HttpStatus.OK);
 
     }

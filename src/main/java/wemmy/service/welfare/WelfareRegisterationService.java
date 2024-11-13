@@ -4,12 +4,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wemmy.domain.user.UserEntityV2;
+import wemmy.domain.welfare.Program;
 import wemmy.domain.welfare.ProgramRegistration;
+import wemmy.domain.welfare.Welfare;
 import wemmy.domain.welfare.WelfareRegistration;
 import wemmy.dto.welfare.WelfareRegisterListRespDTO;
+import wemmy.dto.welfare.program.ProgramRegisterDTO;
+import wemmy.global.config.error.ErrorCode;
+import wemmy.global.config.error.exception.ControllerException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -20,11 +28,37 @@ public class WelfareRegisterationService {
     private final ProgramRegistrationService programRegistrationService;
     private final BenefitRegistrationService benefitRegistrationService;
 
-    public void programRegister(ProgramRegistration register) {
+    public void programRegister(ProgramRegisterDTO dto, UserEntityV2 user, Program program) {
+
+        ProgramRegistration register = ProgramRegistration.builder()
+                .address(dto.getAddress())
+                .addressDetail(dto.getAddressDetail())
+                .birthday(dto.getBirthday())
+                .program(program)
+                .user(user)
+                .phone(dto.getPhone())
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .createTime(LocalDateTime.now())
+                .build();
+
         programRegistrationService.register(register);
     }
 
-    public void welfareRegister(WelfareRegistration register) {
+    public void welfareRegister(ProgramRegisterDTO dto, UserEntityV2 user, Welfare welfare) {
+
+        WelfareRegistration register = WelfareRegistration.builder()
+                .address(dto.getAddress())
+                .addressDetail(dto.getAddressDetail())
+                .birthday(dto.getBirthday())
+                .welfare(welfare)
+                .user(user)
+                .phone(dto.getPhone())
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .createTime(LocalDateTime.now())
+                .build();
+
         benefitRegistrationService.register(register);
     }
 
@@ -41,9 +75,9 @@ public class WelfareRegisterationService {
                     .registerId(program.getId())
                     .registerDate(program.getCreateTime())
                     .title(program.getProgram().getTitle())
-                    .name(program.getUser().getName())
-                    .phone(program.getUser().getPhone())
-                    .email(program.getUser().getEmail())
+                    .name(program.getName())
+                    .phone(program.getPhone())
+                    .email(program.getEmail())
                     .address(program.getAddress())
                     .addressDetail(program.getAddressDetail())
                     .build();
@@ -56,9 +90,9 @@ public class WelfareRegisterationService {
                     .registerId(benefit.getId())
                     .registerDate(benefit.getCreateTime())
                     .title(benefit.getWelfare().getTitle())
-                    .name(benefit.getUser().getName())
-                    .phone(benefit.getUser().getPhone())
-                    .email(benefit.getUser().getEmail())
+                    .name(benefit.getName())
+                    .phone(benefit.getPhone())
+                    .email(benefit.getEmail())
                     .address(benefit.getAddress())
                     .addressDetail(benefit.getAddressDetail())
                     .build();
@@ -81,5 +115,21 @@ public class WelfareRegisterationService {
         response.add(program);
         response.add(benefit);
         return response;
+    }
+
+    public void validateProgram(UserEntityV2 user, Program program) {
+
+        Optional<ProgramRegistration> result = programRegistrationService.validateProgram(program, user);
+
+        if(result.isPresent())
+            throw new ControllerException(ErrorCode.ALREADY_REGISTERED_PROGRAM);
+    }
+
+    public void validateBenefit(UserEntityV2 user, Welfare welfare) {
+
+        Optional<WelfareRegistration> result = benefitRegistrationService.validateBenefit(welfare, user);
+
+        if(result.isPresent())
+            throw new ControllerException(ErrorCode.ALREADY_REGISTERED_PROGRAM);
     }
 }

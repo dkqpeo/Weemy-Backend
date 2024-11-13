@@ -21,7 +21,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProgramRegistration extends BaseTimeEntity {
+public class ProgramRegistration{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +39,15 @@ public class ProgramRegistration extends BaseTimeEntity {
     @Column
     private LocalDate birthday;
 
+    @Column
+    private String phone;
+
+    @Column
+    private String name;
+
+    @Column
+    private String email;
+
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "program", referencedColumnName = "program_id")
     Program program;                   // 프로그램
@@ -47,6 +56,7 @@ public class ProgramRegistration extends BaseTimeEntity {
     @JoinColumn(name = "user", referencedColumnName = "user_id")
     UserEntityV2 user;                 // 신청자 정보(이름, 연락처, 이메일)
 
+    @Column(name = "create_time")
     private LocalDateTime createTime;
 
 }

@@ -43,7 +43,7 @@ public class BenefitListController {
     /*@Tag(name = "Benefit")
     @Operation(summary = "앱 홈화면 복지리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
     @GetMapping("/list/home")*/
-    public ResponseEntity<List<BenefitDTO.titleResponse>> getBenefitTitleList(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<List<BenefitDTO.benefitTitleResponse>> getBenefitTitleList(HttpServletRequest httpServletRequest) {
 
         // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
@@ -63,7 +63,7 @@ public class BenefitListController {
         List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
 
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, babyType, scrapList);
+        List<BenefitDTO.benefitTitleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, babyType, scrapList);
         return new ResponseEntity<>(benefitList, HttpStatus.OK);
     }
 

@@ -46,7 +46,13 @@ public enum ErrorCode {
     NOT_FOUND_WCATEGORY_ID(HttpStatus.BAD_REQUEST, "W-001", "해당 복지 카테고리 code가 존재하지 않습니다."),
 
     // 스크랩
-    ALREADY_REGISTERED_SCRAP(HttpStatus.BAD_REQUEST, "S-001", "이미 스크랩 되어있는 복지 정보 입니다."),;
+    ALREADY_REGISTERED_SCRAP(HttpStatus.BAD_REQUEST, "S-001", "이미 스크랩 되어있는 복지 정보 입니다."),
+
+    // 주변시설
+    FACILITY_NOT_EXISTS(HttpStatus.BAD_REQUEST, "F-001", "존재하지 않는 Facility Key 입니다."),
+
+    // 프로그램 신청
+    ALREADY_REGISTERED_PROGRAM(HttpStatus.BAD_REQUEST, "P-001", "이미 신청한 프로그램 입니다."),;
 
     private final HttpStatus httpStatus;
     private final String errorCode;
