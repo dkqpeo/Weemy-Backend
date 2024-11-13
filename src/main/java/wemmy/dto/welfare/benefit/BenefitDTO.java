@@ -3,8 +3,18 @@ package wemmy.dto.welfare.benefit;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import wemmy.dto.facility.FacilityDTO;
+
+import java.util.List;
 
 public class BenefitDTO {
+
+    @Getter
+    @Builder
+    public static class titleListResponse {
+        private String category;
+        private List<BenefitDTO.benefitTitleResponse> data;
+    }
 
     @Getter
     @Builder
@@ -65,12 +75,12 @@ public class BenefitDTO {
     }
 
     /**
-     * 앱 홈화면 복지 제목 리스트 응답.
+     * APP 홈화면 복지 제목 리스트 응답.
      */
     @Getter
     @Setter
     @Builder
-    public static class titleResponse {
+    public static class benefitTitleResponse {
         private Long benefitId;
         private String title;           // 복지 제목
         private String city;            // 시 ex) 서울특별시
@@ -84,7 +94,7 @@ public class BenefitDTO {
     }
 
     /**
-     * 웹 복지 제목 리스트 응답.
+     * WEB 복지 제목 리스트 응답.
      */
     @Getter
     @Builder

@@ -38,6 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/wemmy/access-token/reissue",
                         "/wemmy/user/oauth/**",
                         "/wemmy/benefit/web/**",
+                        "/wemmy/benefit/v2/web/**",
                         "/wemmy/benefit/v2/web/**"
                 );
 

@@ -38,6 +38,9 @@ public class BenefitDetailControllerV2 {
                                               @PathVariable("group") String group,
                                               HttpServletRequest httpServletRequest) {
 
+        log.info("request url : " + httpServletRequest.getRequestURI());
+        log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
+
         // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
         UserEntityV2 user = userServiceV2.findByUserId(userID);

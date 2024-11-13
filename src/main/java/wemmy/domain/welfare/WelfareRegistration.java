@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WelfareRegistration extends BaseTimeEntity {
+public class WelfareRegistration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,15 @@ public class WelfareRegistration extends BaseTimeEntity {
     @Column
     private LocalDate birthday;
 
+    @Column
+    private String phone;
+
+    @Column
+    private String name;
+
+    @Column
+    private String email;
+
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "welfare", referencedColumnName = "welfare_id")
     Welfare welfare;                   // 복지정보.
@@ -43,7 +52,6 @@ public class WelfareRegistration extends BaseTimeEntity {
     @JoinColumn(name = "user", referencedColumnName = "user_id")
     UserEntityV2 user;                 // 신청자 정보(이름, 연락처, 이메일)
 
-
+    @Column(name = "create_time")
     private LocalDateTime createTime;
-
 }

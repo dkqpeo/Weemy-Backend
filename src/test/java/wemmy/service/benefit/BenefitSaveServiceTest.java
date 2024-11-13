@@ -134,9 +134,9 @@ class BenefitSaveServiceTest {
         List<ScrapDTO.response> scrapList = scrapService.scrapList(user);
 
         // region code로 복지(혜택)정보 조회.
-        List<BenefitDTO.titleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, babyType, scrapList);
+        List<BenefitDTO.benefitTitleResponse> benefitList = benefitService.getBenefitTitleList(region, government, city, district, babyType, scrapList);
 
-        for (BenefitDTO.titleResponse titleResponse : benefitList) {
+        for (BenefitDTO.benefitTitleResponse titleResponse : benefitList) {
             System.out.println(titleResponse.getBenefitId());
             System.out.println(titleResponse.getTitle());
             System.out.println(titleResponse.getCity());
