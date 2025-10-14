@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wemmy.domain.baby.BabyEntity;
 import wemmy.domain.baby.constant.BabyType;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.dto.ResponseDTO;
 import wemmy.dto.baby.BabyInsertDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.baby.BabyService;
-import wemmy.service.user.UserService;
+import wemmy.service.user.UserServiceV2;
 
 import java.time.LocalDateTime;
 
@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 public class InsertBabyController {
 
     private final BabyService babyService;
-    private final UserService userService;
+    private final UserServiceV2 userService;
     private final GetUserIDByToken getUserIDByToken;
 
     @Tag(name = "Baby", description = "아기 관련 API")
@@ -37,7 +37,7 @@ public class InsertBabyController {
     public ResponseEntity<ResponseDTO> insert(@RequestBody BabyInsertDTO dto, HttpServletRequest httpServletRequest) {
 
         Long userId = getUserIDByToken.getUserID(httpServletRequest);
-        UserEntity user = userService.findByUserId(userId);
+        UserEntityV2 user = userService.findByUserId(userId);
 
         BabyEntity baby = BabyEntity.builder()
                 .name(dto.getName())

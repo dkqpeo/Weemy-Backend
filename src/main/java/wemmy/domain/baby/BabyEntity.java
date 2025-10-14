@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wemmy.domain.baby.constant.BabyType;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.dto.user.UserRegisterDTO;
 
 import java.time.LocalDate;
@@ -39,7 +39,7 @@ public class BabyEntity {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    UserEntity user;
+    UserEntityV2 user;
 
     public void updateBabyInfo(String name, LocalDate birthday, BabyType type){
         if(name != null)

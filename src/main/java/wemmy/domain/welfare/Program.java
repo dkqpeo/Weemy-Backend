@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wemmy.domain.area.Regions;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 
 @Entity(name = "program")
 @Getter
@@ -36,7 +36,7 @@ public class Program {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
-    UserEntity adminId;                 // 관리자 ID
+    UserEntityV2 adminId;                 // 관리자 ID
 
     @Column(name = "image_url", length = 2083)
     private String imageUrl;            // 이미지 url

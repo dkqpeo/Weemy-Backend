@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import wemmy.domain.area.district.SiggAreas;
 import wemmy.domain.baby.BabyEntity;
 import wemmy.domain.baby.constant.BabyType;
-import wemmy.domain.user.UserEntity;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.dto.ResponseDTO;
 import wemmy.dto.user.UserRegisterDTO;
@@ -21,7 +20,6 @@ import wemmy.dto.user.UserRegisterDTOV2;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.area.AreaService;
 import wemmy.service.baby.BabyService;
-import wemmy.service.user.UserService;
 import wemmy.service.user.UserServiceV2;
 
 import java.time.LocalDateTime;

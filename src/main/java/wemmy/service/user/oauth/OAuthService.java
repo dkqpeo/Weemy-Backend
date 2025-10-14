@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.user.constant.Role;
 import wemmy.domain.user.constant.UserType;
 import wemmy.dto.user.LoginDTO;
@@ -15,7 +15,7 @@ import wemmy.global.token.jwt.dto.TokenDto;
 import wemmy.global.token.oauth.model.OAuthAttributes;
 import wemmy.global.token.oauth.service.SocialLoginApiService;
 import wemmy.global.token.oauth.service.SocialLoginApiServiceFactory;
-import wemmy.service.user.UserService;
+import wemmy.service.user.UserServiceV2;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -28,7 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OAuthService {
 
-    private final UserService userService;
+    private final UserServiceV2 userService;
     private final TokenProvider tokenProvider;
 
     /**
@@ -108,17 +108,17 @@ public class OAuthService {
 
         TokenDto tokenDto;
 
-        Optional<UserEntity> findUser = userService.finBydUserEmail(userInfo.getEmail());
+        Optional<UserEntityV2> findUser = userService.finBydUserEmail(userInfo.getEmail());
         if(findUser.isEmpty()) { // 신규 회원
             // OAuthAttribute 객체를 활용해서 엔티티 생성
-            UserEntity oauthUser = userInfo.toUserEntity(userType, Role.USER);
+            UserEntityV2 oauthUser = userInfo.toUserEntity(userType, Role.USER);
             userService.signUp(oauthUser);
 
             tokenDto = tokenProvider.createToken(oauthUser.getId(), oauthUser.getEmail(), String.valueOf(oauthUser.getRole()));
             oauthUser.updateToken(tokenDto);
         } else { // 기존회원
             // 토큰 생성
-            UserEntity oauthUser = findUser.get();
+            UserEntityV2 oauthUser = findUser.get();
 
             tokenDto = tokenProvider.createToken(oauthUser.getId(), oauthUser.getEmail(), String.valueOf(oauthUser.getRole()));
             oauthUser.updateToken(tokenDto);

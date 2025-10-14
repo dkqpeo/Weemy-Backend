@@ -7,13 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import wemmy.domain.area.Regions;
 import wemmy.domain.baby.BabyEntity;
 import wemmy.domain.baby.constant.BabyType;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.dto.scrap.ScrapDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.baby.BabyService;
-import wemmy.service.scrap.ScrapService;
-import wemmy.service.user.UserService;
+import wemmy.service.scrap.ScrapServiceV2;
+import wemmy.service.user.UserServiceV2;
 
 import java.util.List;
 
@@ -26,19 +26,19 @@ class BenefitSaveServiceTest {
     private BenefitSaveService benefitSaveService;
 
     @Autowired
-    private BenefitService benefitService;
+    private BenefitServiceV2 benefitService;
 
     @Autowired
     private AreaService areaService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceV2 userService;
 
     @Autowired
     private BabyService babyService;
 
     @Autowired
-    private ScrapService scrapService;
+    private ScrapServiceV2 scrapService;
 
     @Test
     void benefitSave() {
@@ -118,7 +118,7 @@ class BenefitSaveServiceTest {
     void benefitTitleListApp() {
 
         // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
-        UserEntity user = userService.findByUserId(2L);
+        UserEntityV2 user = userService.findByUserId(2L);
         BabyEntity babyInfo = babyService.findBabyByUserId(user.getId());
 
         String city = "서울특별시";

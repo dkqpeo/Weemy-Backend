@@ -2,7 +2,7 @@ package wemmy.global.token.oauth.model;
 
 import lombok.Builder;
 import lombok.Getter;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.user.constant.Role;
 import wemmy.domain.user.constant.UserType;
 
@@ -16,8 +16,8 @@ public class OAuthAttributes {
     private UserType userType;
     private LocalDateTime createdAt;
 
-    public UserEntity toUserEntity(UserType userType, Role role) {
-        return UserEntity.builder()
+    public UserEntityV2 toUserEntity(UserType userType, Role role) {
+        return UserEntityV2.builder()
                 .userType(userType)
                 .email(email)
                 .createdAt(LocalDateTime.now())

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wemmy.dto.user.LoginDTO;
-import wemmy.service.user.UserService;
 import wemmy.service.user.UserServiceV2;
 
 @Tag(name = "UserV2", description = "회원 관련 API")

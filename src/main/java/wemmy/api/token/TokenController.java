@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wemmy.global.token.jwt.dto.AccessTokenResponseDTO;
 import wemmy.global.token.jwt.util.AuthorizationHeaderUtils;
-import wemmy.service.token.TokenService;
 import wemmy.service.token.TokenServiceV2;
 
 @Tag(name = "Token", description = "엑세스 토큰 재발행 API")
