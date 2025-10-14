@@ -12,10 +12,10 @@ import org.springframework.util.FileCopyUtils;
 import wemmy.domain.area.city.SidoAreas;
 import wemmy.domain.area.district.SiggAreas;
 import wemmy.domain.facility.Facility;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.dto.facility.FacilitySaveDTO;
 import wemmy.service.area.AreaService;
-import wemmy.service.user.UserService;
+import wemmy.service.user.UserServiceV2;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -29,7 +29,7 @@ public class FacilitySaveService {
 
     private final FacilityService facilityService;
     private final AreaService areaService;
-    private final UserService userService;
+    private final UserServiceV2 userService;
 
     public List<FacilitySaveDTO> facilitySave(String fileName) {
 
@@ -84,7 +84,7 @@ public class FacilitySaveService {
             String admin = facility.getAdminId();
             String district = facility.getDistrict();
 
-            UserEntity adminId = userService.validateAdmin(admin);        // 관리자 계정
+            UserEntityV2 adminId = userService.validateAdmin(admin);        // 관리자 계정
             
             SidoAreas city = areaService.findBySidoName("서울특별시");
             SiggAreas sigg = areaService.findBySiggNameAndSidoId(district, city);

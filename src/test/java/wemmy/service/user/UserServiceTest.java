@@ -4,22 +4,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import wemmy.domain.user.UserEntity;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.global.config.error.exception.MemberException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+
 class UserServiceTest {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
+    @MockBean
     private UserServiceV2 userServiceV2;
 
-    /*@Test
+    @Test
     void signUpByAdmin() {
 
         // 관리자 계정 생성
@@ -28,14 +25,14 @@ class UserServiceTest {
         } catch (MemberException e) {
 
         }
-    }*/
+    }
 
-    /*@Test
+    @Test
     void signUpByAdmin() {
 
         // 관리자 계정 생성
         try {
-            userService.signUpByAdmin("teamwemmy@gmail.com", "project2024");
+            userServiceV2.signUpByAdmin("teamwemmy@gmail.com", "project2024");
         } catch (MemberException e) {
 
         }
@@ -44,7 +41,7 @@ class UserServiceTest {
 
     @Test
     void getUserInfo() {
-        UserEntity user = userService.findByUserId(2L);
+        UserEntityV2 user = userServiceV2.findByUserId(2L);
 
         System.out.println(user.getSigg_id().getSido_id().getAdm_code());
     }
@@ -52,6 +49,6 @@ class UserServiceTest {
     @Test
     void 이메일_중복_확인() {
         // 예외발생이 잘 되는지 확인.
-        Assertions.assertThrows(MemberException.class, () -> userService.validateEmail("teamwemmy@gmail.com"));
-    }*/
+        Assertions.assertThrows(MemberException.class, () -> userServiceV2.validateEmail("teamwemmy@gmail.com"));
+    }
 }

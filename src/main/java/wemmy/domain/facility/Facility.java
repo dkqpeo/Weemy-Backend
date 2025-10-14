@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wemmy.domain.area.district.SiggAreas;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 
 @Entity(name = "facility")
 @Getter
@@ -46,7 +46,7 @@ public class Facility {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
-    UserEntity adminId;
+    UserEntityV2 adminId;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "district", referencedColumnName = "sigg_id")

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import wemmy.domain.area.Regions;
 import wemmy.domain.common.BaseTimeEntity;
-import wemmy.domain.user.UserEntity;
 import wemmy.domain.user.UserEntityV2;
 
 import java.time.LocalDate;

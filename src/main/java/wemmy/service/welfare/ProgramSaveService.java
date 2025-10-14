@@ -13,11 +13,11 @@ import org.springframework.util.FileCopyUtils;
 import wemmy.domain.area.Regions;
 import wemmy.domain.area.city.SidoAreas;
 import wemmy.domain.area.district.SiggAreas;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.welfare.Program;
 import wemmy.dto.welfare.program.ProgramSaveDTO;
 import wemmy.service.area.AreaService;
-import wemmy.service.user.UserService;
+import wemmy.service.user.UserServiceV2;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +31,7 @@ import java.util.List;
 public class ProgramSaveService {
 
     private final ProgramService programService;
-    private final UserService userService;
+    private final UserServiceV2 userService;
     private final AreaService areaService;
 
     public List<ProgramSaveDTO> programSave(String fileName) {
@@ -85,7 +85,7 @@ public class ProgramSaveService {
             String sidoCode = sigg.getSido_id().getAdm_code();
             String siggCode = sigg.getAdm_code();
 
-            UserEntity adminId = userService.validateAdmin(admin);        // 관리자 계정
+            UserEntityV2 adminId = userService.validateAdmin(admin);        // 관리자 계정
             Regions region = areaService.validateRegionCode(sidoCode+siggCode+"00000");    // 지역코드
 
             String imageUrl = "";

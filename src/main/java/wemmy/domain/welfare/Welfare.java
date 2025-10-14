@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wemmy.domain.area.Regions;
-import wemmy.domain.user.UserEntity;
+import wemmy.domain.user.UserEntityV2;
 
 @Entity (name = "welfare")
 @Getter
@@ -50,7 +50,7 @@ public class Welfare {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
-    UserEntity adminId;         // 관리자 id
+    UserEntityV2 adminId;         // 관리자 id
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "w_category_id", referencedColumnName = "w_category_id")

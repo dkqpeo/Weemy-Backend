@@ -9,13 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import wemmy.domain.user.UserEntity;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.user.constant.Role;
 import wemmy.domain.user.constant.UserType;
 import wemmy.dto.ResponseDTO;
 import wemmy.dto.user.SignUpDTO;
-import wemmy.service.user.UserService;
 import wemmy.service.user.UserServiceV2;
 
 import java.time.LocalDateTime;
