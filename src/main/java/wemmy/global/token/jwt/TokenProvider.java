@@ -1,6 +1,5 @@
 package wemmy.global.token.jwt;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

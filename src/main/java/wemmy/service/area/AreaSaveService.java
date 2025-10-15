@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import wemmy.domain.area.Regions;
 import wemmy.domain.area.city.SidoAreas;
-import wemmy.domain.area.district.SiggAreas;
+import wemmy.domain.area.district.SiguAreas;
 import wemmy.domain.area.district.UmdAreas;
 import wemmy.dto.area.openApi.OpenApiRespDTO;
 
@@ -22,26 +22,26 @@ public class AreaSaveService {
      * 군, 구 데이터 저장
      * @param list
      */
-    public void saveSigg(List<OpenApiRespDTO> list) {
+    public void saveSigu(List<OpenApiRespDTO> list) {
 
         for (OpenApiRespDTO data : list) {
             String regionCd = data.getRegion_cd();
             String sidoCd = data.getSido_cd();
-            String siggCd = data.getSigg_cd();
+            String siguCd = data.getSigu_cd();
             String umdCd = data.getUmd_cd();
             String locallowNm = data.getLocallow_nm();
 
             // 자치구, 군이 없을경우 추가.
-            if (umdCd.equals("000") && !areaService.validateSiggCode(sidoCd, siggCd).isPresent()) {
+            if (umdCd.equals("000") && !areaService.validateSiguCode(sidoCd, siguCd).isPresent()) {
                 SidoAreas findResult = areaService.findBySidoCode(sidoCd);
 
-                SiggAreas siggData = SiggAreas.builder()
-                        .adm_code(siggCd)
+                SiguAreas siguData = SiguAreas.builder()
+                        .adm_code(siguCd)
                         .name(locallowNm)
                         .sido_id(findResult)
                         .build();
 
-                areaService.saveSigg(siggData);
+                areaService.saveSigu(siguData);
             }
         }
     }
@@ -53,21 +53,21 @@ public class AreaSaveService {
     public void saveUmd(List<OpenApiRespDTO> list) {
 
         for (OpenApiRespDTO data : list) {
-            String siggCd = data.getSigg_cd();
+            String siguCd = data.getSigu_cd();
             String umdCd = data.getUmd_cd();
             String locallowNm = data.getLocallow_nm();
 
-            SiggAreas findResult = areaService.findBySiggCode(siggCd);
+            SiguAreas findResult = areaService.findBySiguCode(siguCd);
 
-            if (!areaService.validateUmdCodeAndSigg(umdCd, findResult).isPresent()) {
-                System.out.println("umd code : " + umdCd);
+            if (!areaService.validateUmdCodeAndSigu(umdCd, findResult).isPresent()) {
+                log.debug("umd code: {}", umdCd);
 
                 UmdAreas umdData = UmdAreas.builder()
                         .adm_code(umdCd)
                         .name(locallowNm)
-                        .sigg_id(findResult)
+                        .sigu_id(findResult)
                         .build();
-                System.out.println("umd code : " + umdCd + "  " + siggCd);
+                log.debug("umd code: {} sigu code: {}", umdCd, siguCd);
                 areaService.saveUmd(umdData);
             }
         }
@@ -78,17 +78,17 @@ public class AreaSaveService {
         for (OpenApiRespDTO data : list) {
             String regionCd = data.getRegion_cd();
             String sidoCd = data.getSido_cd();
-            String siggCd = data.getSigg_cd();
+            String siguCd = data.getSigu_cd();
             String umdCd = data.getUmd_cd();
 
-            SiggAreas siggAreas = areaService.findBySiggCode(siggCd);
+            SiguAreas siguAreas = areaService.findBySiguCode(siguCd);
 
             if (!areaService.findByRegionCode(regionCd).isPresent()) {
                 Regions regionData = Regions.builder()
                         .region_cd(regionCd)
                         .sido_id(areaService.findBySidoCode(sidoCd))
-                        .sigg_id(areaService.findBySiggCode(siggCd))
-                        .umd_id(areaService.findByUmdCodeAndSigg(umdCd, siggAreas))
+                        .sigu_id(areaService.findBySiguCode(siguCd))
+                        .umd_id(areaService.findByUmdCodeAndSigu(umdCd, siguAreas))
                         .build();
 
                 areaService.saveRegion(regionData);

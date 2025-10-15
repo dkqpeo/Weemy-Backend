@@ -52,12 +52,12 @@ public class BenefitListControllerV2 {
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
         UserEntityV2 user = userServiceV2.findByUserId(userID);
 
-        String city = user.getSigg_id().getSido_id().getName();
-        String district = user.getSigg_id().getName();
+        String city = user.getSigu_id().getSido_id().getName();
+        String district = user.getSigu_id().getName();
 
 
-        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
-        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+        // 회원 정보에 있는 sigu_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiguCode(user.getSigu_id());
         // 정부 region code 조회.
         Regions government = areaService.getRegionById(494L);
 
@@ -87,11 +87,11 @@ public class BenefitListControllerV2 {
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
         UserEntityV2 user = userServiceV2.findByUserId(userID);
 
-        String city = user.getSigg_id().getSido_id().getName();
-        String district = user.getSigg_id().getName();
+        String city = user.getSigu_id().getSido_id().getName();
+        String district = user.getSigu_id().getName();
 
-        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
-        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+        // 회원 정보에 있는 sigu_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiguCode(user.getSigu_id());
         // 정부 region code 조회.
         Regions government = areaService.getRegionById(494L);
 
@@ -116,11 +116,11 @@ public class BenefitListControllerV2 {
         Long userID = getUserIDByToken.getUserID(httpServletRequest);
         UserEntityV2 user = userServiceV2.findByUserId(userID);
 
-        String city = user.getSigg_id().getSido_id().getName();
-        String district = user.getSigg_id().getName();
+        String city = user.getSigu_id().getSido_id().getName();
+        String district = user.getSigu_id().getName();
 
-        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
-        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+        // 회원 정보에 있는 sigu_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiguCode(user.getSigu_id());
 
         // 회원이 스크랩 한 복지정보 리스트
         List<ScrapDTO.response> scrapList = scrapService.scrapList(user);

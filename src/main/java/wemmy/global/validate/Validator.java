@@ -5,7 +5,6 @@ import wemmy.domain.user.constant.UserType;
 import wemmy.global.config.error.ErrorCode;
 import wemmy.global.config.error.exception.MemberException;
 
-
 @Service
 public class Validator {
 

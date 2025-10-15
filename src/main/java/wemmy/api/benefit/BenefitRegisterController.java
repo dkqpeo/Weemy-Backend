@@ -9,22 +9,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wemmy.domain.user.UserEntityV2;
-import wemmy.domain.user.constant.Role;
 import wemmy.domain.welfare.Program;
-import wemmy.domain.welfare.ProgramRegistration;
 import wemmy.domain.welfare.Welfare;
-import wemmy.domain.welfare.WelfareRegistration;
 import wemmy.dto.ResponseDTO;
 import wemmy.dto.welfare.WelfareRegisterListRespDTO;
 import wemmy.dto.welfare.program.ProgramRegisterDTO;
-import wemmy.global.config.error.ErrorCode;
-import wemmy.global.config.error.exception.ControllerException;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.user.UserServiceV2;
-import wemmy.service.welfare.*;
+import wemmy.service.welfare.ProgramService;
+import wemmy.service.welfare.WelfareRegisterationService;
+import wemmy.service.welfare.WelfareService;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Tag(name = "BenefitV2", description = "복지, 프로그램 정보 API")

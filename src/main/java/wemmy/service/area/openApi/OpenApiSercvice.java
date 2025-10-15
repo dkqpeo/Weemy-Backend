@@ -36,7 +36,7 @@ public class OpenApiSercvice {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-type", "application/json");
             // 응답결과 확인
-            System.out.println("Response code: " + conn.getResponseCode());
+            log.info("Response code: {}", conn.getResponseCode());
 
             // 응답결과 저장.
             BufferedReader rd;
@@ -77,7 +77,7 @@ public class OpenApiSercvice {
                         if(rowObj.has("sido_cd")) {
                             dto.setSido_cd(rowObj.get("sido_cd").getAsString());
                         } if(rowObj.has("sgg_cd")) {
-                            dto.setSigg_cd(rowObj.get("sgg_cd").getAsString());
+                            dto.setSigu_cd(rowObj.get("sgg_cd").getAsString());
                         } if(rowObj.has("umd_cd")) {
                             dto.setUmd_cd(rowObj.get("umd_cd").getAsString());
                         } if(rowObj.has("region_cd")) {

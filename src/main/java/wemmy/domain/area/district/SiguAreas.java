@@ -7,16 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wemmy.domain.area.city.SidoAreas;
 
-@Entity(name = "sigg_areas")
+@Entity(name = "sigu_areas")
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SiggAreas {
+public class SiguAreas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sigg_id")
+    @Column(name = "sigu_id")
     private Long id;
 
     @Column(unique = false)
@@ -25,7 +25,7 @@ public class SiggAreas {
     @Column(unique = true)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "sido_id", referencedColumnName = "sido_id")
     SidoAreas sido_id;
 }

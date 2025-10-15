@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wemmy.domain.area.district.SiggAreas;
+import wemmy.domain.area.district.SiguAreas;
 import wemmy.dto.user.UpdateCityDTO;
 import wemmy.global.token.jwt.GetUserIDByToken;
 import wemmy.service.area.AreaService;
@@ -31,7 +31,7 @@ public class UpdateCityControllerV2 {
     public ResponseEntity<String> updateCity(@RequestBody UpdateCityDTO dto, HttpServletRequest request) {
 
         Long userId = getUserIDByToken.getUserID(request);
-        SiggAreas area = areaService.validateArea(dto.getCity(), dto.getDistrict());
+        SiguAreas area = areaService.validateArea(dto.getCity(), dto.getDistrict());
 
         userServiceV2.updateArea(userId, area);
         return ResponseEntity.ok("정보수정 완료.");

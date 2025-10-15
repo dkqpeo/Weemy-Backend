@@ -48,7 +48,7 @@ public class BenefitDetailControllerV2 {
         // 사용자 정보와 복지 정보 기본키로 스크랩 여부 조회.
         String scrap = scrapServiceV2.findScrap(user, id, group);
 
-        System.out.println(scrap);
+        log.debug("scrap: {}", scrap);
 
         // region code로 복지(혜택)정보 조회.
         if (group.equals("benefit")) {

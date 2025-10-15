@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wemmy.domain.area.city.SidoAreas;
-import wemmy.domain.area.district.SiggAreas;
+import wemmy.domain.area.district.SiguAreas;
 import wemmy.domain.area.district.UmdAreas;
 
 @Entity(name = "regions")
@@ -24,15 +24,15 @@ public class Regions {
     @Column(unique = true)
     private String region_cd;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "sido_id", referencedColumnName = "sido_id")
     SidoAreas sido_id;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "sigg_id", referencedColumnName = "sigg_id")
-    SiggAreas sigg_id;
+    @ManyToOne
+    @JoinColumn(name = "sigu_id", referencedColumnName = "sigu_id")
+    SiguAreas sigu_id;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "umd_id", referencedColumnName = "umd_id")
     UmdAreas umd_id;
 }

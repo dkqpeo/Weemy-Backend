@@ -48,15 +48,15 @@ public class Welfare {
 
     private Long view;          // 조회수
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
     UserEntityV2 adminId;         // 관리자 id
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "w_category_id", referencedColumnName = "w_category_id")
     Wcategory wCategoryId;      // 복지 카테고리
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "host_id", referencedColumnName = "region_id")
     Regions hostId;             // 주최 카테고리
 }

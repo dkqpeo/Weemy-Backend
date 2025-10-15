@@ -1,14 +1,9 @@
 package wemmy.dto.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import wemmy.global.converter.StringListConverter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter

@@ -22,8 +22,8 @@ public class UmdAreas {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "sigg_id", referencedColumnName = "sigg_id")
-    SiggAreas sigg_id;
+    @ManyToOne
+    @JoinColumn(name = "sigu_id", referencedColumnName = "sigu_id")
+    SiguAreas sigu_id;
 
 }

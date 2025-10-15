@@ -6,14 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import wemmy.domain.area.Regions;
-import wemmy.domain.common.BaseTimeEntity;
 import wemmy.domain.user.UserEntityV2;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity(name = "program_registration")
 @Getter
@@ -47,11 +43,11 @@ public class ProgramRegistration{
     @Column
     private String email;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "program", referencedColumnName = "program_id")
     Program program;                   // 프로그램
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "user_id")
     UserEntityV2 user;                 // 신청자 정보(이름, 연락처, 이메일)
 

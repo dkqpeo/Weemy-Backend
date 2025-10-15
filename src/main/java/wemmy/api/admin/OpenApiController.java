@@ -1,7 +1,6 @@
 package wemmy.api.admin;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,7 @@ public class OpenApiController {
 
         // 가져온 데이터 DB에 삽입.
         //areaSaveService.saveArea(result);
-        areaSaveService.saveSigg(result);
+        areaSaveService.saveSigu(result);
         areaSaveService.saveUmd(result);
         areaSaveService.saveRegion(result);
 

@@ -7,12 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wemmy.domain.baby.constant.BabyType;
 import wemmy.domain.user.UserEntityV2;
-import wemmy.dto.user.UserRegisterDTO;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import static org.springframework.util.StringUtils.hasText;
 
 @Entity(name = "BABY")
 @Getter
@@ -37,7 +34,7 @@ public class BabyEntity {
     @Enumerated(EnumType.STRING)
     private BabyType type;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     UserEntityV2 user;
 

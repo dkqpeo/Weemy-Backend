@@ -1,75 +1,82 @@
-spring:
-  config:
-    import: application-setting.yml
-
 #spring:
-#
-#  cloud:
-#    openfeign:
-#      okhttp:
-#        enabled: true
-#
-#  h2:
-#    console:
-#      enabled: true
-#
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: ${RDS_URL}
-#    #url: jdbc:mysql://localhost:3306/wemmy_backend
-#    username: ${RDS_USERNAME}
-#    password: ${RDS_PASSWORD}
-#
-#  jpa:
-#    generate-ddl: true
-#    open-in-view: false
-#    hibernate:
-#      ddl-auto: update
-#    show_sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
-#
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          kakao:
-#            client-id: ${KAKAO_CLIENT_ID}
-#            client-secret: ${KAKAO_CLIENT_KEY}
-#            redirect-uri: '{baseUrl}/wemmy/user/oauth/callback/{registrationId}'
-#            authorization-grant-type: authorization_code
-#            client-authentication-method: client_secret_post
-#            scope:
-#              - account_email
-#        provider:
-#          kakao:
-#            authorization-uri: https://kauth.kakao.com/oauth/authorize
-#            token-uri: https://kauth.kakao.com/oauth/token
-#            user-info-uri: https://kapi.kakao.com/v2/user/me
-#            user-name-attribute: id
-#
-#  # Swagger 설정
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ant_path_matcher
-#
-#token:
-#  header: Authorization
-#  secret: ${TOKEEN_SECRET} # base64
-#  access-token-expiration-time: 600000 # 10m -> ms
-#  refresh-token-expiration-time: 86400000 # 24h -> ms
-#
-#feign:
-#  client:
-#    config:
-#      default:
-#        connect-timeout: 5000 # ?? (5? ??)
-#        read-timeout: 5000 # ?? (5? ??)
-#
-#logging:
-#  level:
-#    com.jet_tutorial: DEBUG
-#
-#openApi:
-#  key: ${OPEN_API_KEY}  # 일반인증키
+#  config:
+#    import: application-setting.yml
+spring:
+
+  cloud:
+    openfeign:
+      okhttp:
+        enabled: true
+
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://wemmy-backend-db.cli04qacg8ry.ap-northeast-2.rds.amazonaws.com:3306/wemmy_backend
+    url: jdbc:mysql://localhost:3306/wemmy_backend
+    username: root
+    password: ENC(dmzBEZ2Gj/az7+V4l9Ud7Hvg3XzqJmJm)
+
+  jpa:
+    generate-ddl: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show_sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ENC(gLfBHJsZnNOoJEdLXBIyeHy8BXOlO/i21blzLR4I5e2luixav9ai5Geob/j5licF)
+            client-secret: ENC(sKm+d2l7FqBUBSNxVQ2STR0EHTC7bQFEc8+HtoGH5OAL90d8v9Yz49RvXD38JpUw)
+            redirect-uri: '{baseUrl}/wemmy/user/oauth/callback/{registrationId}'
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            scope:
+              - account_email
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+  # Swagger 관련 설정
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# actuator
+management:
+  server:
+    port: 7565
+  endpoints:
+    web:
+      base-path: "/monitoring"
+
+token:
+  header: Authorization
+  secret: ENC(CATLO0Bkw7eQVKRo2nQLLA6YQnEKcKJwwFv4BMUa8jg+tqTUivYuHxDZEkTQ+mdNfauXqgxNHWGb/AWiw7+iIpaww8fPklL1lMrnPzwdE8C9ta/WgUIluw==)
+  access-token-expiration-time: 2629800000 # 4주
+  refresh-token-expiration-time: 3629800000 # 42일
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 10000 # 10초
+        read-timeout: 60000 # 60초 (1분)
+
+openApi:
+  key: ENC(+9O98V9dq+QWKLARJI3F50JfzW+PdTOI7RRqvWigNHqJOHwjpSYkWOgA90nFXuv1UxtSGX/a31sLGOOa2oO5HayCXDrrhMNVbrE59scs9HBgtT+pozaTsUcJV0qZ+8EcvrQYQPn+cTGwk6Cz8a0uoA==)
+
+logging:
+  level:
+    com.jet_tutorial: DEBUG
+

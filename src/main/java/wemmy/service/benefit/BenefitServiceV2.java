@@ -49,57 +49,57 @@ public class BenefitServiceV2 {
             Regions region = areaService.validateRegionCode(hostId);    // 지역코드
 
             String imageUrl = "";
-            if(region.getSigg_id().getName().equals("금천구")) {
+            if(region.getSigu_id().getName().equals("금천구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/geumcheon-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("구로구")) {
+            } else if (region.getSigu_id().getName().equals("구로구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/guro-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("서초구")) {
+            } else if (region.getSigu_id().getName().equals("서초구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/seocho-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("강남구")) {
+            } else if (region.getSigu_id().getName().equals("강남구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gangnam-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("강서구")) {
+            } else if (region.getSigu_id().getName().equals("강서구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/ganseo-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("관악구")) {
+            } else if (region.getSigu_id().getName().equals("관악구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gwanak-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("광진구")) {
+            } else if (region.getSigu_id().getName().equals("광진구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gwangjin-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("동작구")) {
+            } else if (region.getSigu_id().getName().equals("동작구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/dongjak-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("영등포구")) {
+            } else if (region.getSigu_id().getName().equals("영등포구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/yeongdeungpo-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("송파구")) {
+            } else if (region.getSigu_id().getName().equals("송파구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/songpa-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("강동구")) {
+            } else if (region.getSigu_id().getName().equals("강동구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gangdong-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("양천구")) {
+            } else if (region.getSigu_id().getName().equals("양천구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/yangcheon-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("마포구")) {
+            } else if (region.getSigu_id().getName().equals("마포구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/mapo-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("서대문구")) {
+            } else if (region.getSigu_id().getName().equals("서대문구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/seodaemun-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("은평구")) {
+            } else if (region.getSigu_id().getName().equals("은평구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/eunpyeong-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("노원구")) {
+            } else if (region.getSigu_id().getName().equals("노원구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/nowon-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("도봉구")) {
+            } else if (region.getSigu_id().getName().equals("도봉구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/dobong-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("강북구")) {
+            } else if (region.getSigu_id().getName().equals("강북구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/gangbuk-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("성북구")) {
+            } else if (region.getSigu_id().getName().equals("성북구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/sungbuk-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("종로구")) {
+            } else if (region.getSigu_id().getName().equals("종로구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/jongno-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("중구")) {
+            } else if (region.getSigu_id().getName().equals("중구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/jung-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("중랑구")) {
+            } else if (region.getSigu_id().getName().equals("중랑구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/_jungnang-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("동대문구")) {
+            } else if (region.getSigu_id().getName().equals("동대문구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/dongdaemun-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("성동구")) {
+            } else if (region.getSigu_id().getName().equals("성동구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/seongdong-gu.png?raw=true";
-            } else if (region.getSigg_id().getName().equals("용산구")) {
+            } else if (region.getSigu_id().getName().equals("용산구")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/yongsan-gu.png?raw=true";
-            } else if(region.getSigg_id().getName().equals("정부")) {
+            } else if(region.getSigu_id().getName().equals("정부")) {
                 imageUrl = "https://github.com/Team-Wemmy/Wemmy-City-Image/blob/main/government.png?raw=true";
             }
 
@@ -257,7 +257,7 @@ public class BenefitServiceV2 {
 
         String category = "";
         String city = detailBenefit.getHostId().getSido_id().getName();
-        String district = detailBenefit.getHostId().getSigg_id().getName();
+        String district = detailBenefit.getHostId().getSigu_id().getName();
         boolean b_scrap = false;
 
         if (scrap.equals("true"))
@@ -300,7 +300,7 @@ public class BenefitServiceV2 {
         Program detailProgram = programService.findById(program_id);
 
         String city = detailProgram.getCityName().getSido_id().getName();
-        String district = detailProgram.getCityName().getSigg_id().getName();
+        String district = detailProgram.getCityName().getSigu_id().getName();
         boolean b_scrap = false;
 
         if (scrap.equals("true"))
@@ -691,7 +691,7 @@ public class BenefitServiceV2 {
 
         for (Welfare welfare : list) {
             String sidoName = welfare.getHostId().getSido_id().getName();
-            String siggName = welfare.getHostId().getSigg_id().getName();
+            String siguName = welfare.getHostId().getSigu_id().getName();
 
             if (reqDistrict.isEmpty()) {
                 if (sidoName.equals(reqCity)) {
@@ -712,7 +712,7 @@ public class BenefitServiceV2 {
                     resultList.add(dto);
                 }
             } else {
-                if (siggName.equals(reqDistrict)) {
+                if (siguName.equals(reqDistrict)) {
                     String district = welfare.getHostId().getUmd_id().getName();
                     String wType = welfare.getWCategoryId().getName();
                     BenefitDTO.titleResponseWeb dto = BenefitDTO.titleResponseWeb.builder()
@@ -738,7 +738,7 @@ public class BenefitServiceV2 {
         for (Program program : list) {
 
             String sidoName = program.getCityName().getSido_id().getName();
-            String siggName = program.getCityName().getSigg_id().getName();
+            String siguName = program.getCityName().getSigu_id().getName();
 
             if (reqDistrict.isEmpty()) {
                 if (sidoName.equals(reqCity)) {
@@ -761,7 +761,7 @@ public class BenefitServiceV2 {
                     resultList.add(dto);
                 }
             } else {
-                if (siggName.equals(reqDistrict)) {
+                if (siguName.equals(reqDistrict)) {
 
                     String district = program.getCityName().getUmd_id().getName();
                     String wType = program.getCategory();
