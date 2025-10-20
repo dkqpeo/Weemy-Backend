@@ -6,8 +6,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import wemmy.domain.user.constant.Role;
 import wemmy.global.config.error.ErrorCode;
 import wemmy.global.config.error.exception.TokenValidateException;
+import wemmy.global.security.CustomUserDetails;
 import wemmy.global.token.jwt.constant.TokenType;
 import wemmy.global.token.jwt.dto.TokenDto;
 
@@ -89,6 +93,30 @@ public class TokenProvider {
             throw new TokenValidateException(ErrorCode.NOT_VALID_TOKEN);
         }
         return true;
+    }
+
+    /**
+     * JWT 토큰에서 Authentication 객체 생성
+     * Spring Security에서 사용
+     */
+    public Authentication getAuthentication(String token) {
+        Claims claims = getTokenClaims(token);
+
+        Long userId = Long.parseLong(claims.get("id").toString());
+        String email = claims.get("email", String.class);
+        Role role = claims.get("userRole", Role.class);
+
+        CustomUserDetails userDetails = new CustomUserDetails(userId, email, role);
+
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    /**
+     * JWT 토큰에서 userId 추출
+     */
+    public Long getUserIdFromToken(String token) {
+        Claims claims = getTokenClaims(token);
+        return Long.parseLong(claims.get("id").toString());
     }
 
     public Claims getTokenClaims(String token) {
