@@ -4,10 +4,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 import wemmy.domain.user.constant.Role;
 import wemmy.global.config.error.ErrorCode;
 import wemmy.global.config.error.exception.TokenValidateException;
@@ -19,12 +20,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Slf4j
-@RequiredArgsConstructor
+@Component
 public class TokenProvider {
 
-    private final String accessTokenExpirationTime;
-    private final String refreshTokenExpirationTime;
-    private final String tokenSecret;
+    @Value("${token.access-token-expiration-time}")
+    private String accessTokenExpirationTime;
+
+    @Value("${token.refresh-token-expiration-time}")
+    private String refreshTokenExpirationTime;
+
+    @Value("${token.secret}")
+    private String tokenSecret;
 
     public TokenDto createToken(Long id, String email, String userRole) {
         Date accessTokenExpireTime = createAccessTokenExpireTime();

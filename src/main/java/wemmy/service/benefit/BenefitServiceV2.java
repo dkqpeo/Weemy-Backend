@@ -7,9 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import wemmy.domain.area.Regions;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.welfare.Program;
+import wemmy.domain.welfare.Wcategory;
 import wemmy.domain.welfare.Welfare;
-import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.dto.scrap.ScrapDTO;
+import wemmy.dto.welfare.benefit.BenefitDTO;
+import wemmy.dto.welfare.benefit.BenefitSaveDTO;
 import wemmy.service.area.AreaService;
 import wemmy.service.user.UserServiceV2;
 import wemmy.service.welfare.ProgramService;
@@ -31,7 +33,7 @@ public class BenefitServiceV2 {
     private final AreaService areaService;
 
     // 크롤링한 복지정보 저장.
-    /*public void benefitParseAndSave(List<BenefitSaveDTO> benefitList) {
+    public void benefitParseAndSave(List<BenefitSaveDTO> benefitList) {
         for (BenefitSaveDTO benefit : benefitList) {
             Long uniqueId = benefit.getUnique_id();
             String admin = benefit.getAdmin_id();
@@ -44,7 +46,7 @@ public class BenefitServiceV2 {
             String etc = benefit.getEtc();
             String originalUrl = benefit.getOriginal_url();
 
-            UserEntity adminId = userService.validateAdmin(admin);      // 관리자 계정
+            UserEntityV2 adminId = userService.validateAdmin(admin);      // 관리자 계정
             Wcategory wcategory = welfareService.getWcategoryByWcategoryId(wCategoryId);        // 복지 카테고리
             Regions region = areaService.validateRegionCode(hostId);    // 지역코드
 
@@ -122,7 +124,7 @@ public class BenefitServiceV2 {
 
             System.out.println("저장 완료");
         }
-    }*/
+    }
 
     /**
      * 앱 맞춤혜택에 보여질 복지 제목 리스트

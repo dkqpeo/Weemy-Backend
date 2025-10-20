@@ -76,6 +76,23 @@ feign:
 openApi:
   key: ENC(+9O98V9dq+QWKLARJI3F50JfzW+PdTOI7RRqvWigNHqJOHwjpSYkWOgA90nFXuv1UxtSGX/a31sLGOOa2oO5HayCXDrrhMNVbrE59scs9HBgtT+pozaTsUcJV0qZ+8EcvrQYQPn+cTGwk6Cz8a0uoA==)
 
+# 지역 데이터 초기화 설정
+region:
+  data:
+    init:
+      enabled: false  # true로 변경하면 앱 시작 시 Open API로부터 지역 데이터를 자동으로 초기화합니다
+
+# 복지 데이터 초기화 설정
+benefit:
+  data:
+    init:
+      enabled: false
+
+facility:
+  data:
+    init:
+      enabled: true
+
 logging:
   level:
     com.jet_tutorial: DEBUG

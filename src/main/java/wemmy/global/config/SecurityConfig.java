@@ -1,7 +1,6 @@
 package wemmy.global.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -16,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import wemmy.global.security.JwtAccessDenideHandler;
 import wemmy.global.security.JwtAuthenticationEnrtyPoint;
 import wemmy.global.security.JwtAuthenticationFilter;
-import wemmy.global.token.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -24,23 +22,9 @@ import wemmy.global.token.jwt.TokenProvider;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Value("${token.access-token-expiration-time}")
-    private String accessTokenExpirationTime;
-    @Value("${token.refresh-token-expiration-time}")
-    private String refreshTokenExpirationTime;
-    @Value("${token.secret}")
-    private String tokenSecret;
-
-    //private final DefaultOAuth2UserService oAuth2UserService;
-
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEnrtyPoint jwtAuthenticationEnrtyPoint;
     private final JwtAccessDenideHandler jwtAccessDenideHandler;
-
-    @Bean
-    public TokenProvider tokenProvider() {
-        return new TokenProvider(accessTokenExpirationTime, refreshTokenExpirationTime, tokenSecret);
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
