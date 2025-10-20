@@ -30,11 +30,11 @@ public class Program {
 
     private Long view;                 // 조회수
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "city_name", referencedColumnName = "region_id")
     Regions cityName;                   // 지역구
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
     UserEntityV2 adminId;                 // 관리자 ID
 

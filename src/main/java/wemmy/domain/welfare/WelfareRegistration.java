@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wemmy.domain.common.BaseTimeEntity;
 import wemmy.domain.user.UserEntityV2;
 
 import java.time.LocalDate;
@@ -44,11 +43,11 @@ public class WelfareRegistration {
     @Column
     private String email;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "welfare", referencedColumnName = "welfare_id")
     Welfare welfare;                   // 복지정보.
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "user_id")
     UserEntityV2 user;                 // 신청자 정보(이름, 연락처, 이메일)
 

@@ -13,7 +13,6 @@ import wemmy.domain.welfare.Welfare;
 @Entity (name = "SCRAPV2")
 @Getter
 @Builder
-//@IdClass(ScrapPK.class)
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScrapEntityV2 extends BaseTimeEntity {

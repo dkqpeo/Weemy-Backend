@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wemmy.domain.area.district.SiggAreas;
+import wemmy.domain.area.district.SiguAreas;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.domain.user.constant.Role;
 import wemmy.domain.user.constant.UserType;
@@ -78,7 +78,7 @@ public class UserServiceV2 {
         return true;
     }
 
-    public boolean updateArea(Long id, SiggAreas area) {
+    public boolean updateArea(Long id, SiguAreas area) {
         UserEntityV2 user = findByUserId(id);
 
         user.updateArea(area);

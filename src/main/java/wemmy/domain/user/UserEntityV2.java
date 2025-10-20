@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wemmy.domain.area.district.SiggAreas;
+import wemmy.domain.area.district.SiguAreas;
 import wemmy.domain.user.constant.Role;
 import wemmy.domain.user.constant.UserType;
 import wemmy.dto.user.UserRegisterDTOV2;
@@ -15,7 +15,6 @@ import wemmy.global.token.jwt.dto.TokenDto;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-
 
 @Entity (name = "USERV2")
 @Getter
@@ -57,8 +56,8 @@ public class UserEntityV2 {
 
     // -- 온보딩 시 수집 내용
     @ManyToOne
-    @JoinColumn(name = "sigg_id", referencedColumnName = "sigg_id")
-    SiggAreas sigg_id;
+    @JoinColumn(name = "sigu_id", referencedColumnName = "sigu_id")
+    SiguAreas sigu_id;
 
     /*@Convert(converter = StringListConverter.class)
     private List<String> topic;*/         // 관심 주제 (임신 준비, 임신, 출산, 양육)
@@ -88,7 +87,7 @@ public class UserEntityV2 {
     public void updatePassword(String password){
         this.password = password;
     }
-    public void updateArea(SiggAreas area) {this.sigg_id = area;}
+    public void updateArea(SiguAreas area) {this.sigu_id = area;}
 
     public void updateUserInfo(UserRegisterDTOV2 dto) {
         //this.topic = dto.getTopic();

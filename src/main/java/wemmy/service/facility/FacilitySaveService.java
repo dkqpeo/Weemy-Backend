@@ -10,7 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import wemmy.domain.area.city.SidoAreas;
-import wemmy.domain.area.district.SiggAreas;
+import wemmy.domain.area.district.SiguAreas;
 import wemmy.domain.facility.Facility;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.dto.facility.FacilitySaveDTO;
@@ -87,7 +87,7 @@ public class FacilitySaveService {
             UserEntityV2 adminId = userService.validateAdmin(admin);        // 관리자 계정
             
             SidoAreas city = areaService.findBySidoName("서울특별시");
-            SiggAreas sigg = areaService.findBySiggNameAndSidoId(district, city);
+            SiguAreas sigu = areaService.findBySiguNameAndSidoId(district, city);
 
             Facility facility1 = Facility.builder()
                     .facilityName(facilityName)
@@ -99,7 +99,7 @@ public class FacilitySaveService {
                     .categorySub(categorySub)
                     .operatingHours(operatingHours)
                     .adminId(adminId)
-                    .district(sigg)
+                    .district(sigu)
                     .build();
 
             facilityService.facilitySave(facility1);

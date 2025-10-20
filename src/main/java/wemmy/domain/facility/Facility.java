@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wemmy.domain.area.district.SiggAreas;
+import wemmy.domain.area.district.SiguAreas;
 import wemmy.domain.user.UserEntityV2;
 
 @Entity(name = "facility")
@@ -44,12 +44,12 @@ public class Facility {
     @Column
     private String operatingHours;          // 영업시간
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
     UserEntityV2 adminId;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "district", referencedColumnName = "sigg_id")
-    SiggAreas district;
+    @ManyToOne
+    @JoinColumn(name = "district", referencedColumnName = "sigu_id")
+    SiguAreas district;
 
 }

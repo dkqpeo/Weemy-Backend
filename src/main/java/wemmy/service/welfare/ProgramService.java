@@ -23,7 +23,7 @@ public class ProgramService {
     public void programSave(Program program) {
 
         programRepository.save(program);
-        System.out.println("저장 완료");
+        log.info("프로그램 저장 완료");
     }
 
     public List<Program> findAll() {

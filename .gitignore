@@ -36,3 +36,9 @@ out/
 
 ### VS Code ###
 .vscode/
+/CLAUDE.md
+/claudedocs/jasypt-encryption-guide.md
+/src/main/java/wemmy/global/config/JasyptConfig.java
+/src/main/java/wemmy/global/util/JasyptEncryptUtil.java
+/claudedocs/project-analysis.md
+/claudedocs/spring-security-migration-guide.md

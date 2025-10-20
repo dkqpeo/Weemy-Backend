@@ -1,8 +1,8 @@
 package wemmy.dto.facility;
 
-import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
+
 import java.util.List;
 
 @Getter

@@ -2,7 +2,6 @@ package wemmy.dto.user;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import wemmy.global.token.jwt.dto.TokenDto;
 

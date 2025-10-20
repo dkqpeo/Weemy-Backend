@@ -7,12 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import wemmy.domain.area.Regions;
 import wemmy.domain.user.UserEntityV2;
 import wemmy.dto.welfare.benefit.BenefitDTO;
 import wemmy.dto.scrap.ScrapDTO;
-import wemmy.global.token.jwt.GetUserIDByToken;
+import wemmy.global.security.CustomUserDetails;
 import wemmy.service.area.AreaService;
 import wemmy.service.benefit.BenefitServiceV2;
 import wemmy.service.scrap.ScrapServiceV2;
@@ -32,7 +33,6 @@ public class BenefitListControllerV2 {
     private final BenefitServiceV2 benefitService;
     private final AreaService areaService;
     private final ScrapServiceV2 scrapService;
-    private final GetUserIDByToken getUserIDByToken;
 
     /**
      * APP 요청 처리
@@ -43,21 +43,22 @@ public class BenefitListControllerV2 {
     @Operation(summary = "APP 맞춤혜택 API", description = "accessToken에 있는 사용자 정보에 해당하는 맞춤혜택 응답. \n group : 전체, 임신준비 등..")
     @GetMapping("/custom/{group}")
     public ResponseEntity<List<BenefitDTO.benefitTitleResponse>> getBenefitTitleList(@PathVariable("group") String group,
+                                                                              @AuthenticationPrincipal CustomUserDetails userDetails,
                                                                               HttpServletRequest httpServletRequest) {
 
         log.info("request url : " + httpServletRequest.getRequestURI());
         log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
-        // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
-        Long userID = getUserIDByToken.getUserID(httpServletRequest);
+        // 인증된 사용자 정보로 거주하는 지역 및 임신/육아 여부 판별.
+        Long userID = userDetails.getUserId();
         UserEntityV2 user = userServiceV2.findByUserId(userID);
 
-        String city = user.getSigg_id().getSido_id().getName();
-        String district = user.getSigg_id().getName();
+        String city = user.getSigu_id().getSido_id().getName();
+        String district = user.getSigu_id().getName();
 
 
-        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
-        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+        // 회원 정보에 있는 sigu_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiguCode(user.getSigu_id());
         // 정부 region code 조회.
         Regions government = areaService.getRegionById(494L);
 
@@ -78,20 +79,21 @@ public class BenefitListControllerV2 {
     @Operation(summary = "APP 홈 분야별 혜택리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
     @GetMapping("/list/home/{group}")
     public ResponseEntity<List<BenefitDTO.benefitTitleResponse>> getBenefitTitleListByGroup(@PathVariable("group") String group,
+                                                                                     @AuthenticationPrincipal CustomUserDetails userDetails,
                                                                                      HttpServletRequest httpServletRequest) {
 
         log.info("request url : " + httpServletRequest.getRequestURI());
         log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
-        // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
-        Long userID = getUserIDByToken.getUserID(httpServletRequest);
+        // 인증된 사용자 정보로 거주하는 지역 및 임신/육아 여부 판별.
+        Long userID = userDetails.getUserId();
         UserEntityV2 user = userServiceV2.findByUserId(userID);
 
-        String city = user.getSigg_id().getSido_id().getName();
-        String district = user.getSigg_id().getName();
+        String city = user.getSigu_id().getSido_id().getName();
+        String district = user.getSigu_id().getName();
 
-        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
-        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+        // 회원 정보에 있는 sigu_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiguCode(user.getSigu_id());
         // 정부 region code 조회.
         Regions government = areaService.getRegionById(494L);
 
@@ -107,20 +109,21 @@ public class BenefitListControllerV2 {
     @Tag(name = "BenefitV2")
     @Operation(summary = "APP HOT 혜택리스트 API", description = "accessToken에 있는 사용자 정보에 해당하는 복지정보 응답.")
     @GetMapping("/list/home/hot")
-    public ResponseEntity<List<BenefitDTO.benefitTitleResponse>> getBenefitTitleListByMostView(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<List<BenefitDTO.benefitTitleResponse>> getBenefitTitleListByMostView(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                                                                HttpServletRequest httpServletRequest) {
 
         log.info("request url : " + httpServletRequest.getRequestURI());
         log.info("request user-agent : " + httpServletRequest.getHeader("user-agent"));
 
-        // 사용자 기본키로 거주하는 지역 및 임신/육아 여부 판별.
-        Long userID = getUserIDByToken.getUserID(httpServletRequest);
+        // 인증된 사용자 정보로 거주하는 지역 및 임신/육아 여부 판별.
+        Long userID = userDetails.getUserId();
         UserEntityV2 user = userServiceV2.findByUserId(userID);
 
-        String city = user.getSigg_id().getSido_id().getName();
-        String district = user.getSigg_id().getName();
+        String city = user.getSigu_id().getSido_id().getName();
+        String district = user.getSigu_id().getName();
 
-        // 회원 정보에 있는 sigg_id를 통해 region code 조회.
-        Regions region = areaService.getRegionBySiggCode(user.getSigg_id());
+        // 회원 정보에 있는 sigu_id를 통해 region code 조회.
+        Regions region = areaService.getRegionBySiguCode(user.getSigu_id());
 
         // 회원이 스크랩 한 복지정보 리스트
         List<ScrapDTO.response> scrapList = scrapService.scrapList(user);

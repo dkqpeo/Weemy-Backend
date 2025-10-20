@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wemmy.domain.user.UserEntityV2;
@@ -31,6 +32,9 @@ public class OAuthService {
     private final UserServiceV2 userService;
     private final TokenProvider tokenProvider;
 
+    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
+    private String kakaoClientSecret;
+
     /**
      * 인가코드로 카카오 api에 엑세스 토큰 요청
      * 앱에서 구현해야 하는 부분 테스트를 위해 사용
@@ -54,15 +58,15 @@ public class OAuthService {
             //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             String sb = "grant_type=authorization_code" +
-                    "&client_id= client_id 입력." + // TODO REST_API_KEY 입력
-                    "&redirect_uri=http://localhost:8080/wemmy/user/oauth/kakao" + // TODO 인가코드 받은 redirect_uri 입력
+                    "&client_id= client_id 입력." +
+                    "&redirect_uri=http://localhost:8080/wemmy/user/oauth/kakao" +
                     "&code=" + code +
-                    "&client_secret=qkmRjsgUjed9DuqgceUcXSYqAjU9CPpm";
+                    "&client_secret=" + kakaoClientSecret;
             bw.write(sb);
 
             //결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
+            log.info("responseCode: {}", responseCode);
 
             //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -72,7 +76,7 @@ public class OAuthService {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println("response body : " + result);
+            log.debug("response body: {}", result);
 
             //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
             JsonParser parser = new JsonParser();
@@ -81,14 +85,14 @@ public class OAuthService {
             accessToken = element.getAsJsonObject().get("access_token").getAsString();
             refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
-            System.out.println("access_token : " + accessToken);
-            System.out.println("refresh_token : " + refreshToken);
+            log.debug("access_token: {}", accessToken);
+            log.debug("refresh_token: {}", refreshToken);
 
             br.close();
             bw.close();
 
         } catch (IOException e){
-            e.printStackTrace();
+            log.error("Kakao access token 요청 중 오류 발생", e);
         }
 
         return accessToken;

@@ -1,9 +1,7 @@
 package wemmy.dto.baby;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import wemmy.domain.baby.BabyEntity;
 import wemmy.domain.baby.constant.BabyType;
 
